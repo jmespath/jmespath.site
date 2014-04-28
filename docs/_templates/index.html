@@ -1,0 +1,90 @@
+{% extends "layout.html" %}
+{% set title = 'Overview' %}
+{%- block extrahead %}
+<script src="{{ pathto('_static/js/jmespath.min.js', 1) }}"></script>
+{{ super() }}
+{% endblock %}
+
+{% block content %}
+<div class="jumbotron">
+  <div class="container">
+    <h1>JMESPath</h1>
+    <p>JMESPath is a query language for JSON.  You can extract and transform elements from a JSON document.</p>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="jmespath-demo">
+        <form>
+          <div class="left-inner-addon">
+            <span class="glyphicon glyphicon-search"></span>
+            <input class="form-control jmespath-expression" type="text" placeholder="Expression" value="foo[].bar" size="40"/>
+          </div>
+          <textarea class="form-control jmespath-input" rows="10">
+{
+  "baz": "other",
+  "foo": [
+    {"bar": 1}, {"bar": 2}, {"bar": 3}, {"bar": 4}
+  ]
+}
+          </textarea>
+        </form>
+        <h3>Result</h3>
+        <pre class="jmespath-result">[1, 2, 3, 4]</pre>
+      </div>
+
+    </div>
+    <div class="col-md-4">
+      <h2>Try it Out!</h2>
+      <p>Enter an expression on the left to see JMESPath in action.</p>
+      <p>The expression is evaluated against the JSON data and the result
+      of the expression is shown below.</p>
+      <p>To learn more about JMESPath, check out the
+      <a href="">JMESPath Tutorial</a> or the <a href="">JMESPath Specification</a>.
+      <p></p>
+      <p></p>
+      <a href="{{ pathto('tutorial') }}" class="btn btn-info btn-lg">JMESPath Tutorial</a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <h3>A Complete Specification</h3>
+      <p>
+        The JMESPath language is described in an
+        <a href="{{ pathto('specification') }}">ABNF grammar</a> with a complete
+        specification.  This ensures that the language syntax is precisely defined.
+      </p>
+    </div>
+    <div class="col-md-4">
+      <h3>A compliance test suite</h3>
+      <p>
+      JMESPath has a full suite of data driven testcases.  This ensures
+      parity for multiple libraries, and makes it easy for developers to
+      <a href="{{ pathto('compliance') }}">implement JMESPath</a> in their
+      language of choice.
+      </p>
+    </div>
+    <div class="col-md-4">
+      <h3>Libraries in Multiple Languages</h3>
+      <p>
+        Each <a href="{{ pathto('libraries') }}">official JMESPath library</a>
+        passes a complete suite of compliance tests to ensure they work as intended.
+        There are libraries in multiple languages including python, php,
+        javascript and lua.
+      </p>
+    </div>
+  </div>
+</div>
+
+<script>
+$('.jmespath-demo .jmespath-expression').bind('keyup', function() {
+  var expression = $('.jmespath-demo .jmespath-expression').val();
+  var inputData = JSON.parse($('.jmespath-demo .jmespath-input').val());
+  var result = jmespath.search(inputData, expression);
+  $('.jmespath-demo .jmespath-result').text(JSON.stringify(result));
+});
+</script>
+
+{% endblock %}

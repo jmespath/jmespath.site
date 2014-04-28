@@ -1,0 +1,167 @@
+{%- extends "basic/layout.html" %}
+
+{# Do this so that bootstrap is included before the main css file #}
+{%- block htmltitle %}
+  {% set script_files = script_files + ["_static/myscript.js"] %}
+  <link rel="stylesheet" type="text/css" href="{{ pathto('_static/css/bootstrap.min.css', 1) }}" />
+  <link rel="stylesheet" type="text/css" href="{{ pathto('_static/css/bootstrap-theme.min.css', 1) }}" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {{ super() }}
+{%- endblock %}
+
+{%- block extrahead %}
+  {% if theme_touch_icon %}
+  <link rel="apple-touch-icon" href="{{ pathto('_static/' ~ theme_touch_icon, 1) }}" />
+  {% endif %}
+  {{ super() }}
+{% endblock %}
+
+{%- block content %}
+
+  {%- if pagename == 'index' and theme_index_template %}
+    {% include theme_index_template %}
+  {%- else %}
+        <div class="container">
+
+          {%- block top_rel_links %}
+            {{ render_relations('top-links', 1) }}
+          {%- endblock %}
+
+          {%- block document_wrapper %}
+            <div class="row">
+              {%- block sidebar1 %}{{ jmespath_sidebar() }}{% endblock %}
+              {%- block document %}
+                <div class="col-md-9">
+                  {% block body %} {% endblock %}
+                </div>
+              {%- endblock %}
+              {%- block sidebar2 %}{# Place holder for other sidebar #}{% endblock %}
+            </div>
+          {%- endblock %}
+
+          {%- block bottom_rel_links %}
+            {{ render_relations('footer-links') }}
+          {%- endblock %}
+
+        </div>
+
+<script>
+$(document).ready(function() {
+    $('.jmespath-demo').each(function(i, el) {
+        function evaluateDemo(el) {
+            var expression = $(el).find('.jmespath-expression').val();
+            var inputData = JSON.parse($(el).find('.jmespath-input').val());
+            var result = jmespath.search(inputData, expression);
+            $(el).find('.jmespath-result').text(JSON.stringify(result));
+        }
+        $(el).find('.jmespath-expression').bind('keyup', function() {
+            evaluateDemo(el);
+        });
+        evaluateDemo(el);
+    });
+})
+</script>
+  {%- endif %}
+{%- endblock %}
+{# Displays the next and previous links both before and after content #}
+{% macro render_relations(class='footer-links', add_spacer=0) -%}
+  {% if prev or next %}
+    <div class="{{ class }}">
+      <ul class="breadcrumb pull-right">
+        {%- if prev and prev.title != '&lt;no title&gt;' %}
+        <li>
+          <a href="{{ prev.link|e }}" title="{{ _('previous chapter')}} (use the left arrow)">&larr; {{ prev.title }}</a>
+          {%- if next and next.title != '&lt;no title&gt;' %}
+          <span class="divider"></span>
+          {% endif %}
+        </li>
+        {%- endif %}
+        {%- if next and next.title != '&lt;no title&gt;' %}
+          <li><a href="{{ next.link|e }}" title="{{ _('next chapter')}} (use the right arrow)">{{ next.title }} &rarr;</a></li>
+        {%- endif %}
+      </ul>
+    </div>
+  {% else %}
+    {% if add_spacer %}
+      <div class="clearer"></div>
+    {% endif %}
+  {% endif %}
+{%- endmacro %}
+
+{%- macro jmespath_sidebar() %}
+  {%- if render_sidebar %}
+  <div class="col-md-3 sphinxsidebar">
+    <div class="sphinxsidebarwrapper">
+      {%- block sidebarlogo %}
+      {%- if logo %}
+        <p class="logo"><a href="{{ pathto(master_doc) }}">
+          <img class="logo" src="{{ pathto('_static/' + logo, 1) }}" alt="Logo"/>
+        </a></p>
+      {%- endif %}
+      {%- endblock %}
+      {%- if sidebars != None %}
+        {#- new style sidebar: explicitly include/exclude templates #}
+        {%- for sidebartemplate in sidebars %}
+        {%- include sidebartemplate %}
+        {%- endfor %}
+      {%- endif %}
+    </div>
+  </div>
+  {%- endif %}
+{%- endmacro %}
+
+{% block header %}
+<nav class="navbar navbar-default navbar-static-top" role="navigation">
+  <div class="container">
+    {%- if theme_github_user and theme_github_repo %}
+    <div class="visible-md visible-lg navbar-text pull-right" id="github-stars">
+      <iframe src="http://ghbtns.com/github-btn.html?user={{ theme_github_user }}&repo={{ theme_github_repo }}&type=watch&count=true&size=small"
+      allowtransparency="true" frameborder="0" scrolling="0" width="110px" height="20px"></iframe>
+    </div>
+    {%- endif %}
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#toggle-main-nav">
+      </button>
+      <a class="navbar-brand" href="{{ pathto(master_doc) }}">{{ theme_project_nav_name }}</a>
+    </div>
+    <div class="collapse navbar-collapse" id="toggle-main-nav">
+      <ul class="nav navbar-nav">
+        {%- block nav_links %}
+        <li><a href="{{ pathto(master_doc) }}">Home</a></li>
+        {%- endblock %}
+        {% include "nav_links.html" ignore missing %}
+      </ul>
+    </div>
+  </div>
+</nav>
+{{ super() }}
+{% endblock %}
+
+
+{%- block footer %}
+
+  <script type="text/javascript" src="{{ pathto('_static/js/bootstrap.js', 1)}}"></script>
+  <script type="text/javascript" src="{{ pathto('_static/js/jmespath.min.js', 1)}}"></script>
+  {%- block footer_wrapper %}
+  <div class="footer container">
+    &copy; Copyright {{ copyright }}. Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div>
+  {%- endblock %}
+  
+  {%- block ga %}
+    {%- if theme_google_analytics_account %}
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', '{{ theme_google_analytics_account }}']);
+      _gaq.push(['_trackPageview']);
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+    {%- endif %}
+  {%- endblock %}
+
+{%- endblock %}
+
