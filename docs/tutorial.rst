@@ -15,7 +15,6 @@ selects a key in an JSON object:
 
 .. jpexample:: a
     :layout: 2cols
-    :cols: 40
     :rows: 5
 
     {"a": "foo", "b": "bar", "c": "baz"}
@@ -30,7 +29,6 @@ in a JSON object:
 
 .. jpexample:: a.b.c.d
     :layout: 2cols
-    :cols: 40
     :rows: 5
 
     {"a": {"b": {"c": {"d": "value"}}}}
@@ -45,7 +43,6 @@ programming languages.  Indexing is 0 based.
 
 .. jpexample:: [1]
     :layout: 2cols
-    :cols: 40
     :rows: 5
 
     ["a", "b", "c", "d", "e", "f"]
@@ -61,7 +58,6 @@ access JSON elements.
 
 .. jpexample:: a.b.c[0].d[1][0]
     :layout: 2cols
-    :cols: 40
     :rows: 10
 
     {"a": {
@@ -97,7 +93,6 @@ we wanted a list of all the first names in our list.
 
 .. jpexample:: people[*].first
     :layout: 2cols
-    :cols: 50
     :rows: 10
 
     {
@@ -151,7 +146,6 @@ the right hand side of the projection onto the list of values.
 
 .. jpexample:: ops.*.numArgs
     :layout: 2cols
-    :cols: 50
     :rows: 10
 
     {
@@ -203,7 +197,6 @@ Here's an example of that:
 
 .. jpexample:: reservations[*].instances[*].state
     :layout: 2cols
-    :cols: 50
     :rows: 20
 
     {
@@ -253,7 +246,6 @@ You can also just use ``[]`` on its own to flatten a list:
 
 .. jpexample:: []
     :layout: 2cols
-    :cols: 50
 
     [
       [0, 1],
@@ -297,7 +289,6 @@ A filter projection can be used to accomplish this:
 
 .. jpexample:: machines[?state==`running`].name
     :layout: 2cols
-    :cols: 50
 
     {
       "machines": [
@@ -336,7 +327,6 @@ to indicate that a projection must stop.  This is shown in the example below:
 
 .. jpexample:: people[*].first | [0]
     :layout: 2cols
-    :cols: 50
     :rows: 10
 
     {
@@ -371,7 +361,6 @@ This is an example of a multiselect list:
 
 .. jpexample:: people[].[name, state.name]
     :layout: 2cols
-    :cols: 50
     :rows: 20
 
     {
@@ -409,7 +398,6 @@ instead wanted to create a two element hash that had two keys, ``Name`` and
 
 .. jpexample:: people[].{Name: name, State: state.name}
     :layout: 2cols
-    :cols: 50
     :rows: 20
 
     {

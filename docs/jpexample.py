@@ -15,12 +15,10 @@ class JPExample(Directive):
     final_argument_whitespace = True
     option_spec = {
         'rows': directives.unchanged,
-        'cols': directives.unchanged,
         'layout': directives.unchanged,
     }
 
     default_rows = 10
-    default_cols = 90
     default_layout = '1col'
 
 
@@ -53,8 +51,6 @@ class JPExample(Directive):
     def _populate_defaults(self):
         if 'rows' not in self.options:
             self.options['rows'] = self.default_rows
-        if 'cols' not in self.options:
-            self.options['cols'] = self.default_cols
         if 'layout' not in self.options:
             self.options['layout'] = self.default_layout
 
