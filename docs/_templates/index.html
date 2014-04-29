@@ -83,7 +83,7 @@ $('.jmespath-demo .jmespath-expression').bind('keyup', function() {
   var expression = $('.jmespath-demo .jmespath-expression').val();
   var inputData = JSON.parse($('.jmespath-demo .jmespath-input').val());
   var result = jmespath.search(inputData, expression);
-  $('.jmespath-demo .jmespath-result').text(JSON.stringify(result));
+  $('.jmespath-demo .jmespath-result').text(JSON.stringify(result, null, 2));
 });
 </script>
 

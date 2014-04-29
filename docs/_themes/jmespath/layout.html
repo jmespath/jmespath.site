@@ -52,7 +52,7 @@ $(document).ready(function() {
             var expression = $(el).find('.jmespath-expression').val();
             var inputData = JSON.parse($(el).find('.jmespath-input').val());
             var result = jmespath.search(inputData, expression);
-            $(el).find('.jmespath-result').text(JSON.stringify(result));
+            $(el).find('.jmespath-result').text(JSON.stringify(result, null, 2));
         }
         $(el).find('.jmespath-expression').bind('keyup', function() {
             evaluateDemo(el);
