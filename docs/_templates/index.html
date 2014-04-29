@@ -20,19 +20,24 @@
         <form>
           <div class="left-inner-addon">
             <span class="glyphicon glyphicon-search"></span>
-            <input class="form-control jmespath-expression" type="text" placeholder="Expression" value="foo[].bar" size="40"/>
+            <input class="form-control jmespath-expression" type="text" placeholder="Expression" value="locations[].name" size="40"/>
           </div>
-          <textarea class="form-control jmespath-input" rows="10">
+          <textarea class="form-control jmespath-input" rows="12">
 {
-  "baz": "other",
-  "foo": [
-    {"bar": 1}, {"bar": 2}, {"bar": 3}, {"bar": 4}
-  ]
+  "locations": [
+    {"name": "Seattle", "state": "WA"},
+    {"name": "Los Angeles", "state": "CA"},
+    {"name": "Bellevue", "state": "WA"},
+    {"name": "New York", "state": "NY"},
+    {"name": "San Antonio", "state": "TX"},
+    {"name": "Hopkins", "country": "Belize"}
+  ],
+  "type": "cities"
 }
           </textarea>
         </form>
         <h3>Result</h3>
-        <pre class="jmespath-result">[1, 2, 3, 4]</pre>
+        <pre class="jmespath-result"></pre>
       </div>
 
     </div>
@@ -69,7 +74,7 @@
     <div class="col-md-4">
       <h3>Libraries in Multiple Languages</h3>
       <p>
-        Each <a href="{{ pathto('libraries') }}">official JMESPath library</a>
+        Each <a href="{{ pathto('libraries') }}">JMESPath library</a>
         passes a complete suite of compliance tests to ensure they work as intended.
         There are libraries in multiple languages including python, php,
         javascript and lua.
@@ -79,12 +84,20 @@
 </div>
 
 <script>
-$('.jmespath-demo .jmespath-expression').bind('keyup', function() {
-  var expression = $('.jmespath-demo .jmespath-expression').val();
-  var inputData = JSON.parse($('.jmespath-demo .jmespath-input').val());
-  var result = jmespath.search(inputData, expression);
-  $('.jmespath-demo .jmespath-result').text(JSON.stringify(result, null, 2));
-});
+$(document).ready(function() {
+    $('.jmespath-demo').each(function(i, el) {
+        function evaluateDemo(el) {
+            var expression = $(el).find('.jmespath-expression').val();
+            var inputData = JSON.parse($(el).find('.jmespath-input').val());
+            var result = jmespath.search(inputData, expression);
+            $(el).find('.jmespath-result').text(JSON.stringify(result, null, 2));
+        }
+        $(el).find('.jmespath-expression').bind('keyup', function() {
+            evaluateDemo(el);
+        });
+        evaluateDemo(el);
+    });
+})
 </script>
 
 {% endblock %}
