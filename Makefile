@@ -1,7 +1,3 @@
-S3_BUCKET=jmespath.org
-BUILD_DIR=docs/_build/html/
-
-
 help:
 	@echo 'Makefile for a pelican Web site                                        '
 	@echo '                                                                       '
@@ -10,7 +6,6 @@ help:
 
 
 publish:
-	aws s3 sync $(BUILD_DIR)/ s3://$(S3_BUCKET) --acl public-read --delete --region us-west-2 --profile jmespath-deployer
-	@echo 'Site uploaded to s3://$(S3_BUCKET)'
+	$(MAKE) -C docs/ publish
 
 .PHONY: help publish
