@@ -600,6 +600,8 @@ Examples
 .. _RFC4234: http://tools.ietf.org/html/rfc4234
 
 
+.. _functions:
+
 Functions Expressions
 =====================
 
@@ -701,6 +703,8 @@ be used to convert (and filter) all elements to numbers::
     search([].to_number(@), ``["1", "2", "3", "notanumber", true]``) -> [1, 2, 3]
 
 This provides a simple mechanism to explicitly convert types when needed.
+
+.. _builtin-functions:
 
 Built-in Functions
 ==================

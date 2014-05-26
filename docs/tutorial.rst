@@ -417,6 +417,101 @@ instead wanted to create a two element hash that had two keys, ``Name`` and
       ]
     }
 
+
+Functions
+=========
+
+JMESPath supports function expressions, for example:
+
+.. jpexample:: length(people)
+    :layout: 2cols
+    :rows: 20
+
+    {
+      "people": [
+        {
+          "name": "b",
+          "age": 30,
+          "state": {"name": "up"}
+        },
+        {
+          "name": "a",
+          "age": 50,
+          "state": {"name": "down"}
+        },
+        {
+          "name": "c",
+          "age": 40,
+          "state": {"name": "up"}
+        }
+      ]
+    }
+
+Functions can be used to transform and filter data in powerful ways.  The full
+list of functions can be found :ref:`here <builtin-functions>`, and the
+:ref:`function expression <functions>` spec has the complete details.
+
+Below are a few examples of functions.
+
+This example prints the name of the oldest person in the ``people`` array:
+
+.. jpexample:: max_by(people, &age).name
+    :layout: 2cols
+    :rows: 20
+
+    {
+      "people": [
+        {
+          "name": "b",
+          "age": 30
+        },
+        {
+          "name": "a",
+          "age": 50
+        },
+        {
+          "name": "c",
+          "age": 40
+        }
+      ]
+    }
+
+Functions can also be combined with filter expressions.  In the example below,
+the JMESPath expressions finds all elements in ``myarray`` that contains the
+string ``foo``.
+
+.. jpexample:: myarray[?contains(@, `foo`) == `true`]
+    :layout: 2cols
+    :rows: 20
+
+    {
+      "myarray": [
+        "foo",
+        "foobar",
+        "barfoo",
+        "bar",
+        "baz",
+        "barbaz",
+        "barfoobaz"
+      ]
+    }
+
+The ``@`` character in the example above refers to the current element being
+evaluated in ``myarray``.  The expression ``contains(@, `foo`)`` will return
+``true`` if the current element in the ``myarray`` array contains the string
+``foo``.
+
+While the :ref:`function expression <functions>` spec all the details, there
+are a few things to keep in mind when working with functions:
+
+* Function arguments have types.  If an argument for a function has the wrong
+  type, an ``invalid-type`` error will occur.  There are functions that can
+  do type conversions (``to_string``, ``to_number``).
+* If a function is called with the wrong number of arguments, an
+  ``invalid-arity`` will occur.
+
+
+
 Next Steps
 ==========
 
