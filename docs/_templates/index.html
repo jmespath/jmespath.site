@@ -9,7 +9,7 @@
 <div class="jumbotron">
   <div class="container">
     <h1>JMESPath</h1>
-    <p>JMESPath is a query language for JSON.  You can extract and transform elements from a JSON document.</p>
+    <p>JMESPath is a query language for JSON.</p>
   </div>
 </div>
 
@@ -20,16 +20,14 @@
         <form>
           <div class="left-inner-addon">
             <span class="glyphicon glyphicon-search"></span>
-            <input class="form-control jmespath-expression" type="text" placeholder="Expression" value="locations[].name" size="40"/>
+            <input class="form-control jmespath-expression" type="text" placeholder="Expression" value="locations[?state == `WA`].name" size="40"/>
           </div>
-          <textarea class="form-control jmespath-input" rows="12">
+          <textarea class="form-control jmespath-input" rows="8">
 {
   "locations": [
     {"name": "Seattle", "state": "WA"},
-    {"name": "Los Angeles", "state": "CA"},
     {"name": "Bellevue", "state": "WA"},
     {"name": "New York", "state": "NY"},
-    {"name": "San Antonio", "state": "TX"},
     {"name": "Hopkins", "country": "Belize"}
   ],
   "type": "cities"
