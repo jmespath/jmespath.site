@@ -2,4 +2,31 @@
 JMESPath Libraries
 ==================
 
-There are JMESPath libraries for the following languages:
+The JMESPath specification is implemented in varioues languages.  Each list
+below shows JMESPath libraries as well as the compliance level.  The compliance
+level is based on which compliance tests the library can pass.
+
+
+.. list-table:: JMESPath Libraries
+  :header-rows: 1
+
+  * - Language
+    - Name
+    - Home Page
+    - Compliance Level
+  * - Python
+    - jmespath
+    - https://github.com/boto/jmespath
+    - Fully compliant
+  * - PHP
+    - jmespath.php
+    - https://github.com/mtdowling/jmespath.php
+    - Fully compliant
+  * - Javascript
+    - jmespath.js
+    - https://github.com/jmespath/jmespath.js
+    - Fully compliant
+  * - Lua
+    - jmespath.lua
+    - https://github.com/mtdowling/jmespath.lua
+    - Missing function support
