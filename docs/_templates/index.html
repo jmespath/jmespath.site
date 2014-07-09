@@ -20,14 +20,15 @@
         <form>
           <div class="left-inner-addon">
             <span class="glyphicon glyphicon-search"></span>
-            <input class="form-control jmespath-expression" type="text" placeholder="Expression" value="locations[?state == `WA`].name" size="40"/>
+            <input class="form-control jmespath-expression" type="text" placeholder="Expression" value="locations[?state == `WA`].name | sort(@) | {WashingtonCities: join(`, `, @)}" size="40"/>
           </div>
           <textarea class="form-control jmespath-input" rows="8">
 {
   "locations": [
     {"name": "Seattle", "state": "WA"},
     {"name": "New York", "state": "NY"},
-    {"name": "Bellevue", "state": "WA"}
+    {"name": "Bellevue", "state": "WA"},
+    {"name": "Olympia", "state": "WA"}
   ]
 }
           </textarea>
