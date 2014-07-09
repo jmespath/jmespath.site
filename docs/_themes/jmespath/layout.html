@@ -1,10 +1,10 @@
 {%- extends "basic/layout.html" %}
 
-{# Do this so that bootstrap is included before the main css file #}
 {%- block htmltitle %}
   {% set script_files = script_files + ["_static/myscript.js"] %}
   <link rel="stylesheet" type="text/css" href="{{ pathto('_static/css/bootstrap.min.css', 1) }}" />
   <link rel="stylesheet" type="text/css" href="{{ pathto('_static/css/bootstrap-theme.min.css', 1) }}" />
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   {{ super() }}
 {%- endblock %}
@@ -111,7 +111,7 @@ $(document).ready(function() {
 {%- endmacro %}
 
 {% block header %}
-<nav class="navbar navbar-default navbar-static-top" role="navigation">
+<nav class="navbar navbar-inverse navbar-static-top" role="navigation">
   <div class="container">
     {%- if theme_github_user and theme_github_repo %}
     <div class="visible-md visible-lg navbar-text pull-right" id="github-stars">
@@ -126,10 +126,11 @@ $(document).ready(function() {
     </div>
     <div class="collapse navbar-collapse" id="toggle-main-nav">
       <ul class="nav navbar-nav">
-        {%- block nav_links %}
         <li><a href="{{ pathto(master_doc) }}">Home</a></li>
-        {%- endblock %}
-        {% include "nav_links.html" ignore missing %}
+        <li><a href="#">Tutorial</a></li>
+        <li><a href="#">Reference</a></li>
+        <li><a href="#">Libraries</a></li>
+        <li><a href="#">Github</a></li>
       </ul>
     </div>
   </div>
@@ -147,7 +148,7 @@ $(document).ready(function() {
   <noscript><p><img alt="Clicky" width="1" height="1" src="//in.getclicky.com/100732121ns.gif" /></p></noscript>
   {%- block footer_wrapper %}
   <div class="footer container">
-    &copy; Copyright {{ copyright }}. Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+    &copy; Copyright {{ copyright }}.
   </div>
   {%- endblock %}
 

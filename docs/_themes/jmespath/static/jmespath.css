@@ -1,10 +1,16 @@
 body {
   font-size: 16px;
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-h1, .h1, h2, .h2, h3, .h3 {
+h1, .h1, h2, .h2, h3, .h3 h4, .h4, h5, .h5 {
   margin-top: 20px;
   margin-bottom: 20px;
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+h1 .h1 {
+  font-weight: 500;
 }
 
 h2 .h2 {
@@ -13,7 +19,6 @@ h2 .h2 {
 
 .navbar {
   margin-bottom: 0;
-  border-bottom: 5px solid #428bca;
   font-size: 16px;
 }
 
@@ -21,7 +26,7 @@ h2 .h2 {
   padding-top: 10px;
   padding-bottom: 10px;
   color: #E0E0E0;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 
   background-image: -webkit-gradient(
       linear,
@@ -39,6 +44,11 @@ h2 .h2 {
 
 .jumbotron p {
   color: #B4B4B4;
+}
+
+h3.section-distinct {
+  font-size: 22px;
+  font-weight: bold;
 }
 
 .left-inner-addon {
@@ -191,7 +201,7 @@ div.sphinxsidebarwrapper p.logo {
 
 div.sphinxsidebar h3,
 div.sphinxsidebar h4 {
-  font-family: Helvetica, arial, freesans, clean, sans-serif;
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #444;
   font-size: 20px;
   font-weight: normal;
