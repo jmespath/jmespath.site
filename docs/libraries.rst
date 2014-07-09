@@ -7,7 +7,9 @@ below shows JMESPath libraries as well as the compliance level.  The compliance
 level is based on which compliance tests the library can pass.
 
 
-.. list-table:: JMESPath Libraries
+.. cssclass:: table
+
+.. list-table::
   :header-rows: 1
 
   * - Language
