@@ -816,6 +816,8 @@ As a final example, here is the steps for evaluating ``abs(to_number(bar))``:
    ``abs(to_number(bar))``.
 
 
+.. cssclass:: table
+
 .. list-table:: Examples
   :header-rows: 1
 
@@ -839,6 +841,8 @@ avg
 Returns the average of the elements in the provided array.
 
 An empty array will produce a return value of null.
+
+.. cssclass:: table
 
 .. list-table:: Examples
   :header-rows: 1
@@ -875,6 +879,8 @@ in the array is equal to the provided ``$search`` value.
 
 If the provided ``$subject`` is a string, this function returns true if
 the string contains the provided ``$search`` argument.
+
+.. cssclass:: table
 
 .. list-table:: Examples
   :header-rows: 1
@@ -916,6 +922,8 @@ ceil
 
 Returns the next highest integer value by rounding up if necessary.
 
+.. cssclass:: table
+
 .. list-table:: Examples
   :header-rows: 1
 
@@ -938,6 +946,8 @@ floor
     number floor(number $value)
 
 Returns the next lowest integer value by rounding down if necessary.
+
+.. cssclass:: table
 
 .. list-table:: Examples
   :header-rows: 1
@@ -962,6 +972,8 @@ join
 Returns all of the elements from the provided ``$stringsarray`` array joined
 together using the ``$glue`` argument as a separator between each.
 
+
+.. cssclass:: table
 
 .. list-table:: Examples
   :header-rows: 1
@@ -991,6 +1003,8 @@ keys
     array keys(object $obj)
 
 Returns an array containing the keys of the provided object.
+
+.. cssclass:: table
 
 .. list-table:: Examples
   :header-rows: 1
@@ -1024,6 +1038,8 @@ Returns the length of the given argument using the following types rules:
 1. string: returns the number of code points in the string
 2. array: returns the number of elements in the array
 3. object: returns the number of key-value pairs in the object
+
+.. cssclass:: table
 
 .. list-table:: Examples
   :header-rows: 1
@@ -1065,6 +1081,8 @@ Returns the highest found number in the provided array argument.
 
 An empty array will produce a return value of null.
 
+.. cssclass:: table
+
 .. list-table:: Examples
   :header-rows: 1
 
@@ -1091,6 +1109,8 @@ comparison key.  The entire maximum element is returned.
 Below are several examples using the ``people`` array (defined above) as the
 given input.
 
+
+.. cssclass:: table
 
 .. list-table:: Examples
   :header-rows: 1
@@ -1119,6 +1139,8 @@ min
 Returns the lowest found number in the provided ``$collection`` argument.
 
 
+.. cssclass:: table
+
 .. list-table:: Examples
   :header-rows: 1
 
@@ -1145,6 +1167,8 @@ comparison key.  The entire maximum element is returned.
 Below are several examples using the ``people`` array (defined above) as the
 given input.
 
+
+.. cssclass:: table
 
 .. list-table:: Examples
   :header-rows: 1
@@ -1177,6 +1201,8 @@ accepts one or more arguments, and will evaluate them in order until a
 non null argument is encounted.  If all arguments values resolve to ``null``,
 then a value of ``null`` is returned.
 
+.. cssclass:: table
+
 .. list-table:: Examples
   :header-rows: 1
 
@@ -1208,6 +1234,8 @@ The array must be a list of strings or numbers.  Sorting strings is based on
 code points.  Locale is not taken into account.
 
 
+
+.. cssclass:: table
 
 .. list-table:: Examples
   :header-rows: 1
@@ -1248,6 +1276,8 @@ given input.  ``sort_by`` follows the same sorting logic as the ``sort``
 function.
 
 
+.. cssclass:: table
+
 .. list-table:: Examples
   :header-rows: 1
 
@@ -1273,6 +1303,8 @@ to_string
   JSON encoder should emit the encoded JSON value without adding any additional
   new lines.
 
+
+.. cssclass:: table
 
 .. list-table:: Examples
   :header-rows: 1
@@ -1324,6 +1356,8 @@ The return value MUST be one of the following:
 * null
 
 
+.. cssclass:: table
+
 .. list-table:: Examples
   :header-rows: 1
 
@@ -1365,6 +1399,8 @@ values
 
 Returns the values of the provided object.
 
+
+.. cssclass:: table
 
 .. list-table:: Examples
   :header-rows: 1
