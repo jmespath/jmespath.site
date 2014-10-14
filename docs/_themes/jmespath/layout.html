@@ -57,6 +57,9 @@ $(document).ready(function() {
         $(el).find('.jmespath-expression').bind('keyup', function() {
             evaluateDemo(el);
         });
+        $(el).find('.jmespath-input').bind('keyup', function() {
+            evaluateDemo(el);
+        });
         evaluateDemo(el);
     });
 })
