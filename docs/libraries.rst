@@ -28,6 +28,10 @@ level is based on which compliance tests the library can pass.
     - jmespath.js
     - https://github.com/jmespath/jmespath.js
     - Fully compliant
+  * - Ruby
+    - jmespath.rb
+    - https://github.com/trevorrowe/jmespath.rb
+    - Fully compliant
   * - Lua
     - jmespath.lua
     - https://github.com/mtdowling/jmespath.lua
