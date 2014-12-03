@@ -31,8 +31,8 @@ The grammar is specified using ABNF, as described in `RFC4234`_
 ::
 
     expression        = sub-expression / index-expression / or-expression / identifier
-    expression        /= "*" / multi-select-list / multi-select-hash / literal
-    expression        /= function-expression / pipe-expression
+    expression        =/ "*" / multi-select-list / multi-select-hash / literal
+    expression        =/ function-expression / pipe-expression
     sub-expression    = expression "." ( identifier /
                                          multi-select-list /
                                          multi-select-hash /
