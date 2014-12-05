@@ -35,4 +35,4 @@ level is based on which compliance tests the library can pass.
   * - Lua
     - jmespath.lua
     - https://github.com/mtdowling/jmespath.lua
-    - Missing function support
+    - Fully compliant
