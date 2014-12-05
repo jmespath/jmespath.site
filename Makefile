@@ -8,4 +8,10 @@ help:
 publish:
 	$(MAKE) -C docs/ publish
 
+clean:
+	$(MAKE) -C docs/ clean
+
+html:
+	$(MAKE) -C docs/ html
+
 .PHONY: help publish
