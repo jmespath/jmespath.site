@@ -1,27 +1,27 @@
-expression             = root / wildcard
-root                   = subexpression / index-expression / flatten
-root                   =/ wildcard-index / filter-expression / or-expression
-root                   =/ identifier / current-node / literal
-root                   =/ root-multi-select-list / multi-select-hash
-root                   =/ function-expression / pipe-expression
-wildcard               = "*"
+expression             = root-expression / wildcard-values
+root-expression        = subexpression / index-expression / flatten
+root-expression        =/ wildcard-index / filter-expression / or-expression
+root-expression        =/ identifier / current-node / literal
+root-expression        =/ root-multi-select-list / multi-select-hash
+root-expression        =/ function-expression / pipe-expression
+wildcard-values        = "*"
 subexpression          = expression (object-predicate / array-predicate)
 object-predicate       = "." ( identifier /
                                multi-select-list /
                                multi-select-hash /
                                function-expression /
-                               wildcard )
+                               wildcard-values )
 array-predicate        = index-expression / wildcard-index
 array-predicate        =/ flatten / filter-expression
 or-expression          = expression "||" expression
 pipe-expression        = expression "|" expression
 index-expression       = "[" number "]"
-wildcard-index         = "[" wildcard "]"
+wildcard-index         = "[*]"
 flatten                = "[]"
 filter-expression      = "[?" comparison "]"
 comparison             = expression comparator expression
 comparator             = "<" / "<=" / "==" / ">=" / ">" / "!="
-root-multi-select-list = "[" (root / multiple-values) "]"
+root-multi-select-list = "[" (root-expression / multiple-values) "]"
 multi-select-list      = "[" (expression / multiple-values) "]"
 multiple-values        = expression 1*( "," expression )
 multi-select-hash      = "{" ( keyval-expr *( "," keyval-expr ) ) "}"
