@@ -44,6 +44,12 @@ h2 .h2 {
 
 .jumbotron p {
   color: #B4B4B4;
+  padding-left: 10px;
+}
+
+.jumbotron img {
+  padding-top: 30px;
+  padding-bottom: 20px;
 }
 
 h3.section-distinct {
