@@ -1,55 +1,67 @@
-expression             = root-expression / wildcard-values
-root-expression        = subexpression / index-expression / flatten
-root-expression        =/ wildcard-index / filter-expression / or-expression
-root-expression        =/ identifier / current-node / literal
-root-expression        =/ root-multi-select-list / multi-select-hash
-root-expression        =/ function-expression / pipe-expression
-wildcard-values        = "*"
-subexpression          = expression (object-predicate / array-predicate)
-object-predicate       = "." ( identifier /
-                               multi-select-list /
-                               multi-select-hash /
-                               function-expression /
-                               wildcard-values )
-array-predicate        = index-expression / wildcard-index
-array-predicate        =/ flatten / filter-expression
-or-expression          = expression "||" expression
-pipe-expression        = expression "|" expression
-index-expression       = "[" number "]"
-wildcard-index         = "[*]"
-flatten                = "[]"
-filter-expression      = "[?" comparison "]"
-comparison             = expression comparator expression
-comparator             = "<" / "<=" / "==" / ">=" / ">" / "!="
-root-multi-select-list = "[" (root-expression / multiple-values) "]"
-multi-select-list      = "[" (expression / multiple-values) "]"
-multiple-values        = expression 1*( "," expression )
-multi-select-hash      = "{" ( keyval-expr *( "," keyval-expr ) ) "}"
-keyval-expr            = identifier ":" expression
-function-expression    = unquoted-string (no-args / one-or-more-args)
-no-args                = "(" ")"
-one-or-more-args       = "(" ( function-arg *( "," function-arg ) ) ")"
-function-arg           = expression / expression-type
-current-node           = "@"
-expression-type        = "&" expression
-literal                = "`" 1*(unescaped-literal / escaped-literal) "`"
-unescaped-literal      = %x20-10FFFF
+expression              = terminating-expression /
+                           root-expression /
+                           wildcard-values
+group                   = "(" expression ")"
+root-expression         = subexpression / index-expression / flatten /
+                           wildcard-index / filter-expression /
+                           identifier / current-node / literal /
+                           root-multi-select-list / multi-select-hash /
+                           function-expression / group / slice-expression
+terminating-expression  = pipe-expression / or-expression
+terminating-rhs         = root-expression / wildcard-values
+wildcard-values         = "*"
+subexpression           = (root-expression / wildcard-values)
+                          (object-predicate / array-predicate)
+object-predicate        = "." ( identifier /
+                                multi-select-list /
+                                multi-select-hash /
+                                function-expression /
+                                wildcard-values )
+array-predicate         = index-expression /
+                           slice-expression /
+                           wildcard-index /
+                           flatten /
+                           filter-expression
+or-expression           = expression "||" terminating-rhs
+pipe-expression         = expression "|" terminating-rhs
+index-expression        = "[" number "]"
+slice-expression        = "[" [number] ":" [number] [ ":" [number] ] "]"
+wildcard-index          = "[*]"
+flatten                 = "[]"
+filter-expression       = "[?" comparison "]"
+comparison              = expression comparator expression
+comparator              = "<" / "<=" / "==" / ">=" / ">" / "!="
+root-multi-select-list  = "[" (root-expression /
+                               multiple-values /
+                               terminating-expression) "]"
+multi-select-list       = "[" (expression / multiple-values) "]"
+multiple-values         = expression 1*( "," expression )
+multi-select-hash       = "{" ( keyval-expr *( "," keyval-expr ) ) "}"
+keyval-expr             = identifier ":" expression
+function-expression     = unquoted-string (no-args / one-or-more-args)
+no-args                 = "(" ")"
+one-or-more-args        = "(" ( function-arg *( "," function-arg ) ) ")"
+function-arg            = expression / expression-type
+current-node            = "@"
+expression-type         = "&" expression
+literal                 = "`" 1*(unescaped-literal / escaped-literal) "`"
+unescaped-literal       = %x20-10FFFF
                           ; basically any character after and including space
-escaped-literal        = escaped-char / (escape %x60)
-number                 = ["-"] 1*DIGIT
-identifier             = unquoted-string / quoted-string
-unquoted-string        = (ALPHA / "_") *(DIGIT / ALPHA / "_")
-quoted-string          = DQUOTE 1*(unescaped-char / escaped-char) DQUOTE
-unescaped-char         = %x20-21 / %x23-5B / %x5D-10FFFF
-                          ; Any character other than "\"
-escape                 = %x5C ; "\"
-escaped-char           = escape (
-                          %x22 /          ; "    quotation mark  U+0022
-                          %x5C /          ; \    reverse solidus U+005C
-                          %x2F /          ; /    solidus         U+002F
-                          %x62 /          ; b    backspace       U+0008
-                          %x66 /          ; f    form feed       U+000C
-                          %x6E /          ; n    line feed       U+000A
-                          %x72 /          ; r    carriage return U+000D
-                          %x74 /          ; t    tab             U+0009
-                          %x75 4HEXDIG )  ; uXXXX                U+XXXX
+escaped-literal         = escaped-char / (escape %x60)
+number                  = ["-"] 1*DIGIT
+identifier              = unquoted-string / quoted-string
+unquoted-string         = (ALPHA / "_") *(DIGIT / ALPHA / "_")
+quoted-string           = DQUOTE 1*(unescaped-char / escaped-char) DQUOTE
+unescaped-char          = %x20-21 / %x23-5B / %x5D-10FFFF
+                           ; Any character other than "\"
+escape                  = %x5C ; "\"
+escaped-char            = escape (
+                           %x22 /          ; "    quotation mark  U+0022
+                           %x5C /          ; \    reverse solidus U+005C
+                           %x2F /          ; /    solidus         U+002F
+                           %x62 /          ; b    backspace       U+0008
+                           %x66 /          ; f    form feed       U+000C
+                           %x6E /          ; n    line feed       U+000A
+                           %x72 /          ; r    carriage return U+000D
+                           %x74 /          ; t    tab             U+0009
+                           %x75 4HEXDIG )  ; uXXXX                U+XXXX
