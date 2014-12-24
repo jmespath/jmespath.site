@@ -1,17 +1,19 @@
 expression              = terminating-expression /
                            root-expression /
                            wildcard-values
-group                   = "(" expression ")"
 root-expression         = subexpression / index-expression / flatten /
                            wildcard-index / filter-expression /
                            identifier / current-node / literal /
                            root-multi-select-list / multi-select-hash /
                            function-expression / group / slice-expression
 terminating-expression  = pipe-expression / or-expression
-terminating-rhs         = root-expression / wildcard-values
+terminating-rhs         = root-expression / wildcard-values / or-expression
+pipe-expression         = expression "|" terminating-rhs
+or-expression           = (root-expression / wildcard-values) "||" terminating-rhs
 wildcard-values         = "*"
+group                   = "(" expression ")"
 subexpression           = (root-expression / wildcard-values)
-                          (object-predicate / array-predicate)
+                           (object-predicate / array-predicate)
 object-predicate        = "." ( identifier /
                                 multi-select-list /
                                 multi-select-hash /
@@ -22,8 +24,6 @@ array-predicate         = index-expression /
                            wildcard-index /
                            flatten /
                            filter-expression
-or-expression           = expression "||" terminating-rhs
-pipe-expression         = expression "|" terminating-rhs
 index-expression        = "[" number "]"
 slice-expression        = "[" [number] ":" [number] [ ":" [number] ] "]"
 wildcard-index          = "[*]"
