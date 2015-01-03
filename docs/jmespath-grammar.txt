@@ -1,18 +1,23 @@
 expression              = terminating-expression /
                            root-expression /
                            wildcard-values
-root-expression         = subexpression / index-expression / flatten /
+root-expression         = non-test / not / binary-expression
+non-test                = subexpression / index-expression / flatten /
                            wildcard-index / filter-expression /
                            identifier / current-node / literal /
                            root-multi-select-list / multi-select-hash /
                            function-expression / group / slice-expression
-terminating-expression  = pipe-expression / or-expression
-terminating-rhs         = root-expression / wildcard-values / or-expression
+terminating-expression  = pipe-expression / or-expression / and-expression
+terminating-rhs         = root-expression /
+                           wildcard-values /
+                           or-expression /
+                           and-expression
 pipe-expression         = expression "|" terminating-rhs
 or-expression           = (root-expression / wildcard-values) "||" terminating-rhs
+and-expression          = (root-expression / wildcard-values) "&&" terminating-rhs
 wildcard-values         = "*"
 group                   = "(" expression ")"
-subexpression           = (root-expression / wildcard-values)
+subexpression           = (non-test / wildcard-values)
                            (object-predicate / array-predicate)
 object-predicate        = "." ( identifier /
                                 multi-select-list /
@@ -28,9 +33,13 @@ index-expression        = "[" number "]"
 slice-expression        = "[" [number] ":" [number] [ ":" [number] ] "]"
 wildcard-index          = "[*]"
 flatten                 = "[]"
-filter-expression       = "[?" comparison "]"
-comparison              = expression comparator expression
-comparator              = "<" / "<=" / "==" / ">=" / ">" / "!="
+filter-expression       = "[?" (not /
+                                non-test /
+                                terminating-expression /
+                                binary-expression) "]"
+not                     = "!" (non-test / not)
+binary-expression       = expression operator (non-test / wildcard-values)
+operator                = "<" / "<=" / "==" / ">=" / ">" / "!="
 root-multi-select-list  = "[" (root-expression /
                                multiple-values /
                                terminating-expression) "]"
@@ -38,16 +47,15 @@ multi-select-list       = "[" (expression / multiple-values) "]"
 multiple-values         = expression 1*( "," expression )
 multi-select-hash       = "{" ( keyval-expr *( "," keyval-expr ) ) "}"
 keyval-expr             = identifier ":" expression
-function-expression     = unquoted-string (no-args / one-or-more-args)
-no-args                 = "(" ")"
-one-or-more-args        = "(" ( function-arg *( "," function-arg ) ) ")"
+function-expression     = unquoted-string function-args
+function-args           = "(" [function-arg *("," function-arg)] ")"
 function-arg            = expression / expression-type
 current-node            = "@"
 expression-type         = "&" expression
 literal                 = "`" 1*(unescaped-literal / escaped-literal) "`"
-unescaped-literal       = %x20-10FFFF
-                          ; basically any character after and including space
-escaped-literal         = escaped-char / (escape %x60)
+unescaped-literal       = %x20-59 / %x61-10FFFF
+                          ; Any character after and including space, but not `
+escaped-literal         = escaped-char / (escape "`")
 number                  = ["-"] 1*DIGIT
 identifier              = unquoted-string / quoted-string
 unquoted-string         = (ALPHA / "_") *(DIGIT / ALPHA / "_")
