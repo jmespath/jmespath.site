@@ -22,7 +22,7 @@ object-subexpr    = (subexpr / index / flatten / wildcard-index /
                           wildcard-values)
 array-subexpr     = (subexpr / index / flatten / wildcard-index / filter /
                      identifier / current-node / literal / root-multi-list /
-                     function / group / slice / wildcard-values)
+                     function / group / slice / wildcard-values / literal)
                      (index / slice / wildcard-index / flatten / filter)
 
 index             = "[" number "]"
@@ -51,7 +51,7 @@ current-node      = "@"
 
 number            = *"-" 1*DIGIT
 literal           = "`" 1*(unescaped-literal / escaped-literal) "`"
-unescaped-literal = %x20-59 / %x61-10FFFF
+unescaped-literal = %x20-5f / %x61-10FFFF
                      ; Any character after and including space, but not `
 escaped-literal   = escaped-char / (escape "`")
 identifier        = unquoted-string / quoted-string
