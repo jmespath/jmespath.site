@@ -42,6 +42,10 @@ h2 .h2 {
   background-image: linear-gradient(to bottom, #14284D 0%, #050538 100%);
 }
 
+#main-logo {
+  width: 390px;
+}
+
 .jumbotron p {
   color: #B4B4B4;
   padding-left: 10px;
@@ -776,7 +780,7 @@ span.eqno {
 /* Small screen styles
 -------------------------------------------------- */
 
-@media screen and (max-device-width: 480px) {
+@media screen and (max-width: 480px) {
 
   body {
     margin: 0;
@@ -808,6 +812,10 @@ span.eqno {
 
   #github-stars {
     display: none;
+  }
+
+  #main-logo {
+    width: 100%;
   }
 }
 
