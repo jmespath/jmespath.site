@@ -44,9 +44,10 @@ The grammar is specified using ABNF, as described in `RFC4234`_
     multi-select-list = "[" ( expression *( "," expression ) ) "]"
     multi-select-hash = "{" ( keyval-expr *( "," keyval-expr ) ) "}"
     keyval-expr       = identifier ":" expression
-    bracket-specifier = "[" (number / "*") "]" / "[]"
+    bracket-specifier = "[" (number / "*" / slice-expression) "]" / "[]"
     bracket-specifier =/ "[?" list-filter-expr "]"
     list-filter-expr  = expression comparator expression
+    slice-expression  = [number] ":" [number] [ ":" [number] ]
     comparator        = "<" / "<=" / "==" / ">=" / ">" / "!="
     function-expression = unquoted-string  (
                             no-args  /
@@ -263,6 +264,67 @@ input to the ``bracket-specifier``.
 
 Using a "*" character within a ``bracket-specifier`` is discussed below in the
 ``wildcard expressions`` section.
+
+
+.. _slices:
+
+Slices
+------
+
+::
+
+  slice-expression  = [number] ":" [number] [ ":" [number] ]
+
+A slice expression allows you to select a contiguous subset of an array.  A
+slice has a ``start``, ``stop``, and ``step`` value.  The general form of a
+slice is ``[start:stop:step]``, but each component is optional and can
+be omitted.
+
+.. note::
+
+  Slices in JMESPath have the same semantics as python slices.
+
+Given a ``start``, ``stop``, and ``step`` value, the sub elements in an array
+are extracted as follows:
+
+* The first element in the extracted array is the index denoted by ``start``.
+* The last element in the extracted array is the index denoted by ``end - 1``.
+* The ``step`` value determines how many indices to skip after each element
+  is selected from the array.  An array of 1 (the default step) will not skip
+  any indices.  A step value of 2 will skip every other index while extracting
+  elements from an array.  A step value of -1 will extract values in reverse
+  order from the array.
+
+
+Slice expressions adhere to the following rules:
+
+* If a negative start position is given, it is calculated as the total length
+  of the array plus the given start position.
+* If no start position is given, it is assumed to be 0 if the given step is
+  greater than 0 or the end of the array if the given step is less than 0.
+* If a negative stop position is given, it is calculated as the total length
+  of the array plus the given stop position.
+* If no stop position is given, it is assumed to be the length of the array if
+  the given step is greater than 0 or 0 if the given step is less than 0.
+* If the given step is omitted, it it assumed to be 1.
+* If the given step is 0, an error MUST be raised.
+* If the element being sliced is not an array, the result is ``null``.
+* If the element being sliced is an array and yields no results, the result
+  MUST be an empty array.
+
+
+Examples
+--------
+
+::
+
+  search([0:4:1], [0, 1, 2, 3]) -> [0, 1, 2, 3]
+  search([0:4], [0, 1, 2, 3]) -> [0, 1, 2, 3]
+  search([0:3], [0, 1, 2, 3]) -> [0, 1, 2]
+  search([:2], [0, 1, 2, 3]) -> [0, 1]
+  search([::2], [0, 1, 2, 3]) -> [0, 2]
+  search([::-1], [0, 1, 2, 3]) -> [3, 2, 1, 0]
+  search([-2:], [0, 1, 2, 3]) -> [2, 3]
 
 .. _flatten:
 
@@ -938,6 +1000,35 @@ Returns the next highest integer value by rounding up if necessary.
   * - ``ceil(`abc`)``
     - ``null``
 
+
+ends_with
+---------
+
+::
+
+    boolean ends_with(string $subject, string $prefix)
+
+Returns ``true`` if the ``$subject`` ends with the ``$prefix``, otherwise this
+function returns ``false``.
+
+
+.. list-table:: Examples
+  :header-rows: 1
+
+  * - Given
+    - Expression
+    - Result
+  * - ``foobarbaz``
+    - ``ends_with(@, ``baz``)``
+    - ``true``
+  * - ``foobarbaz``
+    - ``ends_with(@, ``foo``)``
+    - ``false``
+  * - ``foobarbaz``
+    - ``ends_with(@, ``z``)``
+    - ``true``
+
+
 floor
 -----
 
@@ -1075,7 +1166,7 @@ max
 
 ::
 
-    number max(array[number] $collection)
+    number max(array[number]|array[string] $collection)
 
 Returns the highest found number in the provided array argument.
 
@@ -1092,6 +1183,12 @@ An empty array will produce a return value of null.
   * - ``[10, 15]``
     - ``max(@)``
     - 15
+  * - ``["a", "b"]``
+    - ``max(@)``
+    - "b"
+  * - ``["a", 2, "b"]``
+    - ``max(@)``
+    - ``<error: invalid-type>``
   * - ``[10, false, 20]``
     - ``max(@)``
     - ``<error: invalid-type>``
@@ -1102,7 +1199,7 @@ max_by
 
 ::
 
-    max_by(array elements, expression->number expr)
+    max_by(array elements, expression->number|expression->string expr)
 
 Return the maximum element in an array using the expression ``expr`` as the
 comparison key.  The entire maximum element is returned.
@@ -1134,7 +1231,7 @@ min
 
 ::
 
-    number min(array[number] $collection)
+    number min(array[number]|array[string] $collection)
 
 Returns the lowest found number in the provided ``$collection`` argument.
 
@@ -1150,6 +1247,12 @@ Returns the lowest found number in the provided ``$collection`` argument.
   * - ``[10, 15]``
     - ``min(@)``
     - 10
+  * - ``["a", "b"]``
+    - ``min(@)``
+    - "a"
+  * - ``["a", 2, "b"]``
+    - ``min(@)``
+    - ``<error: invalid-type>``
   * - ``[10, false, 20]``
     - ``min(@)``
     - ``<error: invalid-type>``
@@ -1160,7 +1263,7 @@ min_by
 
 ::
 
-    min_by(array elements, expression->number expr)
+    min_by(array elements, expression->number|expression->string expr)
 
 Return the minimum element in an array using the expression ``expr`` as the
 comparison key.  The entire maximum element is returned.
@@ -1218,6 +1321,36 @@ then a value of ``null`` is returned.
   * - ``{"a": null, "b": null, "c": [], "d": "foo"}``
     - ``not_null(a, b)``
     - ``null``
+
+
+reverse
+-------
+
+::
+
+    array reverse(string|array $argument)
+
+Reverses the order of the ``$argument``.
+
+
+.. list-table:: Examples
+  :header-rows: 1
+
+  * - Given
+    - Expression
+    - Result
+  * - ``[0, 1, 2, 3, 4]``
+    - ``reverse(@)``
+    - ``[4, 3, 2, 1, 0]``
+  * - ``[]
+    - ``reverse(@)``
+    - ``[]``
+  * - ``["a", "b", "c", 1, 2, 3]``
+    - ``reverse(@)``
+    - ``[3, 2, 1, "c", "b", "a"]``
+  * - ``"abcd``
+    - ``reverse(@)``
+    - ``dcba``
 
 
 sort
@@ -1289,6 +1422,64 @@ function.
     - ``{"age": 10, "age_str": "10", "bool": true, "name": 3}``
   * - ``sort_by(people, &to_number(age_str))[0]``
     - ``{"age": 10, "age_str": "10", "bool": true, "name": 3}``
+
+
+starts_with
+-----------
+
+::
+
+    boolean starts_with(string $subject, string $prefix)
+
+Returns ``true`` if the ``$subject`` starts with the ``$prefix``, otherwise
+this function returns ``false``.
+
+.. list-table:: Examples
+  :header-rows: 1
+
+  * - Given
+    - Expression
+    - Result
+  * - ``foobarbaz``
+    - ``starts_with(@, ``foo``)``
+    - ``true``
+  * - ``foobarbaz``
+    - ``starts_with(@, ``baz``)``
+    - ``false``
+  * - ``foobarbaz``
+    - ``starts_with(@, ``f``)``
+    - ``true``
+
+
+sum
+---
+
+::
+
+    number sum(array[number] $collection)
+
+Returns the sum of the provided array argument.
+
+An empty array will produce a return value of 0.
+
+.. list-table:: Examples
+  :header-rows: 1
+
+  * - Given
+    - Expression
+    - Result
+  * - ``[10, 15]``
+    - ``sum(@)``
+    - 25
+  * - ``[10, false, 20]``
+    - ``max(@)``
+    - ``<error: invalid-type>``
+  * - ``[10, false, 20]``
+    - ``sum([].to_number(@))``
+    - 30
+  * - ``[]``
+    - ``sum(@)``
+    - 0
 
 
 to_string
@@ -1432,7 +1623,7 @@ It is similar to a ``sub-expression`` with two important distinctions:
 1. Any expression can be used on the right hand side.  A ``sub-expression``
    restricts the type of expression that can be used on the right hand side.
 2. A ``pipe-expression`` **stops projections on the left hand side for
-   propogating to the right hand side**.  If the left expression creates a
+   propagating to the right hand side**.  If the left expression creates a
    projection, it does **not** apply to the right hand side.
 
 For example, given the following data::
