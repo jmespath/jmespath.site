@@ -69,6 +69,77 @@ access JSON elements.
       }
     }}
 
+Slicing
+=======
+
+Slices allow you to select a contiguous subset of an array.  If
+you've ever used slicing in python, then you already know how to use JMESPath
+slices.  In its simplest form, you can specify the starting index and the
+ending index.  The ending index is the first index which you do *not* want
+included in the slice.  Let's take a look at some examples.  First, given an
+array of integers from 0 to 9, let's select the first half of the array:
+
+.. jpexample:: [0:5]
+    :layout: 2cols
+    :rows: 5
+
+    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+This slice result contains the elements 0, 1, 2, 3, and 4.  The element at
+index 5 is not included.  If we want to select the second half of the array,
+we can use this expression:
+
+.. jpexample:: [5:10]
+    :layout: 2cols
+    :rows: 5
+
+    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+The two example above can be shortened.  If the ``start`` or ``step`` value is
+omitted it is assumed to be the start or the end of the array.  For example:
+
+.. jpexample:: [:5]
+    :layout: 2cols
+    :rows: 5
+
+    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+Try modifying changing the example above to only include the last half of the
+array elements without specifying the end value of ``10``.
+
+The general form of a slice is ``[start:stop:step]``.  So far we've looked
+at the ``[start:stop]`` form.  By default, the ``step`` value is ``1``, which
+means to to include every element in the range specified by the ``start`` and
+``stop`` value.  However, we can use the step value to skip over elements.
+For example, to select only the even elements from the array.
+
+.. jpexample:: [::2]
+    :layout: 2cols
+    :rows: 5
+
+    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+Also note in this example we're omitting the ``start`` as well as the ``stop``
+value, which means to use ``0`` for the ``start`` value, and ``10`` for the
+``stop`` value.  In this example, the expression ``[::2]`` is equivalent to
+``[0:10:2]``.
+
+The last thing to know about slices is that just like indexing a single value,
+all the values can be negative.  If the ``step`` value is negative, then the
+slice is created in reverse order.  For example:
+
+.. jpexample:: [::-1]
+    :layout: 2cols
+    :rows: 5
+
+    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+The above expression creates a slice but in reverse order.
+
+If you want all the details about how slices work, check out the
+:ref:`section in the JMESPath specification <slices>`.
+
+
 Projections
 ===========
 
