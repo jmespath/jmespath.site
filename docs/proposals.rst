@@ -8,6 +8,7 @@ changes. Proposals are marked as either "draft", "accepted", or "rejected".
 .. toctree::
    :maxdepth: 1
 
+   proposals/array-slices
    proposals/nested-expressions
    proposals/improved-identifiers
    proposals/filter-expressions
