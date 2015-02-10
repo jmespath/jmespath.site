@@ -18,11 +18,11 @@ level is based on which compliance tests the library can pass.
     - Compliance Level
   * - Python
     - jmespath
-    - https://github.com/boto/jmespath
+    - https://github.com/jmespath/jmespath.py
     - Fully compliant
   * - PHP
     - jmespath.php
-    - https://github.com/mtdowling/jmespath.php
+    - https://github.com/jmespath/jmespath.php
     - Fully compliant
   * - Javascript
     - jmespath.js
