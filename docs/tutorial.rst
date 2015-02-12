@@ -109,7 +109,7 @@ array elements without specifying the end value of ``10``.
 
 The general form of a slice is ``[start:stop:step]``.  So far we've looked
 at the ``[start:stop]`` form.  By default, the ``step`` value is ``1``, which
-means to to include every element in the range specified by the ``start`` and
+means to include every element in the range specified by the ``start`` and
 ``stop`` value.  However, we can use the step value to skip over elements.
 For example, to select only the even elements from the array.
 
