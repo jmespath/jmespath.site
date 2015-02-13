@@ -1,7 +1,13 @@
 JMESPath Site
 =============
 
+.. image:: https://badges.gitter.im/Join Chat.svg
+   :target: https://gitter.im/jmespath/chat
+
+
 This is the repo for the website: http://jmespath.org
+
+Join us on our `Gitter channel <https://gitter.im/jmespath/chat>`__.
 
 
 Overview
