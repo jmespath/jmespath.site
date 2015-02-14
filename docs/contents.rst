@@ -20,6 +20,7 @@ Contents
    :maxdepth: 2
 
    tutorial
+   examples
    specification
    libraries
    compliance

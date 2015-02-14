@@ -23,9 +23,9 @@ class JPExample(Directive):
 
 
     def run(self):
-        self._populate_defaults()
         expression = self.arguments[0]
         json_data = '\n'.join(self.content)
+        self._populate_defaults()
         try:
             # Validate we have valid JSON.
             json.loads(json_data)
@@ -36,6 +36,8 @@ class JPExample(Directive):
         env = document.settings.env
         if self.options['layout'] == '2cols':
             _, filename = env.relfn2path('_static/html/jmespath_2col_demo.html')
+        elif self.options['layout'] == '2cols-long':
+            _, filename = env.relfn2path('_static/html/jmespath_2col_long_demo.html')
         elif self.options['layout'] == '1col':
             _, filename = env.relfn2path('_static/html/jmespath_1col_demo.html')
         else:
@@ -50,7 +52,9 @@ class JPExample(Directive):
 
     def _populate_defaults(self):
         if 'rows' not in self.options:
-            self.options['rows'] = self.default_rows
+            # Default to the number of '\n' chars in the
+            # supplied JSON doc.
+            self.options['rows'] = len(self.content)
         if 'layout' not in self.options:
             self.options['layout'] = self.default_layout
 
