@@ -75,3 +75,32 @@ instead we want to create the same structure, but only include the ``age`` and
         }
       ]
     }
+
+
+The last half of the above expression contains key value pairs which have the
+general form ``keyname: <expression>``.  In the above expression we're just
+using a field as an expression, but they can be more advanced expressions.  For
+example:
+
+.. jpexample:: people[*].{name: name, tags: tags[0]}
+    :layout: 2cols-long
+
+    {
+      "people": [
+        {
+          "age": 20,
+          "tags": ["a", "b", "c"],
+          "name": "Bob"
+        },
+        {
+          "age": 25,
+          "tags": ["d", "e", "f"],
+          "name": "Fred"
+        },
+        {
+          "age": 30,
+          "tags": ["g", "h", "i"],
+          "name": "George"
+        }
+      ]
+    }
