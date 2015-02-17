@@ -2,10 +2,15 @@
 JMESPath Tutorial
 =================
 
-This is a guide through the JMESPath language.  JMESPath is a query language
+This is a tutorial of the JMESPath language.  JMESPath is a query language
 for JSON.  You can extract and transform elements from a JSON document.
 The examples below are interactive.  You can change the JMESPath expressions
 and see the results update automatically.
+
+For each of these examples, the JMESPath expression is applied to the input
+JSON on the left, and the result of evaluting the JMESPath expression is
+shown in the JSON document on the right hand side.
+
 
 Basic Expressions
 =================
@@ -586,7 +591,13 @@ are a few things to keep in mind when working with functions:
 Next Steps
 ==========
 
-We've now seen an overview of the JMESPath language.  You can also check out:
+We've now seen an overview of the JMESPath language.  The next things to do are:
 
-* The :ref:`JMESPath Spec <spec>`, which has the official ABNF grammar and full
+* See the :doc:`examples`.  You'll see common JMESPath expressions that go
+  beyond the tutorial. You'll also see you how to combine multiple features
+  together in order to best leverage JMESPath expressions.
+* To actually start using JMESPath, pick the language of your choice, and
+  check out the :doc:`libraries` page for more information on using JMESPath
+  in the language of your choice.
+* Read the :ref:`JMESPath Spec <spec>`, which has the official ABNF grammar and full
   details of the semantics of the language.

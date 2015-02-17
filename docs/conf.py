@@ -67,7 +67,8 @@ html_static_path = ['_static']
 htmlhelp_basename = 'JMESPathdoc'
 
 html_sidebars = {
-    'index':    ['mainlinks.html', 'searchbox.html'],
-    '**': ['localtoc.html', 'mainlinks.html', 'searchbox.html']
+    'index': ['mainlinks.html', 'searchbox.html'],
+    'examples': ['searchbox.html'],
+    '**': ['localtoc.html', 'searchbox.html']
 }
 html_additional_pages = {'index': 'index.html'}
