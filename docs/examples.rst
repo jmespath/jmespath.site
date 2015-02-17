@@ -232,6 +232,30 @@ sort_by
       ]
     }
 
-The first interesting thing here if the use of the function ``sort_by``.  This
-function takes two arguments.  The first argument is an array, and the second
-argument describes the key that should be used to sort the array.
+The first interesting thing here if the use of the function ``sort_by``.  In
+this example we are sorting the ``Contents`` array by the value of each
+``LastModified`` key in each element in the ``Contents`` array.  The
+``sort_by`` function takes two arguments.  The first argument is an array, and
+the second argument describes the key that should be used to sort the array.
+
+The second interesting thing in this expression is that the second argument
+starts ``&``, which creates an expression type.  Think of this conceptually as
+a reference to an expression that can be evaluated later.  If you are familiar
+with lambda and anonymous functions, expression types are similiar.  The reason
+we use ``&LastModified`` instead of ``LastModified`` is because if the
+expression is ``LastModified``, it would be evaluated before calling the
+function, and given there's no ``LastModified`` key in the outer hash, the
+second second would evaluate to ``null``.  Check out :ref:`function-evaluation`
+in the specification for more information on how functions are evaluated in
+JMESPath.
+
+And finally, the last interesting thing in this expression is the ``[*]``
+immediately after the ``sort_by`` function call.  The reason for this is that
+we want to apply the multiselect hash, the second half of the expression, to
+each element in the sorted array.  In order to do this we need a projection.
+The ``[*]`` does exactly that, it takes the input array and creates a
+projection such that the multiselect hash ``{Key: Key, Size: Size}`` will be
+applied to each element in the list.
+
+There are other functions that take expression types that are similar to
+``sort_by`` including :ref:`func-min-by` and :ref:`func-max-by`.
