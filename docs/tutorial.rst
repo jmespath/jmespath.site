@@ -2,10 +2,15 @@
 JMESPath Tutorial
 =================
 
-This is a guide through the JMESPath language.  JMESPath is a query language
+This is a tutorial of the JMESPath language.  JMESPath is a query language
 for JSON.  You can extract and transform elements from a JSON document.
 The examples below are interactive.  You can change the JMESPath expressions
 and see the results update automatically.
+
+For each of these examples, the JMESPath expression is applied to the input
+JSON on the left, and the result of evaluting the JMESPath expression is
+shown in the JSON document on the right hand side.
+
 
 Basic Expressions
 =================
