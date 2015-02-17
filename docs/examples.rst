@@ -4,7 +4,8 @@ JMESPath Examples
 
 
 This page contains numerous examples of JMESPath examples
-in action.
+in action.  If you're new to JMESPath, you can start with the
+:doc:`tutorial`, which goes over the basics of JMESPath.
 
 .. note::
 
@@ -194,7 +195,7 @@ functions used in JMESPath.
 sort_by
 -------
 
-.. jpexample:: sort_by(Contents, &LastModified)[*].{Key: Key, Size: Size}
+.. jpexample:: sort_by(Contents, &Date)[*].{Key: Key, Size: Size}
     :layout: 2cols-long
 
     {
@@ -259,3 +260,48 @@ applied to each element in the list.
 
 There are other functions that take expression types that are similar to
 ``sort_by`` including :ref:`func-min-by` and :ref:`func-max-by`.
+
+Pipes
+=====
+
+Pipe expression are useful for stopping projections.  They can also be used to
+group expressions.
+
+Main Page
+---------
+
+Let's look at the expression on the `JMESPath front page
+<http://jmespath.org>`__.
+
+
+.. jpexample:: locations[?state == `WA`].name | sort(@)[-2:] | {WashingtonCities: join(`, `, @)}
+    :layout: 2cols-long
+
+    {
+      "locations": [
+        {"name": "Seattle", "state": "WA"},
+        {"name": "New York", "state": "NY"},
+        {"name": "Bellevue", "state": "WA"},
+        {"name": "Olympia", "state": "WA"}
+      ]
+    }
+
+We can think of this JMESPath expression as having three components, each
+separated by the pipe character ``|``.  The first expression is familiar to us,
+it's similar to the first example on this page.  The second part of the
+expression, ``sort(@)``, is similar to the ``sort_by`` function we saw in the
+previous section.  The ``@`` token is used to refer to the current element.
+The :ref:`func-sort` function takes a single parameter which is an array.  If
+the input JSON document was a hash, and we wanted to sort the ``foo`` key,
+which was an array, we could just use ``sort(foo)``.  In this scenario, the
+input JSON document is the array we want to sort.  To refer to this value, we
+use the current element, ``@``, to indicate this.  We're also only taking a
+subset of the sorted array.  We're using a slice (``[-2:]``) to indicate that
+we only want the last two elements in the sorted array to be passed through to
+the final third of this expression.
+
+And finally, the third part of the expression,
+``{WashingtonCities: join(`, `, @)}``, creates a multiselect hash.  It takes as
+input, the list of sorted city names, and produces a hash witih a single key,
+``WashingtonCities``, whose values are the input list (denoted by ``@``) as a
+string separated by a comma.
