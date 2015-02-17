@@ -182,4 +182,56 @@ with the ``tags`` key.  The ``tags[?Key==`Name`]`` tells us to only include
 list elements that contain a ``Key`` whose value is ``Name``.  From those
 filtered list elements we're going to take the ``Values`` key and flatten
 the list.  Finally, the ``| [0]`` will take the entire list and extract the
-first element in the list.
+
+
+Using Functions
+===============
+
+:ref:`JMESPath functions <functions>` give you a lot of power and flexibility
+when working with JMESPath expressions.  Below are some common expressions and
+functions used in JMESPath.
+
+sort_by
+-------
+
+.. jpexample:: sort_by(Contents, &LastModified)[*].{Key: Key, Size: Size}
+    :layout: 2cols-long
+
+    {
+      "Contents": [
+        {
+          "Date": "2014-12-21T05:18:08.000Z",
+          "Key": "logs/bb",
+          "Size": 303
+        },
+        {
+          "Date": "2014-12-20T05:19:10.000Z",
+          "Key": "logs/aa",
+          "Size": 308
+        },
+        {
+          "Date": "2014-12-20T05:19:12.000Z",
+          "Key": "logs/qux",
+          "Size": 297
+        },
+        {
+          "Date": "2014-11-20T05:22:23.000Z",
+          "Key": "logs/baz",
+          "Size": 329
+        },
+        {
+          "Date": "2014-12-20T05:25:24.000Z",
+          "Key": "logs/bar",
+          "Size": 604
+        },
+        {
+          "Date": "2014-12-20T05:27:12.000Z",
+          "Key": "logs/foo",
+          "Size": 647
+        }
+      ]
+    }
+
+The first interesting thing here if the use of the function ``sort_by``.  This
+function takes two arguments.  The first argument is an array, and the second
+argument describes the key that should be used to sort the array.
