@@ -270,7 +270,7 @@ group expressions.
 Main Page
 ---------
 
-Let's look at the expression on the `JMESPath front page
+Let's look at a modified version of the expression on the `JMESPath front page
 <http://jmespath.org>`__.
 
 
