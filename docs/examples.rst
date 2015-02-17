@@ -240,7 +240,7 @@ this example we are sorting the ``Contents`` array by the value of each
 the second argument describes the key that should be used to sort the array.
 
 The second interesting thing in this expression is that the second argument
-starts ``&``, which creates an expression type.  Think of this conceptually as
+starts with ``&``, which creates an expression type.  Think of this conceptually as
 a reference to an expression that can be evaluated later.  If you are familiar
 with lambda and anonymous functions, expression types are similiar.  The reason
 we use ``&LastModified`` instead of ``LastModified`` is because if the
@@ -248,7 +248,8 @@ expression is ``LastModified``, it would be evaluated before calling the
 function, and given there's no ``LastModified`` key in the outer hash, the
 second second would evaluate to ``null``.  Check out :ref:`function-evaluation`
 in the specification for more information on how functions are evaluated in
-JMESPath.
+JMESPath.  Also, note that we're taking advantage of the fact that the dates
+are in ISO 8601 format, which can be sorted lexicographically.
 
 And finally, the last interesting thing in this expression is the ``[*]``
 immediately after the ``sort_by`` function call.  The reason for this is that
