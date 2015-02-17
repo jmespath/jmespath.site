@@ -591,7 +591,7 @@ are a few things to keep in mind when working with functions:
 Next Steps
 ==========
 
-We've now seen an overview of the JMESPath language.  The nex things to do:
+We've now seen an overview of the JMESPath language.  The next things to do are:
 
 * See the :doc:`examples`.  You'll see common JMESPath expressions that go
   beyond the tutorial. You'll also see you how to combine multiple features
@@ -599,5 +599,5 @@ We've now seen an overview of the JMESPath language.  The nex things to do:
 * To actually start using JMESPath, pick the language of your choice, and
   check out the :doc:`libraries` page for more information on using JMESPath
   in the language of your choice.
-* The :ref:`JMESPath Spec <spec>`, which has the official ABNF grammar and full
+* Read the :ref:`JMESPath Spec <spec>`, which has the official ABNF grammar and full
   details of the semantics of the language.
