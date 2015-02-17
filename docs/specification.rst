@@ -727,6 +727,9 @@ value the the current node represents MUST change to reflect the node currently
 being evaluated. When in a projection, the current node value must be changed
 to the node currently being evaluated by the projection.
 
+
+.. _function-evaluation:
+
 Function Evaluation
 -------------------
 
@@ -807,6 +810,8 @@ for brevity, but the same rules apply.
     All string related functions are defined on the basis of Unicode code
     points; they do not take normalization into account.
 
+
+.. _func-abs:
 
 abs
 ---
@@ -893,6 +898,8 @@ As a final example, here is the steps for evaluating ``abs(to_number(bar))``:
     - ``<error: invalid-type>``
 
 
+.. _func-avg:
+
 avg
 ---
 
@@ -925,6 +932,8 @@ An empty array will produce a return value of null.
     - ``avg(@)``
     - ``<error: invalid-type>``
 
+
+.. _func-contains:
 
 contains
 --------
@@ -975,6 +984,9 @@ the string contains the provided ``$search`` argument.
     - ``contains(@, `b`)``
     - ``false``
 
+
+.. _func-ceil:
+
 ceil
 ----
 
@@ -1000,6 +1012,8 @@ Returns the next highest integer value by rounding up if necessary.
   * - ``ceil(`abc`)``
     - ``null``
 
+
+.. _func-ends-with:
 
 ends_with
 ---------
@@ -1029,6 +1043,8 @@ function returns ``false``.
     - ``true``
 
 
+.. _func-floor:
+
 floor
 -----
 
@@ -1052,6 +1068,8 @@ Returns the next lowest integer value by rounding down if necessary.
   * - ``floor(`1`)``
     - 1
 
+
+.. _func-join:
 
 join
 ----
@@ -1085,6 +1103,7 @@ together using the ``$glue`` argument as a separator between each.
     - ``join(`, `, @)``
     - ``<error: invalid-type>``
 
+.. _func-keys:
 
 keys
 ----
@@ -1116,6 +1135,8 @@ Returns an array containing the keys of the provided object.
     - ``keys(@)``
     - ``<error: invalid-type>``
 
+
+.. _func-length:
 
 length
 ------
@@ -1161,6 +1182,8 @@ Returns the length of the given argument using the following types rules:
     - 2
 
 
+.. _func-max:
+
 max
 ---
 
@@ -1194,6 +1217,8 @@ An empty array will produce a return value of null.
     - ``<error: invalid-type>``
 
 
+.. _func-max-by:
+
 max_by
 ------
 
@@ -1226,6 +1251,8 @@ given input.
     - <error: invalid-type>
 
 
+.. _func-min:
+
 min
 ---
 
@@ -1257,6 +1284,8 @@ Returns the lowest found number in the provided ``$collection`` argument.
     - ``min(@)``
     - ``<error: invalid-type>``
 
+
+.. _func-min-by:
 
 min_by
 ------
@@ -1323,6 +1352,8 @@ then a value of ``null`` is returned.
     - ``null``
 
 
+.. _func-reverse:
+
 reverse
 -------
 
@@ -1352,6 +1383,8 @@ Reverses the order of the ``$argument``.
     - ``reverse(@)``
     - ``dcba``
 
+
+.. _func-sort:
 
 sort
 ----
@@ -1396,6 +1429,8 @@ code points.  Locale is not taken into account.
     - ``null``
 
 
+.. _func-sort-by:
+
 sort_by
 -------
 
@@ -1424,6 +1459,8 @@ function.
     - ``{"age": 10, "age_str": "10", "bool": true, "name": 3}``
 
 
+.. _func-starts-with:
+
 starts_with
 -----------
 
@@ -1450,6 +1487,8 @@ this function returns ``false``.
     - ``starts_with(@, ``f``)``
     - ``true``
 
+
+.. _func-sum:
 
 sum
 ---
@@ -1482,6 +1521,8 @@ An empty array will produce a return value of 0.
     - 0
 
 
+.. _func-to-string:
+
 to_string
 ---------
 
@@ -1508,6 +1549,8 @@ to_string
     - ``"2"``
 
 
+.. _func-to-number:
+
 to_number
 ---------
 
@@ -1526,6 +1569,8 @@ to_number
 * boolean - null
 * null - null
 
+
+.. _func-type:
 
 type
 ----
@@ -1580,6 +1625,8 @@ The return value MUST be one of the following:
     - ``type(@)``
     - "object"
 
+
+.. _func-values:
 
 values
 ------
