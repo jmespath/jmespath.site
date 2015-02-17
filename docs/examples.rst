@@ -21,7 +21,9 @@ Filters and Multiselect Lists
 
 One of the most common usage scenarios for JMESPath is being able to take
 a complex JSON document and simplify it down.  The main main features at work
-here are filters and multiselects.  We'll take a look at some examples.
+here are filters and multiselects.  In this example below, we're taking the
+array of people and, for any element with an age key whose value is greater
+than 20, we're creating a sub list of the name and age values.
 
 
 .. jpexample:: people[?age > `20`].[name, age]
@@ -51,10 +53,10 @@ here are filters and multiselects.  We'll take a look at some examples.
 Filters and Multiselect Hashes
 ==============================
 
-In the previous example we were taking an array of hashes, and only simplifying
-down to an array of two element arrays containing a name and an age.  We're
-also only including list elements where the ``age`` key is greater than ``20``.
-If instead we want to create the same structure, but only include the ``age``
+In the previous example we were taking an array of hashes, and simplifying down
+to an array of two element arrays containing a name and an age.  We're also
+only including list elements where the ``age`` key is greater than ``20``.  If
+instead we want to create the same hash structure but only include the ``age``
 and ``name`` key, we can instead say:
 
 
@@ -109,6 +111,10 @@ example:
         }
       ]
     }
+
+
+Notice in the above example instead of applying a filter expression
+(``[? <expr> ]``), we're selecting all array elements via ``[*]``.
 
 
 Working with Nested Data
@@ -166,12 +172,12 @@ two instances from the first list and the two instances from the second list,
 and combine them into a single list.  Try changing the above expression to just
 ``reservations[].instances[]`` to see what this flattened list looks like.
 Everything to the right of the ``reservations[].instances[]`` is about taking
-the flattened list and paring down to contain only the data that we want.  This
+the flattened list and paring it down to contain only the data that we want.  This
 expression is taking each element in the original list and transforming it into
 a three element sublist.  The three elements are:
 
-* The first element in the ``Values`` list whose ``Key`` has a value of
-  ``Name``.
+* In the ``tags`` list, select the first element in the flattened ``Values``
+  list whose ``Key`` has a value of ``Name``.
 * The ``type``
 * The ``state.name`` of each instance.
 
@@ -183,6 +189,7 @@ with the ``tags`` key.  The ``tags[?Key==`Name`]`` tells us to only include
 list elements that contain a ``Key`` whose value is ``Name``.  From those
 filtered list elements we're going to take the ``Values`` key and flatten
 the list.  Finally, the ``| [0]`` will take the entire list and extract the
+0th element.
 
 
 Using Functions
