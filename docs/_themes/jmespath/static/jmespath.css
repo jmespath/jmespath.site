@@ -46,6 +46,15 @@ h2 .h2 {
   width: 390px;
 }
 
+#sidebar-logo {
+  width: 90%;
+  padding: 60px 10px 20px 10px;
+}
+
+#searchbox {
+  padding-top: 20px;
+}
+
 .jumbotron p {
   color: #B4B4B4;
   padding-left: 10px;
