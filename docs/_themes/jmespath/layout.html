@@ -23,24 +23,18 @@
   {%- else %}
         <div class="container">
 
-          {%- block top_rel_links %}
-            {{ render_relations('top-links', 1) }}
-          {%- endblock %}
-
           {%- block document_wrapper %}
-            <div class="row">
-              {%- block sidebar1 %}{{ jmespath_sidebar() }}{% endblock %}
-              {%- block document %}
-                <div class="col-md-9">
-                  {% block body %} {% endblock %}
-                </div>
-              {%- endblock %}
-              {%- block sidebar2 %}{# Place holder for other sidebar #}{% endblock %}
+            <div class="main-content">
+              <div class="row">
+                {%- block document %}
+                  <div class="col-md-9 col-md-push-3">
+                    {% block body %} {% endblock %}
+                  </div>
+                {%- endblock %}
+                {%- block sidebar1 %}{{ jmespath_sidebar() }}{% endblock %}
+                {%- block sidebar2 %}{# Place holder for other sidebar #}{% endblock %}
+              </div>
             </div>
-          {%- endblock %}
-
-          {%- block bottom_rel_links %}
-            {{ render_relations('footer-links') }}
           {%- endblock %}
 
         </div>
@@ -69,34 +63,10 @@ $(document).ready(function() {
 </script>
   {%- endif %}
 {%- endblock %}
-{# Displays the next and previous links both before and after content #}
-{% macro render_relations(class='footer-links', add_spacer=0) -%}
-  {% if prev or next %}
-    <div class="{{ class }}">
-      <ul class="breadcrumb pull-right">
-        {%- if prev and prev.title != '&lt;no title&gt;' %}
-        <li>
-          <a href="{{ prev.link|e }}" title="{{ _('previous chapter')}} (use the left arrow)">&larr; {{ prev.title }}</a>
-          {%- if next and next.title != '&lt;no title&gt;' %}
-          <span class="divider"></span>
-          {% endif %}
-        </li>
-        {%- endif %}
-        {%- if next and next.title != '&lt;no title&gt;' %}
-          <li><a href="{{ next.link|e }}" title="{{ _('next chapter')}} (use the right arrow)">{{ next.title }} &rarr;</a></li>
-        {%- endif %}
-      </ul>
-    </div>
-  {% else %}
-    {% if add_spacer %}
-      <div class="clearer"></div>
-    {% endif %}
-  {% endif %}
-{%- endmacro %}
 
 {%- macro jmespath_sidebar() %}
   {%- if render_sidebar %}
-  <div class="col-md-3 sphinxsidebar">
+  <div class="col-md-3 col-md-pull-9 sphinxsidebar">
     <div class="sphinxsidebarwrapper">
       {%- block sidebarlogo %}
       {%- if logo %}
