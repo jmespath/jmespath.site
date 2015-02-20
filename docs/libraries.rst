@@ -14,25 +14,19 @@ level is based on which compliance tests the library can pass.
 
   * - Language
     - Name
-    - Home Page
     - Compliance Level
   * - Python
-    - jmespath
-    - https://github.com/jmespath/jmespath.py
+    - `jmespath.py <https://github.com/jmespath/jmespath.py>`__
     - Fully compliant
   * - PHP
-    - jmespath.php
-    - https://github.com/jmespath/jmespath.php
+    - `jmespath.php <https://github.com/jmespath/jmespath.php>`__
     - Fully compliant
   * - Javascript
-    - jmespath.js
-    - https://github.com/jmespath/jmespath.js
+    - `jmespath.js <https://github.com/jmespath/jmespath.js>`__
     - Fully compliant
   * - Ruby
-    - jmespath.rb
-    - https://github.com/trevorrowe/jmespath.rb
+    - `jmespath.rb <https://github.com/trevorrowe/jmespath.rb>`__
     - Fully compliant
   * - Lua
-    - jmespath.lua
-    - https://github.com/jmespath/jmespath.lua
+    - `jmespath.lua <https://github.com/jmespath/jmespath.lua>`__
     - Fully compliant
