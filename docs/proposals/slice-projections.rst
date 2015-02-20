@@ -4,7 +4,7 @@ Slice Projections
 
 :JEP: 10
 :Author: James Saryerwinnie
-:Status: draft
+:Status: accepted
 :Created: 08-Feb-2015
 
 Abstract
