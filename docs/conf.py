@@ -14,7 +14,7 @@ master_doc = 'contents'
 
 # General information about the project.
 project = u'JMESPath'
-copyright = u'2014, James Saryerwinnie'
+copyright = u'2014-2015, James Saryerwinnie'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
