@@ -149,16 +149,17 @@ Projections
 ===========
 
 Projections are one of the key features of JMESPath.  It allows you
-to apply an expression to a collection of elements.  There are four kinds of
+to apply an expression to a collection of elements.  There are five kinds of
 projections:
 
 * List Projections
+* Slice Projections
 * Object Projections
 * Flatten Projections
 * Filter Projections
 
-List Projections
-----------------
+List and Slice Projections
+--------------------------
 
 A :ref:`wildcard expression <wildcards>`  creates a list projection, which is a
 projection over a JSON array.  This is best illustrated with an example.
@@ -211,6 +212,25 @@ added to the collected result array.  If you try the expression ``foo[*].bar``
 you'll see a result of ``null``, because the value associated with the ``foo``
 key is a JSON object, not an array, and a list projection is only defined for
 JSON arrays.
+
+Slice projections are almost identical to a list projection, with the exception
+that the left hand side is the result of evaluating the slice, which may not
+include all the elements in the original list:
+
+.. jpexample:: people[:2].first
+    :layout: 2cols
+    :rows: 10
+
+    {
+      "people": [
+        {"first": "James", "last": "d"},
+        {"first": "Jacob", "last": "e"},
+        {"first": "Jayden", "last": "f"},
+        {"missing": "different"}
+      ],
+      "foo": {"bar": "baz"}
+    }
+
 
 Object Projections
 ------------------
@@ -340,7 +360,7 @@ Filter Projections
 
 Up to this point we've looked at:
 
-* List projections
+* List/Slice projections
 * Object projections
 * Flatten projections
 
@@ -577,15 +597,15 @@ evaluated in ``myarray``.  The expression ``contains(@, `foo`)`` will return
 ``true`` if the current element in the ``myarray`` array contains the string
 ``foo``.
 
-While the :ref:`function expression <functions>` spec all the details, there
-are a few things to keep in mind when working with functions:
+While the :ref:`function expression <functions>` spec has all the details,
+there are a few things to keep in mind when working with functions:
 
 * Function arguments have types.  If an argument for a function has the wrong
   type, an ``invalid-type`` error will occur.  There are functions that can
-  do type conversions (``to_string``, ``to_number``).
+  do type conversions (``to_string``, ``to_number``) to help get arguments
+  converted to their proper type.
 * If a function is called with the wrong number of arguments, an
   ``invalid-arity`` will occur.
-
 
 
 Next Steps
