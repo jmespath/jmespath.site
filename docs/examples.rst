@@ -192,6 +192,183 @@ the list.  Finally, the ``| [0]`` will take the entire list and extract the
 0th element.
 
 
+Filtering and Selecting Nested Data
+----------------------------------------
+
+In this example, we're going to look at how you can filter nested hashes.
+
+
+.. jpexample:: people[?general.id==`100`].general | [0]
+    :layout: 2cols-long
+
+    {
+      "people": [
+        {
+          "general": {
+            "id": 100,
+            "age": 20,
+            "other": "foo",
+            "name": "Bob"
+          },
+          "history": {
+            "first_login": "2014-01-01",
+            "last_login": "2014-01-02"
+          }
+        },
+        {
+          "general": {
+            "id": 101,
+            "age": 30,
+            "other": "bar",
+            "name": "Bill"
+          },
+          "history": {
+            "first_login": "2014-05-01",
+            "last_login": "2014-05-02"
+          }
+        }
+      ]
+    }
+
+In this example we're searching through the ``people`` array.  Each element in
+this array contains a hash of two elements, and each value in the hash is
+itself a hash.  We're trying to retrieve the value of the ``general`` key
+that contains an ``id`` key with a value of ``100``.
+
+If we just had the expression ``people[?general.id==`100`]``, we'd have a
+result of::
+
+    [{
+      "general": {
+        "id": 100,
+        "age": 20,
+        "other": "foo",
+        "name": "Bob"
+      },
+      "history": {
+        "first_login": "2014-01-01",
+        "last_login": "2014-01-02"
+      }
+    }]
+
+Let's walk through how we arrived at this result.  In words, the
+``people[?general.id==`100`]`` expression is saying "for each element in the
+people array, select the elements where the ``general.id`` equals ``100``".
+If we trace the execution of this filtering process we have::
+
+    # First element:
+        {
+          "general": {
+            "id": 100,
+            "age": 20,
+            "other": "foo",
+            "name": "Bob"
+          },
+          "history": {
+            "first_login": "2014-01-01",
+            "last_login": "2014-01-02"
+          }
+        },
+    # Applying the expression ``general.id`` to this hash::
+        100
+    # Does 100==100?
+        true
+    # Add this first element (in its entirety) to the result list.
+
+    # Second element:
+        {
+          "general": {
+            "id": 101,
+            "age": 30,
+            "other": "bar",
+            "name": "Bill"
+          },
+          "history": {
+            "first_login": "2014-05-01",
+            "last_login": "2014-05-02"
+          }
+        }
+
+    # Applying the expression ``general.id`` to this element::
+        101
+    # Does 101==100?
+        false
+    # Do not add this element to the results list.
+    # Result of this expression is a list containing the first element.
+
+
+However, this still isn't the final value we want which is::
+
+      {
+        "id": 100,
+        "age": 20,
+        "other": "foo",
+        "name": "Bob"
+      }
+
+In order to get to this value from our filtered results we need to first
+select the ``general`` key.  This gives us a list of just the values of the
+``general`` hash::
+
+      [{
+        "id": 100,
+        "age": 20,
+        "other": "foo",
+        "name": "Bob"
+      }]
+
+From there, we then uses a pipe (``|``) to stop projections so that we can
+finally select the first element (``[0]``).  Note that we are making the
+assumption that there's only one hash that contains an ``id`` of ``100``.
+Given the way the data is structured, it's entirely possible to have data such
+as::
+
+    {
+      "people": [
+        {
+          "general": {
+            "id": 100,
+            "age": 20
+          },
+          "history": {
+          }
+        },
+        {
+          "general": {
+            "id": 101,
+            "age": 30
+          },
+          "history": {
+          }
+        },
+        {
+          "general": {
+            "id": 100,
+            "age": 30
+          },
+          "history": {
+          }
+        }
+      ]
+    }
+
+Note here that the first and last elements in the ``people`` array both have an
+``id`` of ``100``.  Our expression would then select the first element that
+matched.
+
+Finally, it's worth mentioning there is more than one way to write this
+expression.  In this example we've decided that after we filter the list we're
+going to select the value of the ``general`` key and then select the first
+element in that list.  We could also reverse the order of those operations, we
+could have taken the filtered list, selected the first element, and then
+extracted the value associated with the ``general`` key.  That expression
+would be::
+
+    people[?general.id==`100`] | [0].general
+
+Both versions are equally valid.
+
+
 Using Functions
 ===============
 
