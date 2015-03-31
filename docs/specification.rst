@@ -983,6 +983,12 @@ the string contains the provided ``$search`` argument.
   * - ``["a"]``
     - ``contains(@, `b`)``
     - ``false``
+  * - ``["foo", "bar"]``
+    - ``contains(@, `foo`)``
+    - ``true``
+  * - ``["foo", "bar"]``
+    - ``contains(@, `b`)``
+    - ``false``
 
 
 .. _func-ceil:
