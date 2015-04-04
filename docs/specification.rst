@@ -61,7 +61,7 @@ The grammar is specified using ABNF, as described in `RFC4234`_
     literal           = "`" json-value "`"
     literal           =/ "`" 1*(unescaped-literal / escaped-literal) "`"
     unescaped-literal = %x20-21 /       ; space !
-                            %x23-5A /   ; # - [
+                            %x23-5B /   ; # - [
                             %x5D-5F /   ; ] ^ _
                             %x61-7A     ; a-z
                             %x7C-10FFFF ; |}~ ...
@@ -69,7 +69,7 @@ The grammar is specified using ABNF, as described in `RFC4234`_
     number            = ["-"]1*digit
     digit             = %x30-39
     identifier        = unquoted-string / quoted-string
-    unquoted-string   = (%x41-5A / %x61-7A / %x5F) *(  ; a-zA-Z_
+    unquoted-string   = (%x41-5A / %x61-7A / %x5F) *(  ; A-Za-z_
                             %x30-39  /  ; 0-9
                             %x41-5A /  ; A-Z
                             %x5F    /  ; _
@@ -134,7 +134,7 @@ Identifiers
 ::
 
     identifier        = unquoted-string / quoted-string
-    unquoted-string   = (%x41-5A / %x61-7A / %x5F) *(  ; a-zA-Z_
+    unquoted-string   = (%x41-5A / %x61-7A / %x5F) *(  ; A-Za-z_
                             %x30-39  /  ; 0-9
                             %x41-5A /  ; A-Z
                             %x5F    /  ; _
