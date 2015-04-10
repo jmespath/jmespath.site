@@ -1257,6 +1257,38 @@ given input.
     - <error: invalid-type>
 
 
+.. _func-merge:
+
+merge
+-----
+
+::
+
+    object merge([object *argument, [, object $...]])
+
+Accepts 0 or more objects as arguments, and returns a single object
+with subsequent objects merged.  Each subsequent object's key/value
+pairs are added to the preceding object.  This function is used
+to combine multiple objects into one.  You can think of this as
+the first object being the base object, and each subsequent argument
+being overrides that are applied to the base object.
+
+
+.. cssclass:: table
+
+.. list-table:: Examples
+  :header-rows: 1
+
+  * - Expression
+    - Result
+  * - ``merge(`{"a": "b"}`, `{"c": "d"}`)``
+    - ``{"a": "b", "c": "d"}``
+  * - ``merge(`{"a": "b"}`, `{"a": "override"}`)``
+    - ``{"a": "override"}``
+  * - ``merge(`{"a": "x", "b": "y"}`, `{"b": "override", "c": "z"}`)``
+    - ``{"a": "x", "b": "override", "c": "z"}``
+
+
 .. _func-min:
 
 min
@@ -1332,7 +1364,7 @@ not_null
 
 ::
 
-    any not_null(any $argument [, any $...])
+    any not_null([any $argument [, any $...]])
 
 Returns the first argument that does not resolve to ``null``.  This function
 accepts one or more arguments, and will evaluate them in order until a
@@ -1525,6 +1557,45 @@ An empty array will produce a return value of 0.
   * - ``[]``
     - ``sum(@)``
     - 0
+
+
+.. _func-to-array:
+
+to_array
+---------
+
+::
+
+    array to_array(any $arg)
+
+* array - Returns the passed in value.
+* number/string/object/boolean - Returns a one element array containing
+  the passed in argument.
+
+
+.. cssclass:: table
+
+.. list-table:: Examples
+  :header-rows: 1
+
+  * - Given
+    - Expression
+    - Result
+  * - ``null``
+    - ``to_array(`[1, 2]`)``
+    - ``[1, 2]``
+  * - ``null``
+    - ``to_array(`"string"`)``
+    - ``["string"]``
+  * - ``null``
+    - ``to_array(`0`)``
+    - ``[0]``
+  * - ``null``
+    - ``to_array(`true`)``
+    - ``[true]``
+  * - ``null``
+    - ``to_array(`{"foo": "bar"}`)``
+    - ``[{"foo": "bar"}]``
 
 
 .. _func-to-string:
