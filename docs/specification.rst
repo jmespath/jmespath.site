@@ -1578,27 +1578,22 @@ to_array
 .. list-table:: Examples
   :header-rows: 1
 
-  * - Given
-    - Expression
+  * - Expression
     - Result
-  * - ``null``
-    - ``to_array(`[1, 2]`)``
+  * - ``to_array(`[1, 2]`)``
     - ``[1, 2]``
-  * - ``null``
-    - ``to_array(`"string"`)``
+  * - ``to_array(`"string"`)``
     - ``["string"]``
-  * - ``null``
-    - ``to_array(`0`)``
+  * - ``to_array(`0`)``
     - ``[0]``
-  * - ``null``
-    - ``to_array(`true`)``
+  * - ``to_array(`true`)``
     - ``[true]``
-  * - ``null``
-    - ``to_array(`{"foo": "bar"}`)``
+  * - ``to_array(`{"foo": "bar"}`)``
     - ``[{"foo": "bar"}]``
 
 
 .. _func-to-string:
+
 
 to_string
 ---------
@@ -1618,11 +1613,9 @@ to_string
 .. list-table:: Examples
   :header-rows: 1
 
-  * - Given
-    - Expression
+  * - Expression
     - Result
-  * - ``null``
-    - ``to_string(`2`)``
+  * - ``to_string(`2`)``
     - ``"2"``
 
 
