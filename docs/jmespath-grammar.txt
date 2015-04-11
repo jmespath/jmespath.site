@@ -31,11 +31,10 @@ begin-filter    = "[?" ws
 flatten         = ws "[]" ws
 
 ; Insignificant whitespace
-<ws> = <*(
-          %x20 / ; Space
-          %x09 / ; Horizontal tab
-          %x0A / ; Line feed or New line
-          %x0D)> ; Carriage return
+ws = *(%x20 / ; Space
+       %x09 / ; Horizontal tab
+       %x0A / ; Line feed or New line
+       %x0D) ; Carriage return
 
 ; "&&" binds more tightly than "||"
 ; "||" binds more tightly than "|".
