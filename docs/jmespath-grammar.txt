@@ -1,24 +1,24 @@
-expr      = ws (terminal / non-terminal) ws
+expr      = ws ( terminal / non-terminal ) ws
 root-expr = non-test / not / comparison
 non-test  = subexpr / index / flatten / wildcard-index / filter /
             identifier / current-node / literal / root-multi-list /
             multi-hash / function / group / slice
-group     = open-group expr close-group
+group     = begin-group expr end-group
 
 ; Insignificant whitespace is allowed around expr nodes and around the
 ; following structural tokens.
-open-group      = ws "(" ws
-close-group     = ws ")" ws
-open-bracket    = ws "[" ws
-close-bracket   = ws "]" ws
-open-brace      = ws "{" ws
-close-brace     = ws "}" ws
-dot-separator   = ws "." ws
+begin-array     = ws %x5B ws    ; [ left square bracket
+begin-object    = ws %x7B ws    ; { left curly bracket
+end-array       = ws %x5D ws    ; ] right square bracket
+end-object      = ws %x7D ws    ; } right curly bracket
+begin-group     = ws %x28 ws    ; ( left parenthesis
+end-group       = ws %x29 ws    ; ) right parenthesis
+name-separator  = ws %x3A ws    ; : colon
+value-separator = ws %x2C ws    ; , comma
+decimal-point   = ws %x2E ws    ; .
 pipe-separator  = ws "|" ws
 or-separator    = ws "||" ws
 and-separator   = ws "&&" ws
-name-separator  = ws ":" ws
-value-separator = ws "," ws
 lt              = ws "<" ws
 lte             = ws "<=" ws
 gt              = ws ">" ws
@@ -27,18 +27,27 @@ eq              = ws "==" ws
 ne              = ws "!=" ws
 expref-token    = "&" ws
 not-token       = "!" ws
+begin-filter    = "[?" ws
+flatten         = ws "[]" ws
+
+; Insignificant whitespace
+<ws> = <*(
+          %x20 / ; Space
+          %x09 / ; Horizontal tab
+          %x0A / ; Line feed or New line
+          %x0D)> ; Carriage return
 
 ; "&&" binds more tightly than "||"
 ; "||" binds more tightly than "|".
 terminal     = pipe / or / and
 non-terminal = root-expr / wildcard-values
-pipe         = expr pipe-separator (non-terminal / or / and)
-or           = (non-terminal / and) or-separator (non-terminal / or / and)
-and          = non-terminal and-separator (non-terminal / and)
+pipe         = expr pipe-separator ( non-terminal / or / and )
+or           = ( non-terminal / and ) or-separator ( non-terminal / or / and )
+and          = non-terminal and-separator ( non-terminal / and )
 
 ; subexpr handles most that descend into nodes.
 subexpr            = object-subexpr / array-subexpr
-object-subexpr     = object-subexpr-lhs dot-separator object-subexpr-rhs
+object-subexpr     = object-subexpr-lhs decimal-point object-subexpr-rhs
 object-subexpr-lhs = subexpr / index / flatten / wildcard-index /
                      filter / identifier / current-node / literal /
                      multi-hash / function / group / slice / wildcard-values
@@ -51,46 +60,51 @@ array-subexpr-lhs  = subexpr / index / flatten / wildcard-index / filter /
 array-subexpr-rhs  = index / slice / wildcard-index / flatten / filter
 
 ; Array related rules
-index           = open-bracket number close-bracket
-slice           = open-bracket *number name-separator
-                               *number *(name-separator *number)
-                               close-bracket
-wildcard-index   = open-bracket "*" close-bracket
-flatten          = open-bracket close-bracket
-filter           = open-bracket "?" filter-condition close-bracket
+index           = begin-array number end-array
+slice           = begin-array [number] name-separator
+                               [number] [name-separator [number] ]
+                               end-array
+wildcard-index   = begin-array "*" end-array
+filter           = begin-filter filter-condition end-array
 filter-condition = not / non-test / terminal / comparison
 
-not             = not-token (non-test / not)
-comparison      = non-terminal comparator (non-test / not / wildcard-values)
+not             = not-token ( non-test / not )
+comparison      = non-terminal comparator ( non-test / not / wildcard-values )
 comparator      = lt / lte / gt / gte / eq / ne
 
-root-multi-list = open-bracket
-                  (root-expr / multiple-values / terminal)
-                  close-bracket
-multi-list      = open-bracket (expr / multiple-values) close-bracket
+root-multi-list = begin-array
+                  ( root-expr / multiple-values / terminal )
+                  end-array
+multi-list      = begin-array ( expr / multiple-values ) end-array
 multiple-values = expr 1*( value-separator expr )
 
-multi-hash      = open-brace (keyval *(value-separator keyval)) close-brace
+multi-hash      = begin-object ( keyval *( value-separator keyval ) ) end-object
 keyval          = identifier name-separator expr
 
 function        = unquoted-string arg-list
-arg-list        = open-group *1(arg *(value-separator arg)) close-group
+arg-list        = begin-group [ arg *( value-separator arg ) ] end-group
 arg             = expr / expref
 
 expref          = expref-token expr
 wildcard-values = "*"
 current-node    = "@"
 
-number            = *"-" 1*DIGIT
-literal           = "`" 1*(unescaped-literal / escaped-literal) "`"
-unescaped-literal = %x20-5f / %x61-10FFFF
-                     ; Any character after and including space, but not `
-escaped-literal   = escaped-char / (escape "`")
+number            = ["-"] int
+literal           = "`" literal-value "`"
+; literal-value is ambiguous; however, json-value has a higher precedence than
+; non-json-value.
+literal-value     = non-json-value / json-value
+literal-char      = unescaped-literal / escaped-literal
+non-json-value    = 1*( literal-char )
+unescaped-literal = %x20-5f / %x61-10FFFF ; Any character except "`"
+escaped-literal   = escaped-char / ( escape "`" )
+
+; Strings, identifiers, and characters.
 identifier        = unquoted-string / quoted-string
-unquoted-string   = (ALPHA / "_") *(DIGIT / ALPHA / "_")
-quoted-string     = DQUOTE 1*(unescaped-char / escaped-char) DQUOTE
+unquoted-string   = ( ALPHA / "_" ) *( DIGIT / ALPHA / "_" )
+quoted-string     = DQUOTE *char DQUOTE
+char              = unescaped-char / escaped-char
 unescaped-char    = %x20-21 / %x23-5B / %x5D-10FFFF
-                     ; Any character other than "\"
 escape            = %x5C             ; "\"
 escaped-char      = escape (
                      %x22 /          ; "    quotation mark  U+0022
@@ -103,5 +117,18 @@ escaped-char      = escape (
                      %x74 /          ; t    tab             U+0009
                      %x75 4HEXDIG )  ; uXXXX                U+XXXX
 
-; Whitespace is Space, HTAB, LF, or CR
-ws = *(%x20 / %x09 / %x0A / %x0D)
+; JSON related grammar (for literal and string values)
+json-value  = false / null / true / object / array
+json-value  =/ json-number / json-string
+json-string = DQUOTE *literal-char DQUOTE
+false       = %x66.61.6c.73.65   ; false
+null        = %x6e.75.6c.6c      ; null
+true        = %x74.72.75.65      ; true
+object      = begin-object [ member *( value-separator member ) ] end-object
+member      = json-string name-separator json-value
+array       = begin-array [ json-value *( value-separator json-value ) ] end-array
+json-number = ["-"] int [frac] [exp]
+digit1-9    = %x31-39 ; 1-9
+int         = "0" / ( digit1-9 *DIGIT )
+exp         = "e" [ "-" / "+" ] 1*DIGIT
+frac        = decimal-point 1*DIGIT
