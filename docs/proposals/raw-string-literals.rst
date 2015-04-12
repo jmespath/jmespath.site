@@ -83,6 +83,52 @@ problems:
 3. Introduces an ambiguous rule to the JMESPath grammar that requires a prose
    based specification to resolve the ambiguity in parser implementations.
 
+   The relevant literal grammar rules are currently defined as follows::
+
+      literal = "`" json-value "`"
+      literal =/ "`" 1*(unescaped-literal / escaped-literal) "`"
+      unescaped-literal = %x20-21 /       ; space !
+                              %x23-5B /   ; # - [
+                              %x5D-5F /   ; ] ^ _
+                              %x61-7A     ; a-z
+                              %x7C-10FFFF ; |}~ ...
+      escaped-literal   = escaped-char / (escape %x60)
+      json-value = false / null / true / json-object / json-array /
+                   json-number / json-quoted-string
+      false = %x66.61.6c.73.65   ; false
+      null  = %x6e.75.6c.6c      ; null
+      true  = %x74.72.75.65      ; true
+      json-quoted-string = %x22 1*(unescaped-literal / escaped-literal) %x22
+      begin-array     = ws %x5B ws  ; [ left square bracket
+      begin-object    = ws %x7B ws  ; { left curly bracket
+      end-array       = ws %x5D ws  ; ] right square bracket
+      end-object      = ws %x7D ws  ; } right curly bracket
+      name-separator  = ws %x3A ws  ; : colon
+      value-separator = ws %x2C ws  ; , comma
+      ws              = *(%x20 /              ; Space
+                          %x09 /              ; Horizontal tab
+                          %x0A /              ; Line feed or New line
+                          %x0D                ; Carriage return
+                         )
+      json-object = begin-object [ member *( value-separator member ) ] end-object
+      member = quoted-string name-separator json-value
+      json-array = begin-array [ json-value *( value-separator json-value ) ] end-array
+      json-number = [ minus ] int [ frac ] [ exp ]
+      decimal-point = %x2E       ; .
+      digit1-9 = %x31-39         ; 1-9
+      e = %x65 / %x45            ; e E
+      exp = e [ minus / plus ] 1*DIGIT
+      frac = decimal-point 1*DIGIT
+      int = zero / ( digit1-9 *DIGIT )
+      minus = %x2D               ; -
+      plus = %x2B                ; +
+      zero = %x30                ; 0
+
+   The ``literal`` rule is ambiguous because ``unescaped-literal`` includes
+   all of the same characters that ``json-value`` match, allowing any value
+   that is valid JSON to be matched on either ``unescaped-literal`` or
+   ``json-value``.
+
 
 Rationale
 ---------
@@ -169,8 +215,8 @@ The following ABNF grammar rules will be added, and is allowed anywhere an
 expression is allowed::
 
     raw-string        = "'" *raw-string-char "'"
-    ; Any character other than "\" or "\'" or "\"
-    raw-string-char   = (%x20-21 / %x23-5B / %x5D-10FFFF) / raw-string-escape
+    ; The first grouping matches any character other than "\"
+    raw-string-char   = (%x20-26 / %x28-5B / %x5D-10FFFF) / raw-string-escape
     raw-string-escape = escape ["'"]
 
 This rule allows any character inside of a raw string, including an escaped
