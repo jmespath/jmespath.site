@@ -20,11 +20,11 @@ the usability of the language and ease the implementation of parsers:
   JSON strings to be parsed as JSON strings, removing an ambiguity in the
   JMESPath grammar and helping to ensure consistency among implementations.
 
-This proposal seeks to add the following syntax and behavior to JMESPath::
+This proposal seeks to add the following syntax to JMESPath::
 
-    contains('foobar', 'foo') -> true
-    contains('foo\'bar', `"foo"`') -> true
-    contains('foo', `bar`) -> Parse error/warning (implementation specific)
+    'foobar'
+    'foo\'bar'
+    `bar` -> Parse error/warning (implementation specific)
 
 
 Motivation
@@ -108,8 +108,8 @@ needed to currently parse a JSON literal value in JMESPath:
    value for the literal token.
 5. If ``$temp`` cannot be parsed as valid JSON, then wrap the contents of
    ``$lexeme`` in double quotes and parse the wrapped value as a JSON string,
-   making the following expressions equivalent: ```foo``` == ```"foo"```,
-   ``[1, ]`` == ``"[1, ]``".
+   making the following expressions equivalent: ```foo``` == ```"foo"```, and
+   ```[1, ]``` == ```"[1, ]"```.
 
 It is reasonable to assume that the most common use case for a JSON literal in
 a JMESPath expression is to provide a string value to a function argument or
@@ -126,8 +126,8 @@ Specification
 =============
 
 A raw string literal is value that begins and ends with a single quote, does
-not interpret escape characters other than ``\'``, and allows single quotes may
-be escaped with to avoid delimiter collision.
+not interpret escape characters, and may contain escaped single quotes to
+avoid delimiter collision.
 
 
 Examples
@@ -136,11 +136,11 @@ Examples
 Here are several examples of valid raw string literals and how they are
 parsed:
 
-- A basic raw string literal (parsed as ``foo bar``)::
+- A basic raw string literal, parsed as ``foo bar``::
 
       'foo bar'
 
-- An escaped single quote (parsed as ``foo'bar``)::
+- An escaped single quote, parsed as ``foo'bar``::
 
       'foo\'bar'
 
@@ -156,8 +156,8 @@ parsed:
       baz
       bar!
 
-- A raw string literal that contains escape characters
-  (parsed as ``foo\nbar``)::
+- A raw string literal that contains escape characters,
+  parsed as ``foo\nbar``::
 
        foo\nbar
 
