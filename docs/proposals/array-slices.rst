@@ -4,7 +4,7 @@ Array Slice Expressions
 
 :JEP: 5
 :Author: Michael Dowling
-:Status: draft
+:Status: accepted
 :Created: 08-Dec-2013
 
 Abstract

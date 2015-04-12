@@ -4,7 +4,7 @@ Functions
 
 :JEP: 3
 :Author: Michael Dowling, James Saryerwinnie
-:Status: Draft
+:Status: accepted
 :Created: 27-Nov-2013
 
 Abstract
