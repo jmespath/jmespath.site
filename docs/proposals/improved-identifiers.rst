@@ -4,7 +4,7 @@ Improved Identifiers
 
 :JEP: 6
 :Author: James Saryerwinnie
-:Status: draft
+:Status: accepted
 :Created: 14-Dec-2013
 :Last Updated: 15-Dec-2013
 
