@@ -16,3 +16,4 @@ changes. Proposals are marked as either "draft", "accepted", or "rejected".
    proposals/functions
    proposals/exptype
    proposals/slice-projections
+   proposals/let-function
