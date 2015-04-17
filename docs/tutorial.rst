@@ -383,7 +383,7 @@ In pseudocode, this would be::
 
 A filter projection can be used to accomplish this:
 
-.. jpexample:: machines[?state==`running`].name
+.. jpexample:: machines[?state=='running'].name
     :layout: 2cols
 
     {
@@ -576,7 +576,7 @@ Functions can also be combined with filter expressions.  In the example below,
 the JMESPath expressions finds all elements in ``myarray`` that contains the
 string ``foo``.
 
-.. jpexample:: myarray[?contains(@, `foo`) == `true`]
+.. jpexample:: myarray[?contains(@, 'foo') == `true`]
     :layout: 2cols
     :rows: 20
 
