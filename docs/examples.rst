@@ -121,7 +121,7 @@ Working with Nested Data
 ========================
 
 
-.. jpexample:: reservations[].instances[].[tags[?Key==`Name`].Values[] | [0], type, state.name]
+.. jpexample:: reservations[].instances[].[tags[?Key=='Name'].Values[] | [0], type, state.name]
     :layout: 2cols-long
 
     {
@@ -182,7 +182,7 @@ a three element sublist.  The three elements are:
 * The ``state.name`` of each instance.
 
 The most interesting of those three expressions is the
-``tags[?Key==`Name`].Values[] | [0]`` part.  Let's examine that further.
+``tags[?Key=='Name'].Values[] | [0]`` part.  Let's examine that further.
 
 The first thing to notice is the we're filtering down the list associated
 with the ``tags`` key.  The ``tags[?Key==`Name`]`` tells us to only include
@@ -459,7 +459,7 @@ Let's look at a modified version of the expression on the `JMESPath front page
 <http://jmespath.org>`__.
 
 
-.. jpexample:: locations[?state == `WA`].name | sort(@)[-2:] | {WashingtonCities: join(`, `, @)}
+.. jpexample:: locations[?state == 'WA'].name | sort(@)[-2:] | {WashingtonCities: join(', ', @)}
     :layout: 2cols-long
 
     {
@@ -486,7 +486,7 @@ we only want the last two elements in the sorted array to be passed through to
 the final third of this expression.
 
 And finally, the third part of the expression,
-``{WashingtonCities: join(`, `, @)}``, creates a multiselect hash.  It takes as
+``{WashingtonCities: join(', ', @)}``, creates a multiselect hash.  It takes as
 input, the list of sorted city names, and produces a hash witih a single key,
 ``WashingtonCities``, whose values are the input list (denoted by ``@``) as a
 string separated by a comma.

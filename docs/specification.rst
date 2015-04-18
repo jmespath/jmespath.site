@@ -32,7 +32,7 @@ The grammar is specified using ABNF, as described in `RFC4234`_
 
     expression        = sub-expression / index-expression / or-expression / identifier
     expression        =/ "*" / multi-select-list / multi-select-hash / literal
-    expression        =/ function-expression / pipe-expression
+    expression        =/ function-expression / pipe-expression / raw-string
     sub-expression    = expression "." ( identifier /
                                          multi-select-list /
                                          multi-select-hash /
@@ -58,8 +58,10 @@ The grammar is specified using ABNF, as described in `RFC4234`_
     current-node        = "@"
     expression-type     = "&" expression
 
+    raw-string        = "'" *raw-string-char "'"
+    raw-string-char   = (%x20-26 / %x28-5B / %x5D-10FFFF) / raw-string-escape
+    raw-string-escape = raw-string-escape = escape ["'"]
     literal           = "`" json-value "`"
-    literal           =/ "`" 1*(unescaped-literal / escaped-literal) "`"
     unescaped-literal = %x20-21 /       ; space !
                             %x23-5B /   ; # - [
                             %x5D-5F /   ; ] ^ _
@@ -544,13 +546,7 @@ Literal Expressions
 ::
 
     literal           = "`" json-value "`"
-    literal           =/ "`" 1*(unescaped-literal / escaped-literal) "`"
-    unescaped-literal = %x20-21 /       ; space !
-                            %x23-5A /   ; # - [
-                            %x5D-5F /   ; ] ^ _
-                            %x61-7A     ; a-z
-                            %x7C-10FFFF ; |}~ ...
-    escaped-literal   = escaped-char / (escape %x60)
+
 
 A literal expression is an expression that allows arbitrary JSON objects to be
 specified.  This is useful in filter expressions as well as multi select hashes
@@ -560,22 +556,46 @@ use an existing JSON parser to parse literal values.  Note that the ``\```
 character must now be escaped in a ``json-value`` which means implementations
 need to handle this case before passing the resulting string to a JSON parser.
 
-Note the second literal rule.  This is used to specify a string such that
-double quotes do not have to be included.  This means that the literal
-expression ``\`"foo"\``` is equivalent to ``\`foo\```.
-
 
 Examples
 --------
 
 ::
 
-  search(`foo`, "anything") -> "foo"
   search(`"foo"`, "anything") -> "foo"
   search(`[1, 2]`, "anything") -> [1, 2]
   search(`true`, "anything") -> true
   search(`{"a": "b"}`.a, "anything") -> "b"
-  search({first: a, type: `mytype`}, {"a": "b", "c": "d"}) -> {"first": "b", "type": "mytype"}
+  search({first: a, type: `"mytype"`}, {"a": "b", "c": "d"}) -> {"first": "b", "type": "mytype"}
+
+
+Raw String Literals
+===================
+
+::
+
+  raw-string        = "'" *raw-string-char "'"
+  raw-string-char   = (%x20-26 / %x28-5B / %x5D-10FFFF) / raw-string-escape
+  raw-string-escape = escape ["'"]
+
+A raw string is an expression that allows for a literal string value to be
+specified.  The result of evaluating the raw string literal expression is the
+literal string value.  It is a simpler form of a literal expression that is
+special cased for strings.  In addition, it does not perform any of the
+additional processing that JSON strings supports including:
+
+* Not expanding unicode escape sequences
+* Not expanding newline characters
+* Not expanding tab characters or any other escape sequences documented
+  in RFC 4627 section 2.5.
+
+::
+
+  search('foo', "") -> "foo"
+  search(' bar ', "") -> " foo "
+  search('[baz]', "") -> "[baz]"
+  search('[baz]', "") -> "[baz]"
+  search('\u03a6', "") -> "\u03a6"
 
 
 .. _filterexpressions:
