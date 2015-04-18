@@ -4,7 +4,7 @@ Raw String Literals
 
 :JEP: 12
 :Author: Michael Dowling
-:Status: draft
+:Status: accepted
 :Created: 09-Apr-2015
 
 Abstract
