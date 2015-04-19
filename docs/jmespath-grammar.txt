@@ -1,8 +1,8 @@
 expr      = ws ( terminal / non-terminal ) ws
 root-expr = non-test / not / comparison
 non-test  = subexpr / index / flatten / wildcard-index / filter /
-            identifier / current-node / literal / root-multi-list /
-            multi-hash / function / group / slice
+            identifier / current-node / raw-string / literal /
+            root-multi-list / multi-hash / function / group / slice
 group     = begin-group expr end-group
 
 ; Insignificant whitespace is allowed around expr nodes and around the
@@ -89,16 +89,12 @@ wildcard-values = "*"
 current-node    = "@"
 
 number            = ["-"] int
-literal           = "`" literal-value "`"
-; literal-value is ambiguous; however, json-value has a higher precedence than
-; non-json-value.
-literal-value     = non-json-value / json-value
-literal-char      = unescaped-literal / escaped-literal
-non-json-value    = 1*( literal-char )
-unescaped-literal = %x20-5f / %x61-10FFFF ; Any character except "`"
-escaped-literal   = escaped-char / ( escape "`" )
 
 ; Strings, identifiers, and characters.
+raw-string        = "'" *raw-string-char "'"
+raw-string-char   = (%x20-26 / %x28-5B / %x5D-10FFFF) / raw-string-escape
+raw-string-escape = escape ["'"]
+
 identifier        = unquoted-string / quoted-string
 unquoted-string   = ( ALPHA / "_" ) *( DIGIT / ALPHA / "_" )
 quoted-string     = DQUOTE *char DQUOTE
@@ -115,6 +111,12 @@ escaped-char      = escape (
                      %x72 /          ; r    carriage return U+000D
                      %x74 /          ; t    tab             U+0009
                      %x75 4HEXDIG )  ; uXXXX                U+XXXX
+
+; Literal rules (e.g., "`[]`")
+literal           = "`" json-value "`"
+literal-char      = unescaped-literal / escaped-literal
+unescaped-literal = %x20-5f / %x61-10FFFF ; Any character except "`"
+escaped-literal   = escaped-char / ( escape "`" )
 
 ; JSON related grammar (for literal and string values)
 json-value  = false / null / true / object / array
