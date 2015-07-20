@@ -817,6 +817,19 @@ output::
     return_type function_name(type $argname)
     return_type function_name2(type1|type2 $argname)
 
+The list of data types supported by a function are:
+
+* number (integers and double-precision floating-point format in JSON)
+* string
+* boolean (``true`` or ``false``)
+* array (an ordered, sequence of values)
+* object (an unordered collection of key value pairs)
+* null
+* expression (denoted by ``&expression``)
+
+With the exception of the last item, all of the above types correspond
+to the types provided by JSON.
+
 If a function can accept multiple types for an input value, then the
 multiple types are separated with ``|``.  If the resolved arguments do not
 match the types specified in the signature, an ``invalid-type`` error occurs.
@@ -830,6 +843,17 @@ argument resolves to an array of numbers::
 
 As a shorthand, the type ``any`` is used to indicate that the argument can be
 of any type (``array|object|number|string|boolean|null``).
+
+JMESPath functions are required to type check their input arguments.
+Specifying an invalid type for a function argument will result in a JMESPath
+error.
+
+The expression type, denoted by ``&expression``, is used to specify a
+expression that is not immediately evaluated.  Instead, a reference to that
+expression is provided to the function being called.  The function can then
+choose to apply the expression reference as needed.  It is semantically similar
+to an anonymous function. See the :ref:`func-sort-by`_ function for an example
+usage of the expression type.
 
 Similarly how arrays can specify a type within a list using the
 ``array[type]`` syntax, expressions can specify their resolved type using
@@ -1515,7 +1539,14 @@ sort_by
 
     sort_by(array elements, expression->number|expression->string expr)
 
-Sort an array using an expression ``expr`` as the sort key.
+Sort an array using an expression ``expr`` as the sort key.  For each element
+in the array of ``elements``, the ``expr`` expression is applied and the
+resulting value is used as the key used when sorting the ``elements``.
+
+If the result of evaluating the ``expr`` against the current array element
+results in type other than a ``number`` or a ``string``, a type error will
+occur.
+
 Below are several examples using the ``people`` array (defined above) as the
 given input.  ``sort_by`` follows the same sorting logic as the ``sort``
 function.
