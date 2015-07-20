@@ -528,7 +528,10 @@ returned.
 
 Similarly, a hash wildcard expression is only valid for the JSON object type.
 If a hash wildcard expression is applied to any other JSON type, a value of
-``null`` is returned.
+``null`` is returned.  Note that JSON hashes are explicitly defined as
+unordered.  Therefore a hash wildcard expression can return the values
+associated with the hash in any order.  Implementations are not required
+to return the hash values in any specific order.
 
 Examples
 --------
@@ -1139,6 +1142,10 @@ keys
     array keys(object $obj)
 
 Returns an array containing the keys of the provided object.
+Note that because JSON hashes are inheritently unordered, the
+keys associated with the provided object ``obj`` are inheritently
+unordered.  Implementations are not required to return keys in
+any specific order.
 
 .. cssclass:: table
 
@@ -1726,7 +1733,24 @@ values
     array values(object $obj)
 
 Returns the values of the provided object.
+Note that because JSON hashes are inheritently unordered, the
+values associated with the provided object ``obj`` are inheritently
+unordered.  Implementations are not required to return values in
+any specific order.  For example, given the input::
 
+    {"a": "first", "b": "second", "c": "third"}
+
+The expression ``values(@)`` could have any of these return values:
+
+* ``["first", "second", "third"]``
+* ``["first", "third", "second"]``
+* ``["second", "first", "third"]``
+* ``["second", "third", "first"]``
+* ``["third", "first", "second"]``
+* ``["third", "second", "first"]``
+
+If you would like a specific order, consider using the
+``sort`` or ``sort_by`` functions.
 
 .. cssclass:: table
 
