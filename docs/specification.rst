@@ -234,6 +234,7 @@ The final result in this example is ``"baz"``.
 Additional examples::
 
    search(foo.bar, {"foo": {"bar": "value"}}) -> "value"
+   search(foo."bar", {"foo": {"bar": "value"}}) -> "value"
    search(foo.bar, {"foo": {"baz": "value"}}) -> null
    search(foo.bar.baz, {"foo": {"bar": {"baz": "value"}}}) -> "value"
 
@@ -284,7 +285,8 @@ be omitted.
 
 .. note::
 
-  Slices in JMESPath have the same semantics as python slices.
+  Slices in JMESPath have the same semantics as python slices.  If you're
+  familiar with python slices, you're familiar with JMESPath slices.
 
 Given a ``start``, ``stop``, and ``step`` value, the sub elements in an array
 are extracted as follows:
@@ -566,6 +568,7 @@ Examples
 ::
 
   search(`"foo"`, "anything") -> "foo"
+  search(`"foo\`bar"`, "anything") -> "foo`bar"
   search(`[1, 2]`, "anything") -> [1, 2]
   search(`true`, "anything") -> true
   search(`{"a": "b"}`.a, "anything") -> "b"
@@ -584,7 +587,16 @@ Raw String Literals
 A raw string is an expression that allows for a literal string value to be
 specified.  The result of evaluating the raw string literal expression is the
 literal string value.  It is a simpler form of a literal expression that is
-special cased for strings.  In addition, it does not perform any of the
+special cased for strings.  For example, the following expressions both
+evaluate to the same value: "foo"::
+
+    search(`"foo"`, "") -> "foo"
+    search('foo', "") -> "foo"
+
+As you can see in the examples above, it is meant as a more succinct
+form of the common scenario of specifying a literal string value.
+
+In addition, it does not perform any of the
 additional processing that JSON strings supports including:
 
 * Not expanding unicode escape sequences
