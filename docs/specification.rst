@@ -15,11 +15,25 @@ not quoted.  For example::
 
     search(foo, {"foo": "bar"}) -> "bar"
 
-In this specification, ``null`` is used as a return value whenever an
-expression does not match.  ``null`` is the generic term that maps to the JSON
-``null`` value.  Implementations can replace the ``null`` value with the
-language equivalent value.
+The result of applying a JMESPath expression against a JSON document will
+**always** result in valid JSON, provided there are no errors during the
+evaluation process.  Structured data in, structured data out.
 
+This also means that, with the exception of JMESPath expression types,
+JMESPath only supports the same types support by JSON:
+
+* number (integers and double-precision floating-point format in JSON)
+* string
+* boolean (``true`` or ``false``)
+* array (an ordered, sequence of values)
+* object (an unordered collection of key value pairs)
+* null
+
+Expression types are discussed in the :ref:`functions` section.
+
+Implementations can map the corresponding JSON types to their language
+equivalent.  For example, a JSON ``null`` could map to ``None`` in python,
+and ``nil`` in ruby and go.
 
 .. _grammar:
 
@@ -852,7 +866,7 @@ The expression type, denoted by ``&expression``, is used to specify a
 expression that is not immediately evaluated.  Instead, a reference to that
 expression is provided to the function being called.  The function can then
 choose to apply the expression reference as needed.  It is semantically similar
-to an anonymous function. See the :ref:`func-sort-by`_ function for an example
+to an anonymous function. See the :ref:`func-sort-by` function for an example
 usage of the expression type.
 
 Similarly how arrays can specify a type within a list using the
