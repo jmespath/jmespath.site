@@ -621,7 +621,7 @@ additional processing that JSON strings supports including:
 ::
 
   search('foo', "") -> "foo"
-  search(' bar ', "") -> " foo "
+  search(' bar ', "") -> " bar "
   search('[baz]', "") -> "[baz]"
   search('[baz]', "") -> "[baz]"
   search('\u03a6', "") -> "\u03a6"
