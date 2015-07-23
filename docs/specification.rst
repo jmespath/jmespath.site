@@ -15,11 +15,25 @@ not quoted.  For example::
 
     search(foo, {"foo": "bar"}) -> "bar"
 
-In this specification, ``null`` is used as a return value whenever an
-expression does not match.  ``null`` is the generic term that maps to the JSON
-``null`` value.  Implementations can replace the ``null`` value with the
-language equivalent value.
+The result of applying a JMESPath expression against a JSON document will
+**always** result in valid JSON, provided there are no errors during the
+evaluation process.  Structured data in, structured data out.
 
+This also means that, with the exception of JMESPath expression types,
+JMESPath only supports the same types support by JSON:
+
+* number (integers and double-precision floating-point format in JSON)
+* string
+* boolean (``true`` or ``false``)
+* array (an ordered, sequence of values)
+* object (an unordered collection of key value pairs)
+* null
+
+Expression types are discussed in the :ref:`functions` section.
+
+Implementations can map the corresponding JSON types to their language
+equivalent.  For example, a JSON ``null`` could map to ``None`` in python,
+and ``nil`` in ruby and go.
 
 .. _grammar:
 
@@ -234,6 +248,7 @@ The final result in this example is ``"baz"``.
 Additional examples::
 
    search(foo.bar, {"foo": {"bar": "value"}}) -> "value"
+   search(foo."bar", {"foo": {"bar": "value"}}) -> "value"
    search(foo.bar, {"foo": {"baz": "value"}}) -> null
    search(foo.bar.baz, {"foo": {"bar": {"baz": "value"}}}) -> "value"
 
@@ -284,7 +299,8 @@ be omitted.
 
 .. note::
 
-  Slices in JMESPath have the same semantics as python slices.
+  Slices in JMESPath have the same semantics as python slices.  If you're
+  familiar with python slices, you're familiar with JMESPath slices.
 
 Given a ``start``, ``stop``, and ``step`` value, the sub elements in an array
 are extracted as follows:
@@ -528,7 +544,10 @@ returned.
 
 Similarly, a hash wildcard expression is only valid for the JSON object type.
 If a hash wildcard expression is applied to any other JSON type, a value of
-``null`` is returned.
+``null`` is returned.  Note that JSON hashes are explicitly defined as
+unordered.  Therefore a hash wildcard expression can return the values
+associated with the hash in any order.  Implementations are not required
+to return the hash values in any specific order.
 
 Examples
 --------
@@ -563,6 +582,7 @@ Examples
 ::
 
   search(`"foo"`, "anything") -> "foo"
+  search(`"foo\`bar"`, "anything") -> "foo`bar"
   search(`[1, 2]`, "anything") -> [1, 2]
   search(`true`, "anything") -> true
   search(`{"a": "b"}`.a, "anything") -> "b"
@@ -581,7 +601,16 @@ Raw String Literals
 A raw string is an expression that allows for a literal string value to be
 specified.  The result of evaluating the raw string literal expression is the
 literal string value.  It is a simpler form of a literal expression that is
-special cased for strings.  In addition, it does not perform any of the
+special cased for strings.  For example, the following expressions both
+evaluate to the same value: "foo"::
+
+    search(`"foo"`, "") -> "foo"
+    search('foo', "") -> "foo"
+
+As you can see in the examples above, it is meant as a more succinct
+form of the common scenario of specifying a literal string value.
+
+In addition, it does not perform any of the
 additional processing that JSON strings supports including:
 
 * Not expanding unicode escape sequences
@@ -802,6 +831,19 @@ output::
     return_type function_name(type $argname)
     return_type function_name2(type1|type2 $argname)
 
+The list of data types supported by a function are:
+
+* number (integers and double-precision floating-point format in JSON)
+* string
+* boolean (``true`` or ``false``)
+* array (an ordered, sequence of values)
+* object (an unordered collection of key value pairs)
+* null
+* expression (denoted by ``&expression``)
+
+With the exception of the last item, all of the above types correspond
+to the types provided by JSON.
+
 If a function can accept multiple types for an input value, then the
 multiple types are separated with ``|``.  If the resolved arguments do not
 match the types specified in the signature, an ``invalid-type`` error occurs.
@@ -815,6 +857,17 @@ argument resolves to an array of numbers::
 
 As a shorthand, the type ``any`` is used to indicate that the argument can be
 of any type (``array|object|number|string|boolean|null``).
+
+JMESPath functions are required to type check their input arguments.
+Specifying an invalid type for a function argument will result in a JMESPath
+error.
+
+The expression type, denoted by ``&expression``, is used to specify a
+expression that is not immediately evaluated.  Instead, a reference to that
+expression is provided to the function being called.  The function can then
+choose to apply the expression reference as needed.  It is semantically similar
+to an anonymous function. See the :ref:`func-sort-by` function for an example
+usage of the expression type.
 
 Similarly how arrays can specify a type within a list using the
 ``array[type]`` syntax, expressions can specify their resolved type using
@@ -1139,6 +1192,10 @@ keys
     array keys(object $obj)
 
 Returns an array containing the keys of the provided object.
+Note that because JSON hashes are inheritently unordered, the
+keys associated with the provided object ``obj`` are inheritently
+unordered.  Implementations are not required to return keys in
+any specific order.
 
 .. cssclass:: table
 
@@ -1496,7 +1553,14 @@ sort_by
 
     sort_by(array elements, expression->number|expression->string expr)
 
-Sort an array using an expression ``expr`` as the sort key.
+Sort an array using an expression ``expr`` as the sort key.  For each element
+in the array of ``elements``, the ``expr`` expression is applied and the
+resulting value is used as the key used when sorting the ``elements``.
+
+If the result of evaluating the ``expr`` against the current array element
+results in type other than a ``number`` or a ``string``, a type error will
+occur.
+
 Below are several examples using the ``people`` array (defined above) as the
 given input.  ``sort_by`` follows the same sorting logic as the ``sort``
 function.
@@ -1726,7 +1790,24 @@ values
     array values(object $obj)
 
 Returns the values of the provided object.
+Note that because JSON hashes are inheritently unordered, the
+values associated with the provided object ``obj`` are inheritently
+unordered.  Implementations are not required to return values in
+any specific order.  For example, given the input::
 
+    {"a": "first", "b": "second", "c": "third"}
+
+The expression ``values(@)`` could have any of these return values:
+
+* ``["first", "second", "third"]``
+* ``["first", "third", "second"]``
+* ``["second", "first", "third"]``
+* ``["second", "third", "first"]``
+* ``["third", "first", "second"]``
+* ``["third", "second", "first"]``
+
+If you would like a specific order, consider using the
+``sort`` or ``sort_by`` functions.
 
 .. cssclass:: table
 
