@@ -145,6 +145,15 @@ The grammar is specified using ABNF, as described in `RFC4234`_
     plus = %x2B                ; +
     zero = %x30                ; 0
 
+
+In addition to the grammar, there is the following token precedence that goes
+from weakest to tightest binding:
+
+* pipe: ``|``
+* or:  ``||``
+* rbracket: ``]``
+
+
 .. _identifiers:
 
 Identifiers
