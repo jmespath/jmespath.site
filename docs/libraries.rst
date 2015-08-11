@@ -30,3 +30,28 @@ level is based on which compliance tests the library can pass.
   * - Lua
     - `jmespath.lua <https://github.com/jmespath/jmespath.lua>`__
     - Fully compliant
+  * - Go
+    - `go-jmespath <https://github.com/jmespath/go-jmespath>`__
+    - Fully compliant
+
+In addition to the JMESPath libraries in various programming languages,
+there are a number of miscellaneous JMESPath tools.
+
+.. cssclass:: table
+
+.. list-table::
+  :header-rows: 1
+
+  * - Tool
+    - Description
+  * - `jmespath.terminal <https://github.com/jmespath/jmespath.terminal>`__
+    - Provides a JMESPath interactive terminal that you can use to evaluate
+      JMESpath expressions as you type.  The README in the
+      `github repo <https://github.com/jmespath/jmespath.terminal>`__ shows
+      GIFs of ``jpterm`` in action.
+  * - `jp <https://github.com/jmespath/jp>`__
+    - Provides a JMESPath command line interface called ``jp``.
+      This cross platform tool accepts JSON data through stdin or input files,
+      and prints the result of evaluating the JMESPath expression to stdout.
+      This is useful if you're writing shell scripts that need to manipulate
+      JSON data.
