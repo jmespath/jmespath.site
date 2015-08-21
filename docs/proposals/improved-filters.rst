@@ -1,6 +1,6 @@
-==================
-Filter Expressions
-==================
+================
+Improved Filters
+================
 
 :JEP: 9
 :Author: James Saryerwinnie
@@ -179,6 +179,37 @@ expression::
 
     expression /= current-node
 
+Operator Precedence
+-------------------
+
+This JEP introduces and expressions, which would normally be defined as::
+
+    expression     = or-expression / and-expression / not-expression
+    or-expression  = expression "||" expression
+    and-expression = expression "&&" expression
+    not-expression = "!" expression
+
+However, if this current pattern is followed, it makes it impossible to parse
+an expression with the correct precedence.  A more standard way of expressing
+this would be::
+
+    expression          = or-expression
+    or-expression       = and-expression "||" and-expression
+    and-expression      = not-expression "&&" not-expression
+    not-expression      = "!" expression
+
+
+The precedence for the new boolean expressions matches how most
+other languages define boolean expressions.  That is from weakest
+binding to tightest binding:
+
+* Or - ``||``
+* And - ``&&``
+* Unary not - ``!``
+
+So for example, ``a || b && c`` is parsed as ``a || (b && c)`` and
+not ``(a || b) && c``.
+
 Now that these expressions are allowed as general ``expressions``, there
 semantics outside of their original contexts must be defined.
 
@@ -225,37 +256,7 @@ Paren Expressions
 -----------------
 
 A ``paren-expression`` allows a user to override the precedence order of
-an expression.
-
-
-Comparator Expressions
-----------------------
-
-Current Node
-------------
-
-
-Operator Precedence
--------------------
-
-Precedence
-==========
-
-This JEP introduces And expressions, which would normally be defined as::
-
-    expression     = or-expression / and-expression / not-expression
-    or-expression  = expression "||" expression
-    and-expression = expression "&&" expression
-    not-expression = "!" expression
-
-However, if this current pattern is followed, it makes it impossible to parse
-an expression with the correct precedence.  A more standard way of expressing
-this would be::
-
-    expression          = or-expression
-    or-expression       = and-expression "||" and-expression
-    and-expression      = not-expression "&&" not-expression
-    not-expression      = "!" expression
+an expression, e.g. ``(a || b) && c``.
 
 
 Rationale
@@ -271,8 +272,8 @@ into the more general ``expression`` rule.  Specifically:
   which again is just a general ``expression``.
 
 There are several reasons the previous grammar rules were minimally scoped.
-One of the main reasons, as stated in JEP 4 which introduced filter
+One of the main reasons, as stated in JEP 7 which introduced filter
 expressions, was to keep the spec "purposefully minimal."  In fact the end
-of JEP 4 states that there "are several extensions that can be added in
+of JEP 7 states that there "are several extensions that can be added in
 future." This is in fact exactly what this JEP proposes, the recommendations
-from JEP 4.
+from JEP 7.
