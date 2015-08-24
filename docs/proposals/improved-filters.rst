@@ -149,6 +149,17 @@ a supported syntax.  Especially now that we are basically anchoring to
 a C-like syntax for filtering in this JEP, users will expect unary expressions
 even more.
 
+Paren Expressions
+-----------------
+
+Once ``||`` and ``&&`` statements have been introduced, there will be times
+when you want to override the precedence of these operators.
+
+A ``paren-expression`` allows a user to override the precedence order of
+an expression, e.g. ``(a || b) && c``, instead of the default precedence
+of ``a || (b && c)`` for the expression ``a || b && c``.
+
+
 
 Specification
 =============
@@ -210,12 +221,32 @@ binding to tightest binding:
 So for example, ``a || b && c`` is parsed as ``a || (b && c)`` and
 not ``(a || b) && c``.
 
+The operator precedence list in the specification will now read:
+
+* Pipe - ``||``
+* Or - ``||``
+* And - ``&&``
+* Unary not - ``!``
+* Rbracket - ``]``
+
+
 Now that these expressions are allowed as general ``expressions``, there
 semantics outside of their original contexts must be defined.
 
 
 And Expressions
 ---------------
+
+For reference, the JMESPath spec already defines the following values
+as "false-like" values:
+
+* Empty list: ``[]``
+* Empty object: ``{}``
+* Empty string: ``""``
+* False boolean: ``false``
+* Null value: ``null``
+
+And any value that is not a false-like value is a truth-like value.
 
 An ``and-expression`` has similar semantics to and expressions in other
 languages.  If the expression on the left hand side is a truth-like value, then
@@ -242,6 +273,23 @@ expected truth table:
     - False
     - False
 
+This is the standard truth table for a
+`logical conjunction (AND) <https://en.wikipedia.org/wiki/Truth_table#Logical_conjunction_.28AND.29>`__.
+
+
+Below are a few examples of and expressions:
+
+
+Examples
+~~~~~~~~
+
+::
+
+  search(True && False, {"True": true, "False": false}) -> false
+  search(Number && EmptyList, {"Number": 5, EmptyList: []}) -> []
+  search(foo[?a == `1` && b == `2`],
+         {"foo": [{"a": 1, "b": 2}, {"a": 1, "b": 3}]}) -> [{"a": 1, "b": 2}]
+
 
 Not Expressions
 ---------------
@@ -251,12 +299,30 @@ results in a truth-like value, a ``not-expression`` will change this value to
 ``false``.  If the expression results in a false-like value, a
 ``not-expression`` will change this value to ``true``.
 
+Examples
+~~~~~~~~
+
+::
+
+  search(!True, {"True": true}) -> false
+  search(!False, {"False": false}) -> true
+  search(!Number, {"Number": 5}) -> false
+  search(!EmptyList, {"EmptyList": []}) -> true
+
 
 Paren Expressions
 -----------------
 
 A ``paren-expression`` allows a user to override the precedence order of
 an expression, e.g. ``(a || b) && c``.
+
+Examples
+~~~~~~~~
+
+::
+
+  search(foo[?(a == `1` || b ==`2`) && c == `5`],
+         {"foo": [{"a": 1, "b": 2, "c": 3}, {"a": 3, "b": 4}]}) -> []
 
 
 Rationale
