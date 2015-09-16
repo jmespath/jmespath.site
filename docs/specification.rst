@@ -513,7 +513,7 @@ Additional examples:
   search({foo: foo, "bar.baz": bar.baz}, {"foo": "a", "bar": {"baz": "b"}})
                 -> {"foo": "a", "bar.baz": "b"}
   search({foo: foo, baz: baz}, {"foo": "a", "bar": "b"})
-                -> {"foo": "a", "bar": null}
+                -> {"foo": "a", "baz": null}
 
 
 .. _wildcards:
