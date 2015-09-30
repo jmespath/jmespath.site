@@ -4,7 +4,7 @@ Improved Filters
 
 :JEP: 9
 :Author: James Saryerwinnie
-:Status: proposed
+:Status: accepted
 :Created: 07-July-2014
 
 
