@@ -51,20 +51,24 @@ The grammar is specified using ABNF, as described in `RFC4234`_
     expression        = sub-expression / index-expression / or-expression / identifier
     expression        =/ "*" / multi-select-list / multi-select-hash / literal
     expression        =/ function-expression / pipe-expression / raw-string
+    expression        =/ current-node
     sub-expression    = expression "." ( identifier /
                                          multi-select-list /
                                          multi-select-hash /
                                          function-expression /
                                          "*" )
-    or-expression     = expression "||" expression
     pipe-expression   = expression "|" expression
+    or-expression     = expression "||" expression
+    and-expression    = expression "&&" expression
+    not-expression    = "!" expression
+    paren-expression  = "(" expression ")"
     index-expression  = expression bracket-specifier / bracket-specifier
     multi-select-list = "[" ( expression *( "," expression ) ) "]"
     multi-select-hash = "{" ( keyval-expr *( "," keyval-expr ) ) "}"
     keyval-expr       = identifier ":" expression
     bracket-specifier = "[" (number / "*" / slice-expression) "]" / "[]"
-    bracket-specifier =/ "[?" list-filter-expr "]"
-    list-filter-expr  = expression comparator expression
+    bracket-specifier =/ "[?" expression "]"
+    comparator-expression = expression comparator expression
     slice-expression  = [number] ":" [number] [ ":" [number] ]
     comparator        = "<" / "<=" / "==" / ">=" / ">" / "!="
     function-expression = unquoted-string  (
@@ -72,7 +76,7 @@ The grammar is specified using ABNF, as described in `RFC4234`_
                             one-or-more-args )
     no-args             = "(" ")"
     one-or-more-args    = "(" ( function-arg *( "," function-arg ) ) ")"
-    function-arg        = expression / current-node / expression-type
+    function-arg        = expression / expression-type
     current-node        = "@"
     expression-type     = "&" expression
 
@@ -151,6 +155,8 @@ from weakest to tightest binding:
 
 * pipe: ``|``
 * or:  ``||``
+* and:  ``&&``
+* unary not:  ``!``
 * rbracket: ``]``
 
 
@@ -432,6 +438,105 @@ Examples
   search(override || mylist[-1], {"mylist": ["one", "two"], "override": "yes"}) -> "yes"
 
 
+.. _andexpressions:
+
+And Expressions
+===============
+
+::
+
+  and-expression  = expression "&&" expression
+
+An and expression will evaluate to either the left expression or the
+right expression.  If the expression on the left hand side is a truth-like value, then
+the value on the right hand side is returned.  Otherwise the result of the
+expression on the left hand side is returned.  This also reduces to the
+expected truth table:
+
+.. cssclass:: table
+
+.. list-table:: Truth table for and expressions
+  :header-rows: 1
+
+  * - LHS
+    - RHS
+    - Result
+  * - True
+    - True
+    - True
+  * - True
+    - False
+    - False
+  * - False
+    - True
+    - False
+  * - False
+    - False
+    - False
+
+This is the standard truth table for a
+`logical conjunction (AND) <https://en.wikipedia.org/wiki/Truth_table#Logical_conjunction_.28AND.29>`__.
+
+Examples
+--------
+
+::
+
+  search(True && False, {"True": true, "False": false}) -> false
+  search(Number && EmptyList, {"Number": 5, EmptyList: []}) -> []
+  search(foo[?a == `1` && b == `2`],
+         {"foo": [{"a": 1, "b": 2}, {"a": 1, "b": 3}]}) -> [{"a": 1, "b": 2}]
+
+
+
+.. _parenexpressions:
+
+Paren Expressions
+=================
+
+::
+
+  paren-expression  = "(" expression ")"
+
+A ``paren-expression`` allows a user to override the precedence order of
+an expression, e.g. ``(a || b) && c``.
+
+Examples
+--------
+
+::
+
+  search(foo[?(a == `1` || b ==`2`) && c == `5`],
+         {"foo": [{"a": 1, "b": 2, "c": 3}, {"a": 3, "b": 4}]}) -> []
+
+
+.. _notexpressions:
+
+Not Expressions
+===============
+
+::
+
+    not-expression    = "!" expression
+
+A ``not-expression`` negates the result of an expression.  If the expression
+results in a truth-like value, a ``not-expression`` will change this value to
+``false``.  If the expression results in a false-like value, a
+``not-expression`` will change this value to ``true``.
+
+Examples
+--------
+
+::
+
+  search(!True, {"True": true}) -> false
+  search(!False, {"False": false}) -> true
+  search(!Number, {"Number": 5}) -> false
+  search(!EmptyList, {"EmptyList": []}) -> true
+
+
+
+
 .. _multiselectlist:
 
 MultiSelect List
@@ -647,16 +752,17 @@ Filter Expressions
 
 ::
 
-  list-filter-expr  = expression comparator expression
-  comparator        = "<" / "<=" / "==" / ">=" / ">" / "!="
+  list-filter-expr      = "[?" expression "]"
+  comparator-expression = expression comparator expression
+  comparator            = "<" / "<=" / "==" / ">=" / ">" / "!="
 
 A filter expression provides a way to select JSON elements based on a
 comparison to another expression.  A filter expression is evaluated as follows:
-for each element in an array evaluate the ``list-filter-expr`` against the
-element.  If the expression evalutes to ``true``, the item (in its entirety) is
-added to the result list.  Otherwise it is excluded from the result list.  A
-filter expression is only defined for a JSON array.  Attempting to evaluate a
-filter expression against any other type will return ``null``.
+for each element in an array evaluate the ``expression`` against the
+element.  If the expression evalutes to a truth-like value, the item (in its
+entirety) is added to the result list.  Otherwise it is excluded from the
+result list.  A filter expression is only defined for a JSON array.  Attempting
+to evaluate a filter expression against any other type will return ``null``.
 
 Comparison Operators
 --------------------
