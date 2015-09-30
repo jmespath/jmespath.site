@@ -223,7 +223,7 @@ not ``(a || b) && c``.
 
 The operator precedence list in the specification will now read:
 
-* Pipe - ``||``
+* Pipe - ``|``
 * Or - ``||``
 * And - ``&&``
 * Unary not - ``!``
