@@ -1,6 +1,9 @@
 language: python
 python:
-  - "2.7"
+  - '2.7'
 install:
-  - "pip install -r requirements.txt"
-script: "make html"
+  - pip install -r requirements.txt
+script: make html
+env:
+  - secure: "RMFu9ZbY0Wed8NDj+wqoKyTx9+g7y8UdCjH8UKfp9nj4Ge4g2NyLk88p/s4XmSK1ulP0J0772BelANOmSApLUFCUNyHJfLtGhdzXBCWP2QFW7+1bB3EeBImvdPNaKZ4g2lKebdkbHViV9NxoC/gneAJyeLy+99N8xm6ef5h9wxA="
+  - secure: "RAs2AT1sVAeXdpYrnL2EhKv20hpOOvsmyVVb/1M9jra87RbN22YYMr0/6KwueuR42I4tBVRYSQAUzsFoqAyh4BZp/aLTr9XZroap+D6MdtPwJvq7n/L63Fc5H6DAeNe1SIG3idnl1Qipa1fR/P7tOfS71fYONxTzlL/5QulKyg8="
