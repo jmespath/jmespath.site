@@ -156,4 +156,4 @@ doctest:
 	      "results in $(BUILDDIR)/doctest/output.txt."
 
 publish: html
-	aws s3 sync $(BUILD_DIR)/ s3://$(S3_BUCKET) --acl public-read --delete --region us-west-2 --profile jmespath-deployer
+	aws s3 sync $(BUILD_DIR)/ s3://$(S3_BUCKET) --acl public-read --delete --region us-west-2
