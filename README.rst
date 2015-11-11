@@ -70,3 +70,11 @@ rendered html::
   $ python -m SimpleHTTPServer
 
 You can then view the docs at http://localhost:8000/
+
+License
+=======
+
+All source code in this repo is licensed under Apache 2 (see LICENSE.txt).
+
+All documentation, including the JMESPath specification, is Creative
+Commons licensed (CC BY 4.0). See LICENSE-docs.txt.

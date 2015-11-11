@@ -1,0 +1,2 @@
+JMESPath Website, Documentation, and Specification
+Copyright 2015 James Saryerwinnie. All Rights Reserved.
