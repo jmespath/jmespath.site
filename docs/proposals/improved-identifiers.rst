@@ -94,7 +94,8 @@ character ``%x0A``.  However, consider Bash::
 
     $ foo --jmespath-expression "foo\nbar"
 
-In this situation, bash will not interpret the ``"\n"`` (``%x5C %x6E``) sequence.
+In this situation, bash will not interpret the ``"\n"`` (``%x5C %x6E``)
+sequence.
 
 
 Specification

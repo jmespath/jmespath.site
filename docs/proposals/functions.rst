@@ -18,17 +18,18 @@ Motivation
 ==========
 
 Functions allow users to easily transform and filter data in JMESPath
-expressions. As JMESPath is currently implemented, functions would be very useful
-in ``multi-select-list`` and ``multi-select-hash`` expressions to format the
-output of an expression to contain data that might not have been in the
-original JSON input. Combined with filtered expressions, functions
-would be a powerful mechanism to perform any kind of special comparisons for
-things like ``length()``, ``contains()``, etc.
+expressions. As JMESPath is currently implemented, functions would be very
+useful in ``multi-select-list`` and ``multi-select-hash`` expressions to format
+the output of an expression to contain data that might not have been in the
+original JSON input. Combined with filtered expressions, functions would be a
+powerful mechanism to perform any kind of special comparisons for things like
+``length()``, ``contains()``, etc.
 
 Data Types
 ==========
 
-In order to support functions, a type system is needed.  The JSON types are used:
+In order to support functions, a type system is needed.  The JSON types are
+used:
 
 * number (integers and double-precision floating-point format in JSON)
 * string
@@ -48,11 +49,16 @@ The grammar will require the following grammar additions:
 
 ::
 
-    function-expression = identifier "(" *(function-arg *("," function-arg ) ) ")"
+    function-expression = unquoted-string  (
+                            no-args  /
+                            one-or-more-args )
+    no-args             = "(" ")"
+    one-or-more-args    = "(" ( function-arg *( "," function-arg ) ) ")"
     function-arg        = expression / number / current-node
     current-node        = "@"
 
-``expression`` will need to be updated to add the ``function-expression`` production:
+``expression`` will need to be updated to add the ``function-expression``
+production:
 
 ::
 

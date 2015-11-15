@@ -37,8 +37,8 @@ given a JSON object::
 
 It is not currently possible to sort the ``people`` array by the ``age`` key.
 Also, ``sort`` is not defined for the ``object`` type, so it's not currently
-possible to even sort the ``people`` array.  In order to sort the ``people`` array,
-we need to know what key to use when sorting the array.
+possible to even sort the ``people`` array.  In order to sort the ``people``
+array, we need to know what key to use when sorting the array.
 
 This concept of sorting based on a key can be generalized.  Instead of
 requiring a key name, an expression can be provided that each element

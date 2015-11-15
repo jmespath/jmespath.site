@@ -36,8 +36,8 @@ Syntax
 ======
 
 This syntax introduces Python style array slicing that allows a start position,
-stop position, and step.  This syntax also proposes following the same semantics
-as python slices.
+stop position, and step.  This syntax also proposes following the same
+semantics as python slices.
 
 ::
 

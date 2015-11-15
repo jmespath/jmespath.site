@@ -74,20 +74,20 @@ to be consistent.
 Specification
 =============
 
-Whenver a slice is created, a projection will be created. This will be the fourth
-type of array projection in JMESPath.  In addition to the existing array
+Whenver a slice is created, a projection will be created. This will be the
+fourth type of array projection in JMESPath.  In addition to the existing array
 projections:
 
 * List Projections
 * Flatten Projections
 * Filter Projections
 
-A new projection type, the slice projection will be added.  A slice projection is
-evaluated similar to the other array projections.  Given a slice projection
+A new projection type, the slice projection will be added.  A slice projection
+is evaluated similar to the other array projections.  Given a slice projection
 which contains a left hand side containing the slice expression and a right
-hand side, the slice expression is evaluated to create a new sub array, and each
-expression on the right hand side is evaluted against each element from the
-array slice to create the final result.
+hand side, the slice expression is evaluated to create a new sub array, and
+each expression on the right hand side is evaluted against each element from
+the array slice to create the final result.
 
 This JEP does not include any modifications to the JMESPath grammar.
 

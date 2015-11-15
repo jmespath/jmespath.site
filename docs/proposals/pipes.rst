@@ -64,8 +64,8 @@ Result:
 .. code-block:: json
 
     [1, 2, 3]
-    
-Not only does this give us the ability to operate on the result of a 
+
+Not only does this give us the ability to operate on the result of a
 projection, but pipe expressions can also be useful for breaking down a complex
 expression into smaller, easier to comprehend, parts.
 
