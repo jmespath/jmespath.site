@@ -34,8 +34,8 @@ level is based on which compliance tests the library can pass.
     - `go-jmespath <https://github.com/jmespath/go-jmespath>`__
     - Fully compliant
 
-In addition to the JMESPath libraries in various programming languages,
-there are a number of miscellaneous JMESPath tools.
+In addition to the JMESPath libraries above, there are a number of
+miscellaneous JMESPath tools.
 
 .. cssclass:: table
 
