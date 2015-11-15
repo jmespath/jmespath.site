@@ -7,3 +7,8 @@ install:
 script: make html
 env:
   secure: Khr9QUaTYeizE1J81nCd3D2mBuA8o5TuBmtzUDnhjr/bBPBJiipmVPeEycyJbDXHxvHdMZKEx7qAGe9cQ+tQqVxAEhaN/CAvkT8j6nDRCYpLuHivqr/77VeFNl0ekx+rR10QEvxOHgYNMHcsNng2I7+KirsQEuLn9zk0NEQVEZs=
+deploy:
+  provider: script
+  script: aws s3 ls s3://jmespath.org/index.html --region us-west-2
+  on:
+    branch: master

@@ -1,1 +1,3 @@
 Sphinx==1.2.2
+# Used for deployment
+awscli==1.9.7
