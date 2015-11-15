@@ -189,10 +189,10 @@ Identifiers
                             %x74 /          ; t    tab             U+0009
                             %x75 4HEXDIG )  ; uXXXX                U+XXXX
 
-An ``identifier`` is the most basic expression and can be used to extract a single
-element from a JSON document.  The return value for an ``identifier`` is the
-value associated with the identifier.  If the ``identifier`` does not exist in
-the JSON document, than a ``null`` value is returned.
+An ``identifier`` is the most basic expression and can be used to extract a
+single element from a JSON document.  The return value for an ``identifier`` is
+the value associated with the identifier.  If the ``identifier`` does not exist
+in the JSON document, than a ``null`` value is returned.
 
 From the grammar rule listed above identifiers can be one of more characters,
 and must start with ``A-Za-z_``.
@@ -409,9 +409,9 @@ Or Expressions
   or-expression     = expression "||" expression
 
 An or expression will evaluate to either the left expression or the right
-expression.  If the evaluation of the left expression is not false it is used as
-the return value.  If the evaluation of the right expression is not false it is
-used as the return value.  If neither the left or right expression are
+expression.  If the evaluation of the left expression is not false it is used
+as the return value.  If the evaluation of the right expression is not false it
+is used as the return value.  If neither the left or right expression are
 non-null, then a value of null is returned.  A false value corresponds to any
 of the following conditions::
 
@@ -447,9 +447,9 @@ And Expressions
 
   and-expression  = expression "&&" expression
 
-An and expression will evaluate to either the left expression or the
-right expression.  If the expression on the left hand side is a truth-like value, then
-the value on the right hand side is returned.  Otherwise the result of the
+An and expression will evaluate to either the left expression or the right
+expression.  If the expression on the left hand side is a truth-like value,
+then the value on the right hand side is returned.  Otherwise the result of the
 expression on the left hand side is returned.  This also reduces to the
 expected truth table:
 
@@ -853,7 +853,8 @@ expressions.
 Data Types
 ----------
 
-In order to support functions, a type system is needed.  The JSON types are used:
+In order to support functions, a type system is needed.  The JSON types are
+used:
 
 * number (integers and double-precision floating-point format in JSON)
 * string

@@ -167,14 +167,14 @@ The input data contains a top level key, "reservations", which is a list.
 Within each list, there is an "instances" key, which is also a list.
 
 The first thing we're doing here is creating a single list from multiple lists
-of instances.  By using the :ref:`flatten` we can take the
-two instances from the first list and the two instances from the second list,
-and combine them into a single list.  Try changing the above expression to just
+of instances.  By using the :ref:`flatten` we can take the two instances from
+the first list and the two instances from the second list, and combine them
+into a single list.  Try changing the above expression to just
 ``reservations[].instances[]`` to see what this flattened list looks like.
 Everything to the right of the ``reservations[].instances[]`` is about taking
-the flattened list and paring it down to contain only the data that we want.  This
-expression is taking each element in the original list and transforming it into
-a three element sublist.  The three elements are:
+the flattened list and paring it down to contain only the data that we want.
+This expression is taking each element in the original list and transforming it
+into a three element sublist.  The three elements are:
 
 * In the ``tags`` list, select the first element in the flattened ``Values``
   list whose ``Key`` has a value of ``Name``.
@@ -424,16 +424,17 @@ this example we are sorting the ``Contents`` array by the value of each
 the second argument describes the key that should be used to sort the array.
 
 The second interesting thing in this expression is that the second argument
-starts with ``&``, which creates an expression type.  Think of this conceptually as
-a reference to an expression that can be evaluated later.  If you are familiar
-with lambda and anonymous functions, expression types are similiar.  The reason
-we use ``&LastModified`` instead of ``LastModified`` is because if the
-expression is ``LastModified``, it would be evaluated before calling the
-function, and given there's no ``LastModified`` key in the outer hash, the
-second second would evaluate to ``null``.  Check out :ref:`function-evaluation`
-in the specification for more information on how functions are evaluated in
-JMESPath.  Also, note that we're taking advantage of the fact that the dates
-are in ISO 8601 format, which can be sorted lexicographically.
+starts with ``&``, which creates an expression type.  Think of this
+conceptually as a reference to an expression that can be evaluated later.  If
+you are familiar with lambda and anonymous functions, expression types are
+similiar.  The reason we use ``&LastModified`` instead of ``LastModified`` is
+because if the expression is ``LastModified``, it would be evaluated before
+calling the function, and given there's no ``LastModified`` key in the outer
+hash, the second second would evaluate to ``null``.  Check out
+:ref:`function-evaluation` in the specification for more information on how
+functions are evaluated in JMESPath.  Also, note that we're taking advantage of
+the fact that the dates are in ISO 8601 format, which can be sorted
+lexicographically.
 
 And finally, the last interesting thing in this expression is the ``[*]``
 immediately after the ``sort_by`` function call.  The reason for this is that

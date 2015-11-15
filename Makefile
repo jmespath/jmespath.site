@@ -14,4 +14,8 @@ clean:
 html:
 	$(MAKE) -C docs/ html
 
+doclint:
+	find . -type f -name "*.rst" | xargs doc8
+
+
 .PHONY: help publish

@@ -331,8 +331,8 @@ the desired result, you can use ``[]`` instead of ``[*]`` to flatten a list:
 ``reservations[].instances[].state``.  Try changing ``[*]`` to ``[]`` in the
 expression above and see how the result changes.
 
-While the :ref:`spec <flatten>` goes into more detail, a simple rule of thumb to use
-for the flatten operator, ``[]``, is that:
+While the :ref:`spec <flatten>` goes into more detail, a simple rule of thumb
+to use for the flatten operator, ``[]``, is that:
 
 * It flattens sublists into the parent list (not recursively, just one level).
 * It creates a projection, so anything on the RHS of the flatten projection is
@@ -365,8 +365,8 @@ Up to this point we've looked at:
 * Flatten projections
 
 Evaluating the RHS of a projection is a basic type of filter.  If the result of
-the expression evaluated against an individual element results in ``null``, then
-the element is excluded from the final result.
+the expression evaluated against an individual element results in ``null``,
+then the element is excluded from the final result.
 
 A filter projection allows you to filter the LHS of the projection *before*
 evaluating the RHS of a projection.
@@ -611,7 +611,8 @@ there are a few things to keep in mind when working with functions:
 Next Steps
 ==========
 
-We've now seen an overview of the JMESPath language.  The next things to do are:
+We've now seen an overview of the JMESPath language.
+The next things to do are:
 
 * See the :doc:`examples`.  You'll see common JMESPath expressions that go
   beyond the tutorial. You'll also see you how to combine multiple features
@@ -619,5 +620,5 @@ We've now seen an overview of the JMESPath language.  The next things to do are:
 * To actually start using JMESPath, pick the language of your choice, and
   check out the :doc:`libraries` page for more information on using JMESPath
   in the language of your choice.
-* Read the :ref:`JMESPath Spec <spec>`, which has the official ABNF grammar and full
-  details of the semantics of the language.
+* Read the :ref:`JMESPath Spec <spec>`, which has the official ABNF grammar and
+  full details of the semantics of the language.
