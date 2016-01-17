@@ -27,7 +27,7 @@ than 20, we're creating a sub list of the name and age values.
 
 
 .. jpexample:: people[?age > `20`].[name, age]
-    :layout: 2cols-long
+    :layout: 2cols-expand
 
     {
       "people": [
@@ -61,7 +61,7 @@ and ``name`` key, we can instead say:
 
 
 .. jpexample:: people[?age > `20`].{name: name, age: age}
-    :layout: 2cols-long
+    :layout: 2cols-expand
 
     {
       "people": [
@@ -90,7 +90,7 @@ using a field as an expression, but they can be more advanced expressions.  For
 example:
 
 .. jpexample:: people[*].{name: name, tags: tags[0]}
-    :layout: 2cols-long
+    :layout: 2cols-expand
 
     {
       "people": [
@@ -122,7 +122,7 @@ Working with Nested Data
 
 
 .. jpexample:: reservations[].instances[].[tags[?Key=='Name'].Values[] | [0], type, state.name]
-    :layout: 2cols-long
+    :layout: 2cols-expand
 
     {
       "reservations": [
@@ -199,7 +199,7 @@ In this example, we're going to look at how you can filter nested hashes.
 
 
 .. jpexample:: people[?general.id==`100`].general | [0]
-    :layout: 2cols-long
+    :layout: 2cols-expand
 
     {
       "people": [
@@ -380,7 +380,7 @@ sort_by
 -------
 
 .. jpexample:: sort_by(Contents, &Date)[*].{Key: Key, Size: Size}
-    :layout: 2cols-long
+    :layout: 2cols-expand
 
     {
       "Contents": [
@@ -461,7 +461,7 @@ Let's look at a modified version of the expression on the `JMESPath front page
 
 
 .. jpexample:: locations[?state == 'WA'].name | sort(@)[-2:] | {WashingtonCities: join(', ', @)}
-    :layout: 2cols-long
+    :layout: 2cols-expand
 
     {
       "locations": [

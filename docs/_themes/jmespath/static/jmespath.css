@@ -109,6 +109,29 @@ h3.section-distinct {
   font-size: 14px;
 }
 
+.jmespath-example-heading {
+  padding: 10px 15px;
+  border: 1px solid #e1e1e8;
+  background-color: #D8D8D8;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.jmespath-example-heading:hover {
+  background-color: #ECEAEA;
+}
+
+.jmespath-example-heading a:hover{
+    text-decoration: none;
+}
+
+.jp-demo-expr {
+    font-family: Consolas, Monaco, Menlo, 'Courier New', monospace;
+    color: black;
+    font-size: 14px;
+    margin-left: 10px;
+}
+
 .panel-danger>.panel-heading {
   background: #E0E0E0;
 }

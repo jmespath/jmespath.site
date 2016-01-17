@@ -4,6 +4,9 @@ from docutils.parsers.rst import Directive, directives
 from docutils import nodes
 
 
+EXAMPLES_COUNT = 0
+
+
 class jmespath_demo_node(nodes.Element):
     pass
 
@@ -36,8 +39,8 @@ class JPExample(Directive):
         env = document.settings.env
         if self.options['layout'] == '2cols':
             _, filename = env.relfn2path('_static/html/jmespath_2col_demo.html')
-        elif self.options['layout'] == '2cols-long':
-            _, filename = env.relfn2path('_static/html/jmespath_2col_long_demo.html')
+        elif self.options['layout'] == '2cols-expand':
+            _, filename = env.relfn2path('_static/html/jmespath_2col_expand_demo.html')
         elif self.options['layout'] == '1col':
             _, filename = env.relfn2path('_static/html/jmespath_1col_demo.html')
         else:
@@ -66,10 +69,14 @@ def setup(app):
 
 
 def visit_jmespath_demo_node(self, node):
+    global EXAMPLES_COUNT
+    EXAMPLES_COUNT += 1
+    idnum = 'jpexample-%s' % EXAMPLES_COUNT
     opts = node.jmespath_options
     with open(node.jmespath_html_filename) as f:
         contents = f.read().format(expression=node.jmespath_expr,
                                    num_rows=opts['rows'],
+                                   idnum=idnum,
                                    jmespath_data=node.jmespath_data)
     self.body.append(contents)
 
