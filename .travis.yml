@@ -5,8 +5,8 @@ python:
 install:
 - pip install -r requirements.txt
 script:
--make html
--make doclint
+- make html
+- make doclint
 env:
   secure: Khr9QUaTYeizE1J81nCd3D2mBuA8o5TuBmtzUDnhjr/bBPBJiipmVPeEycyJbDXHxvHdMZKEx7qAGe9cQ+tQqVxAEhaN/CAvkT8j6nDRCYpLuHivqr/77VeFNl0ekx+rR10QEvxOHgYNMHcsNng2I7+KirsQEuLn9zk0NEQVEZs=
 deploy:
