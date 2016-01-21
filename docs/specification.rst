@@ -83,7 +83,7 @@ The grammar is specified using ABNF, as described in `RFC4234`_
 
     raw-string        = "'" *raw-string-char "'"
     raw-string-char   = (%x20-26 / %x28-5B / %x5D-10FFFF) / raw-string-escape
-    raw-string-escape = raw-string-escape = escape ["'"]
+    raw-string-escape = escape "'"
     literal           = "`" json-value "`"
     unescaped-literal = %x20-21 /       ; space !
                             %x23-5B /   ; # - [
