@@ -195,7 +195,7 @@ single element from a JSON document.  The return value for an ``identifier`` is
 the value associated with the identifier.  If the ``identifier`` does not exist
 in the JSON document, than a ``null`` value is returned.
 
-From the grammar rule listed above identifiers can be one of more characters,
+From the grammar rule listed above identifiers can be one or more characters,
 and must start with ``A-Za-z_``.
 
 An identifier can also be quoted.  This is necessary when an identifier has
