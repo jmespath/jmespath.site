@@ -88,9 +88,14 @@ $(document).ready(function() {
     $('.jmespath-demo').each(function(i, el) {
         function evaluateDemo(el) {
             var expression = $(el).find('.jmespath-expression').val();
-            var inputData = JSON.parse($(el).find('.jmespath-input').val());
-            var result = jmespath.search(inputData, expression);
-            $(el).find('.jmespath-result').text(JSON.stringify(result, null, 2));
+            var result;
+            try {
+                var inputData = JSON.parse($(el).find('.jmespath-input').val());
+                result = JSON.stringify(jmespath.search(inputData, expression), null, 2);
+            } catch(e) {
+                result = 'Error: ' + e.message + ' (' + e.constructor.name + ')';
+            }
+            $(el).find('.jmespath-result').text(result);
         }
         $(el).find('.jmespath-expression').bind('keyup', function() {
             evaluateDemo(el);
