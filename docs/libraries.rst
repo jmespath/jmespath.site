@@ -33,6 +33,9 @@ level is based on which compliance tests the library can pass.
   * - Go
     - `go-jmespath <https://github.com/jmespath/go-jmespath>`__
     - Fully compliant
+  * - Java
+    - `jmespath-java <https://github.com/burtcorp/jmespath-java>`__
+    - Fully compliant
 
 In addition to the JMESPath libraries above, there are a number of
 miscellaneous JMESPath tools.
