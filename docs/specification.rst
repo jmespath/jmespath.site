@@ -82,8 +82,10 @@ The grammar is specified using ABNF, as described in `RFC4234`_
     expression-type     = "&" expression
 
     raw-string        = "'" *raw-string-char "'"
-    raw-string-char   = (%x20-26 / %x28-5B / %x5D-10FFFF) / raw-string-escape
-    raw-string-escape = escape "'"
+    raw-string-char   = (%x20-26 / %x28-5B / %x5D-10FFFF) / preserved-escape /
+                          raw-string-escape
+    preserved-escape  = escape (%x20-26 / %28-5B / %x5D-10FFFF)
+    raw-string-escape = escape ("'" / escape)
     literal           = "`" json-value "`"
     unescaped-literal = %x20-21 /       ; space !
                             %x23-5B /   ; # - [
@@ -714,8 +716,10 @@ Raw String Literals
 ::
 
   raw-string        = "'" *raw-string-char "'"
-  raw-string-char   = (%x20-26 / %x28-5B / %x5D-10FFFF) / raw-string-escape
-  raw-string-escape = escape ["'"]
+  raw-string-char   = (%x20-26 / %x28-5B / %x5D-10FFFF) / preserved-escape /
+                        raw-string-escape
+  preserved-escape  = escape (%x20-26 / %28-5B / %x5D-10FFFF)
+  raw-string-escape = escape ("'" / escape)
 
 A raw string is an expression that allows for a literal string value to be
 specified.  The result of evaluating the raw string literal expression is the
@@ -744,6 +748,7 @@ additional processing that JSON strings supports including:
   search('[baz]', "") -> "[baz]"
   search('[baz]', "") -> "[baz]"
   search('\u03a6', "") -> "\u03a6"
+  search('\\', "") -> "\\"
 
 
 .. _filterexpressions:
