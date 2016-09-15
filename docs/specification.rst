@@ -1324,6 +1324,31 @@ If you would like a specific order, consider using the ``sort_by`` function.
     - ``[["z", "last"], ["b", "second"]]``
 
 
+.. _func-from-items:
+
+from_items
+---------
+
+::
+
+    object from_items(array[array[any]] $arg)
+
+Returns an object from the provided array of key value pairs. This function
+is the inverse of :ref:`func-items`.
+
+.. cssclass:: table
+
+.. list-table:: Examples
+:header-rows: 1
+
+  * - Given
+    - Expression
+    - Result
+  * - ``[["one", 1], ["two", 2]]``
+    - ``from_items(@)``
+    - ``{"one": 1, "two": 2}``
+
+
 .. _func-join:
 
 join
@@ -1882,31 +1907,6 @@ to_array
     - ``[true]``
   * - ``to_array(`{"foo": "bar"}`)``
     - ``[{"foo": "bar"}]``
-
-
-.. _func-to-object:
-
-to_object
----------
-
-::
-
-    object to_object(array[array[any]] $arg)
-
-Returns an object from the provided array of key value pairs. This function
-is the inverse of :ref:`func-items`.
-
-.. cssclass:: table
-
-.. list-table:: Examples
-  :header-rows: 1
-
-  * - Given
-    - Expression
-    - Result
-  * - ``[["one", 1], ["two", 2]]``
-    - ``to_object(@)``
-    - ``{"one": 1, "two": 2}``
 
 
 .. _func-to-string:
