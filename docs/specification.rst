@@ -1327,7 +1327,7 @@ If you would like a specific order, consider using the ``sort_by`` function.
 .. _func-from-items:
 
 from_items
----------
+----------
 
 ::
 
@@ -1339,7 +1339,7 @@ is the inverse of :ref:`func-items`.
 .. cssclass:: table
 
 .. list-table:: Examples
-:header-rows: 1
+  :header-rows: 1
 
   * - Given
     - Expression
