@@ -36,6 +36,9 @@ level is based on which compliance tests the library can pass.
   * - Java
     - `jmespath-java <https://github.com/burtcorp/jmespath-java>`__
     - Fully compliant
+  * - Rust
+    - `jmespath.rs <https://github.com/mtdowling/jmespath.rs>`__
+    - Fully compliant
 
 In addition to the JMESPath libraries above, there are a number of
 miscellaneous JMESPath tools.
