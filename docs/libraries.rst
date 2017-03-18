@@ -39,6 +39,9 @@ level is based on which compliance tests the library can pass.
   * - Rust
     - `jmespath.rs <https://github.com/mtdowling/jmespath.rs>`__
     - Fully compliant
+  * - DotNet
+    - `jmespath.net <https://github.com/jdevillard/JmesPath.Net>`__
+    - Fully compliant
 
 In addition to the JMESPath libraries above, there are a number of
 miscellaneous JMESPath tools.
