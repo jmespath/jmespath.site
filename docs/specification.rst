@@ -417,7 +417,7 @@ expression.  If the evaluation of the left expression is not false it is used
 as the return value.  If the evaluation of the right expression is not false it
 is used as the return value.  If neither the left or right expression are
 non-null, then a value of null is returned.  A false value corresponds to any
-of the following conditions::
+of the following conditions:
 
 * Empty list: ``[]``
 * Empty object: ``{}``
