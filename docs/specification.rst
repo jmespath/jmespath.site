@@ -693,9 +693,10 @@ A literal expression is an expression that allows arbitrary JSON objects to be
 specified.  This is useful in filter expressions as well as multi select hashes
 (to create arbitrary key value pairs), but is allowed anywhere an expression is
 allowed.  The specification includes the ABNF for JSON, implementations should
-use an existing JSON parser to parse literal values.  Note that the ``\```
-character must now be escaped in a ``json-value`` which means implementations
-need to handle this case before passing the resulting string to a JSON parser.
+use an existing JSON parser to parse literal values.  Note that the
+:literal:`\`` character must now be escaped in a ``json-value`` which means
+implementations need to handle this case before passing the resulting string to
+a JSON parser.
 
 
 Examples
@@ -941,7 +942,7 @@ to be applied to every element in a projection.  For example, given the input
 data of ``["1", "2", "3", "notanumber", true]``, the following expression can
 be used to convert (and filter) all elements to numbers::
 
-    search([].to_number(@), ``["1", "2", "3", "notanumber", true]``) -> [1, 2, 3]
+    search([].to_number(@), `["1", "2", "3", "notanumber", true]`) -> [1, 2, 3]
 
 This provides a simple mechanism to explicitly convert types when needed.
 
@@ -1239,13 +1240,13 @@ function returns ``false``.
     - Expression
     - Result
   * - ``foobarbaz``
-    - ``ends_with(@, ``baz``)``
+    - ``ends_with(@, `baz`)``
     - ``true``
   * - ``foobarbaz``
-    - ``ends_with(@, ``foo``)``
+    - ``ends_with(@, `foo`)``
     - ``false``
   * - ``foobarbaz``
-    - ``ends_with(@, ``z``)``
+    - ``ends_with(@, `z`)``
     - ``true``
 
 
@@ -1300,7 +1301,7 @@ together using the ``$glue`` argument as a separator between each.
     - ``join(`, `, @)``
     - "a, b"
   * - ``["a", "b"]``
-    - ``join(````, @)``
+    - :literal:`join(\`\`, @)`
     - "ab"
   * - ``["a", false, "b"]``
     - ``join(`, `, @)``
@@ -1759,13 +1760,13 @@ this function returns ``false``.
     - Expression
     - Result
   * - ``foobarbaz``
-    - ``starts_with(@, ``foo``)``
+    - ``starts_with(@, `foo`)``
     - ``true``
   * - ``foobarbaz``
-    - ``starts_with(@, ``baz``)``
+    - ``starts_with(@, `baz`)``
     - ``false``
   * - ``foobarbaz``
-    - ``starts_with(@, ``f``)``
+    - ``starts_with(@, `f`)``
     - ``true``
 
 
