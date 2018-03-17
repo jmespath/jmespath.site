@@ -693,9 +693,10 @@ A literal expression is an expression that allows arbitrary JSON objects to be
 specified.  This is useful in filter expressions as well as multi select hashes
 (to create arbitrary key value pairs), but is allowed anywhere an expression is
 allowed.  The specification includes the ABNF for JSON, implementations should
-use an existing JSON parser to parse literal values.  Note that the ``\```
-character must now be escaped in a ``json-value`` which means implementations
-need to handle this case before passing the resulting string to a JSON parser.
+use an existing JSON parser to parse literal values.  Note that the
+:literal:`\`` character must now be escaped in a ``json-value`` which means
+implementations need to handle this case before passing the resulting string to
+a JSON parser.
 
 
 Examples
@@ -941,7 +942,7 @@ to be applied to every element in a projection.  For example, given the input
 data of ``["1", "2", "3", "notanumber", true]``, the following expression can
 be used to convert (and filter) all elements to numbers::
 
-    search([].to_number(@), ``["1", "2", "3", "notanumber", true]``) -> [1, 2, 3]
+    search([].to_number(@), `["1", "2", "3", "notanumber", true]`) -> [1, 2, 3]
 
 This provides a simple mechanism to explicitly convert types when needed.
 
@@ -1091,9 +1092,9 @@ As a final example, here is the steps for evaluating ``abs(to_number(bar))``:
   * - Expression
     - Result
   * - ``abs(1)``
-    - 1
+    - ``1``
   * - ``abs(-1)``
-    - 1
+    - ``1``
   * - ``abs(`abc`)``
     - ``<error: invalid-type>``
 
@@ -1121,7 +1122,7 @@ An empty array will produce a return value of null.
     - Result
   * - ``[10, 15, 20]``
     - ``avg(@)``
-    - 15
+    - ``15``
   * - ``[10, false, 20]``
     - ``avg(@)``
     - ``<error: invalid-type>``
@@ -1210,11 +1211,11 @@ Returns the next highest integer value by rounding up if necessary.
   * - Expression
     - Result
   * - ``ceil(`1.001`)``
-    - 2
+    - ``2``
   * - ``ceil(`1.9`)``
-    - 2
+    - ``2``
   * - ``ceil(`1`)``
-    - 1
+    - ``1``
   * - ``ceil(`abc`)``
     - ``null``
 
@@ -1239,13 +1240,13 @@ function returns ``false``.
     - Expression
     - Result
   * - ``foobarbaz``
-    - ``ends_with(@, ``baz``)``
+    - ``ends_with(@, `baz`)``
     - ``true``
   * - ``foobarbaz``
-    - ``ends_with(@, ``foo``)``
+    - ``ends_with(@, `foo`)``
     - ``false``
   * - ``foobarbaz``
-    - ``ends_with(@, ``z``)``
+    - ``ends_with(@, `z`)``
     - ``true``
 
 
@@ -1268,11 +1269,11 @@ Returns the next lowest integer value by rounding down if necessary.
   * - Expression
     - Result
   * - ``floor(`1.001`)``
-    - 1
+    - ``1``
   * - ``floor(`1.9`)``
-    - 1
+    - ``1``
   * - ``floor(`1`)``
-    - 1
+    - ``1``
 
 
 .. _func-join:
@@ -1298,10 +1299,10 @@ together using the ``$glue`` argument as a separator between each.
     - Result
   * - ``["a", "b"]``
     - ``join(`, `, @)``
-    - "a, b"
+    - ``"a, b"``
   * - ``["a", "b"]``
-    - ``join(````, @)``
-    - "ab"
+    - :literal:`join(\`\`, @)`
+    - ``"ab"``
   * - ``["a", false, "b"]``
     - ``join(`, `, @)``
     - ``<error: invalid-type>``
@@ -1371,25 +1372,25 @@ Returns the length of the given argument using the following types rules:
     - Result
   * - n/a
     - ``length(`abc`)``
-    - 3
+    - ``3``
   * - "current"
     - ``length(@)``
-    - 7
+    - ``7``
   * - "current"
     - ``length(not_there)``
     - ``<error: invalid-type>``
   * - ``["a", "b", "c"]``
     - ``length(@)``
-    - 3
+    - ``3``
   * - ``[]``
     - ``length(@)``
-    - 0
+    - ``0``
   * - ``{}``
     - ``length(@)``
-    - 0
+    - ``0``
   * - ``{"foo": "bar", "baz": "bam"}``
     - ``length(@)``
-    - 2
+    - ``2``
 
 .. _func-map:
 
@@ -1447,10 +1448,10 @@ An empty array will produce a return value of null.
     - Result
   * - ``[10, 15]``
     - ``max(@)``
-    - 15
+    - ``15``
   * - ``["a", "b"]``
     - ``max(@)``
-    - "b"
+    - ``"b"``
   * - ``["a", 2, "b"]``
     - ``max(@)``
     - ``<error: invalid-type>``
@@ -1484,13 +1485,13 @@ given input.
   * - ``max_by(people, &age)``
     - ``{"age": 50, "age_str": "50", "bool": false, "name": "d"}``
   * - ``max_by(people, &age).age``
-    - 50
+    - ``50``
   * - ``max_by(people, &to_number(age_str))``
     - ``{"age": 50, "age_str": "50", "bool": false, "name": "d"}``
   * - ``max_by(people, &age_str)``
-    - <error: invalid-type>
+    - ``<error: invalid-type>``
   * - ``max_by(people, age)``
-    - <error: invalid-type>
+    - ``<error: invalid-type>``
 
 
 .. _func-merge:
@@ -1547,10 +1548,10 @@ Returns the lowest found number in the provided ``$collection`` argument.
     - Result
   * - ``[10, 15]``
     - ``min(@)``
-    - 10
+    - ``10``
   * - ``["a", "b"]``
     - ``min(@)``
-    - "a"
+    - ``"a"``
   * - ``["a", 2, "b"]``
     - ``min(@)``
     - ``<error: invalid-type>``
@@ -1584,7 +1585,7 @@ given input.
   * - ``min_by(people, &age)``
     - ``{"age": 10, "age_str": "10", "bool": true, "name": 3}``
   * - ``min_by(people, &age).age``
-    - 10
+    - ``10``
   * - ``min_by(people, &to_number(age_str))``
     - ``{"age": 10, "age_str": "10", "bool": true, "name": 3}``
   * - ``min_by(people, &age_str)``
@@ -1617,7 +1618,7 @@ then a value of ``null`` is returned.
     - Result
   * - ``{"a": null, "b": null, "c": [], "d": "foo"}``
     - ``not_null(no_exist, a, b, c, d)``
-    - []
+    - ``[]``
   * - ``{"a": null, "b": null, "c": [], "d": "foo"}``
     - ``not_null(a, b, `null`, d, c)``
     - ``"foo"``
@@ -1759,13 +1760,13 @@ this function returns ``false``.
     - Expression
     - Result
   * - ``foobarbaz``
-    - ``starts_with(@, ``foo``)``
+    - ``starts_with(@, `foo`)``
     - ``true``
   * - ``foobarbaz``
-    - ``starts_with(@, ``baz``)``
+    - ``starts_with(@, `baz`)``
     - ``false``
   * - ``foobarbaz``
-    - ``starts_with(@, ``f``)``
+    - ``starts_with(@, `f`)``
     - ``true``
 
 
@@ -1790,16 +1791,16 @@ An empty array will produce a return value of 0.
     - Result
   * - ``[10, 15]``
     - ``sum(@)``
-    - 25
+    - ``25``
   * - ``[10, false, 20]``
     - ``max(@)``
     - ``<error: invalid-type>``
   * - ``[10, false, 20]``
     - ``sum([].to_number(@))``
-    - 30
+    - ``30``
   * - ``[]``
     - ``sum(@)``
-    - 0
+    - ``0``
 
 
 .. _func-to-array:
@@ -1913,30 +1914,30 @@ The return value MUST be one of the following:
   * - Given
     - Expression
     - Result
-  * - "foo"
+  * - ``"foo"``
     - ``type(@)``
-    - "string"
+    - ``"string"``
   * - ``true``
     - ``type(@)``
-    - "boolean"
+    - ``"boolean"``
   * - ``false``
     - ``type(@)``
-    - "boolean"
+    - ``"boolean"``
   * - ``null``
     - ``type(@)``
-    - "null"
-  * - 123
+    - ``"null"``
+  * - ``123``
     - ``type(@)``
-    - number
-  * - 123.05
+    - ``number``
+  * - ``123.05``
     - ``type(@)``
-    - number
+    - ``number``
   * - ``["abc"]``
     - ``type(@)``
-    - "array"
+    - ``"array"``
   * - ``{"abc": "123"}``
     - ``type(@)``
-    - "object"
+    - ``"object"``
 
 
 .. _func-values:
