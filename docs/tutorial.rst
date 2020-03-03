@@ -306,7 +306,7 @@ Here's an example of that:
         {
           "instances": [
             {"state": "terminated"},
-            {"state": "runnning"}
+            {"state": "running"}
           ]
         }
       ]

@@ -1032,7 +1032,7 @@ Evaluating ``abs(foo)`` works as follows:
 
 1. Evaluate the input argument against the current data::
 
-     search(foo, {"foo": -1, "bar": 2"}) -> -1
+     search(foo, {"foo": -1, "bar": "2"}) -> -1
 
 2. Validate the type of the resolved argument.  In this case
    ``-1`` is of type ``number`` so it passes the type check.
@@ -1049,7 +1049,7 @@ Below is the same steps for evaluating ``abs(bar)``:
 
 1. Evaluate the input argument against the current data::
 
-     search(bar, {"foo": -1, "bar": 2"}) -> "2"
+     search(bar, {"foo": -1, "bar": "2"}) -> "2"
 
 2. Validate the type of the resolved argument.  In this case
    ``"2"`` is of type ``string`` so we immediately indicate that
