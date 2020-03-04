@@ -31,10 +31,10 @@ Motivation
 ==========
 
 Raw string literals are provided in `various programming languages
-<http://en.wikipedia.org/wiki/String_literal#Raw_strings>`_ in order to prevent
+<https://en.wikipedia.org/wiki/String_literal#Raw_strings>`_ in order to prevent
 language specific interpretation (i.e., JSON parsing) and remove the need for
 escaping, avoiding a common problem called `leaning toothpick syndrome (LTS)
-<http://en.wikipedia.org/wiki/Leaning_toothpick_syndrome>`_. Leaning toothpick
+<https://en.wikipedia.org/wiki/Leaning_toothpick_syndrome>`_. Leaning toothpick
 syndrome is an issue in which strings become unreadable due to excessive use of
 escape characters in order to avoid delimiter collision (e.g., ``\\\\\\``).
 
@@ -296,7 +296,7 @@ Use a customizable delimiter
 ----------------------------
 
 Several languages allow for a custom delimiter to be placed around a raw
-string. For example, Lua allows for a `long bracket <http://www.lua.org/manual/5.2/manual.html#3.1>`_ notation in which raw
+string. For example, Lua allows for a `long bracket <https://www.lua.org/manual/5.2/manual.html#3.1>`_ notation in which raw
 strings are surrounded by ``[[]]`` with any number of balanced `=` characters
 between the brackets::
 
@@ -309,5 +309,5 @@ the appropriate number of matching characters.
 
 The addition of a string literal as described in this JEP does not preclude a
 later addition of a heredoc or delimited style string literal as provided by
-languages like Lua, `D <http://dlang.org/lex.html#DelimitedString>`_,
-`C++ <http://en.wikipedia.org/wiki/C%2B%2B11#New_string_literals>`_, etc...
+languages like Lua, `D <https://dlang.org/lex.html#DelimitedString>`_,
+`C++ <https://en.wikipedia.org/wiki/C%2B%2B11#New_string_literals>`_, etc...

@@ -51,7 +51,7 @@ def create_sitemap(app, exception):
     sitemap_filename = os.path.join(app.outdir, 'sitemap.xml')
     print("Generating sitemap.xml in %s" % sitemap_filename)
     root = ET.Element("urlset")
-    root.set("xmlns", "http://www.sitemaps.org/schemas/sitemap/0.9")
+    root.set("xmlns", "https://www.sitemaps.org/schemas/sitemap/0.9")
     for link in app.sitemap_links:
         url = ET.SubElement(root, "url")
         ET.SubElement(url, "loc").text = link

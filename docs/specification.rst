@@ -834,7 +834,7 @@ Examples
   search(foo[?a==b], {"foo": [{"a": 1, "b": 2}, {"a": 2, "b": 2}]}) -> [{"a": 2, "b": 2}]
 
 
-.. _RFC4234: http://tools.ietf.org/html/rfc4234
+.. _RFC4234: https://tools.ietf.org/html/rfc4234
 
 
 .. _functions:
