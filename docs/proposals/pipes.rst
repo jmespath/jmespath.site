@@ -100,7 +100,7 @@ The following modified JMESPath grammar supports piped expressions.
                         %x61-7A / ; a-z
                         %x7F-10FFFF
 
-.. _RFC4234: http://tools.ietf.org/html/rfc4234
+.. _RFC4234: https://tools.ietf.org/html/rfc4234
 
 .. note::
 

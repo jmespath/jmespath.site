@@ -54,7 +54,7 @@ html_title = 'JMESPath'
 html_theme_path = ['_themes']
 
 html_theme_options = {
-    "base_url": "http://jmespath.org",
+    "base_url": "https://jmespath.org",
 }
 
 

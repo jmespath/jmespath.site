@@ -10,7 +10,7 @@ Nested Expressions
 Abstract
 ========
 
-This document proposes modifying the `JMESPath grammar <http://jmespath.readthedocs.org/en/latest/specification.html#grammar>`_
+This document proposes modifying the `JMESPath grammar <https://jmespath.readthedocs.org/en/latest/specification.html#grammar>`_
 to support arbitrarily nested expressions within ``multi-select-list`` and
 ``multi-select-hash`` expressions.
 
@@ -218,4 +218,4 @@ and is specified using ABNF, as described in `RFC4234`_
                         %x61-7A / ; a-z
                         %x7F-10FFFF
 
-.. _RFC4234: http://tools.ietf.org/html/rfc4234
+.. _RFC4234: https://tools.ietf.org/html/rfc4234
