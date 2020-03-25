@@ -886,7 +886,7 @@ expression creates an array containing the total number of elements in the
 
 ::
 
-    foo[].[count(@), bar]
+    foo[].[length(@), bar]
 
 JMESPath assumes that all function arguments operate on the current node unless
 the argument is a ``literal`` or ``number`` token.  Because of this, an
