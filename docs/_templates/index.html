@@ -20,10 +20,6 @@
     <div class="col-md-8">
       <div class="jmespath-demo">
         <form>
-          <div class="left-inner-addon">
-            <span class="glyphicon glyphicon-search"></span>
-            <input class="form-control jmespath-expression" type="text" placeholder="Expression" value="locations[?state == 'WA'].name | sort(@) | {WashingtonCities: join(', ', @)}" size="40"/>
-          </div>
           <textarea class="form-control jmespath-input" rows="8">
 {
   "locations": [
@@ -33,6 +29,10 @@
     {"name": "Olympia", "state": "WA"}
   ]
 }</textarea>
+          <div class="left-inner-addon">
+            <span class="glyphicon glyphicon-search"></span>
+            <input class="form-control jmespath-expression" type="text" placeholder="Expression" value="locations[?state == 'WA'].name | sort(@) | {WashingtonCities: join(', ', @)}" size="40"/>
+          </div>
         </form>
         <h3>Result</h3>
         <pre class="jmespath-result"></pre>
