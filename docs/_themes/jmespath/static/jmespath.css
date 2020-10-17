@@ -97,6 +97,7 @@ h3.section-distinct {
 .jmespath-demo .jmespath-expression {
   font-family: Consolas, Monaco, Menlo, 'Courier New', monospace;
   font-size: 14px;
+  margin-top: 20px;
   margin-bottom: 20px;
 }
 .jmespath-demo .jmespath-result {
