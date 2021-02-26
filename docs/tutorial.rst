@@ -206,7 +206,7 @@ of the spec, but the main points are:
 
 You can try this out in the demo above.  Notice how  ``people[*].first`` only
 included three elements, even though the people array has four elements.
-This is because the last element, ``{"missing": "different"}`` evalues to
+This is because the last element, ``{"missing": "different"}`` evaluates to
 ``null`` when the expression ``first`` is applied, and ``null`` values are not
 added to the collected result array.  If you try the expression ``foo[*].bar``
 you'll see a result of ``null``, because the value associated with the ``foo``
