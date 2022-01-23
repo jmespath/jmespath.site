@@ -419,7 +419,7 @@ sort_by
 
 The first interesting thing here if the use of the function ``sort_by``.  In
 this example we are sorting the ``Contents`` array by the value of each
-``LastModified`` key in each element in the ``Contents`` array.  The
+``Date`` key in each element in the ``Contents`` array.  The
 ``sort_by`` function takes two arguments.  The first argument is an array, and
 the second argument describes the key that should be used to sort the array.
 
@@ -427,9 +427,9 @@ The second interesting thing in this expression is that the second argument
 starts with ``&``, which creates an expression type.  Think of this
 conceptually as a reference to an expression that can be evaluated later.  If
 you are familiar with lambda and anonymous functions, expression types are
-similiar.  The reason we use ``&LastModified`` instead of ``LastModified`` is
-because if the expression is ``LastModified``, it would be evaluated before
-calling the function, and given there's no ``LastModified`` key in the outer
+similiar.  The reason we use ``&Date`` instead of ``Date`` is
+because if the expression is ``Date``, it would be evaluated before
+calling the function, and given there's no ``Date`` key in the outer
 hash, the second second would evaluate to ``null``.  Check out
 :ref:`function-evaluation` in the specification for more information on how
 functions are evaluated in JMESPath.  Also, note that we're taking advantage of
