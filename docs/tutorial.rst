@@ -593,7 +593,7 @@ string ``foo``.
     }
 
 The ``@`` character in the example above refers to the current element being
-evaluated in ``myarray``.  The expression ``contains(@, `foo`)`` will return
+evaluated in ``myarray``.  The expression ``contains(@, 'foo')`` will return
 ``true`` if the current element in the ``myarray`` array contains the string
 ``foo``.
 

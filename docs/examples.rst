@@ -185,7 +185,7 @@ The most interesting of those three expressions is the
 ``tags[?Key=='Name'].Values[] | [0]`` part.  Let's examine that further.
 
 The first thing to notice is the we're filtering down the list associated
-with the ``tags`` key.  The ``tags[?Key==`Name`]`` tells us to only include
+with the ``tags`` key.  The ``tags[?Key=='Name']`` tells us to only include
 list elements that contain a ``Key`` whose value is ``Name``.  From those
 filtered list elements we're going to take the ``Values`` key and flatten
 the list.  Finally, the ``| [0]`` will take the entire list and extract the
