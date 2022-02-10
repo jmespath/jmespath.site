@@ -1095,7 +1095,7 @@ As a final example, here is the steps for evaluating ``abs(to_number(bar))``:
     - ``1``
   * - ``abs(-1)``
     - ``1``
-  * - ``abs(`abc`)``
+  * - ``abs('abc')``
     - ``<error: invalid-type>``
 
 
@@ -1161,34 +1161,34 @@ the string contains the provided ``$search`` argument.
     - Expression
     - Result
   * - n/a
-    - ``contains(`foobar`, `foo`)``
+    - ``contains('foobar', 'foo')``
     - ``true``
   * - n/a
-    - ``contains(`foobar`, `not`)``
+    - ``contains('foobar', 'not')``
     - ``false``
   * - n/a
-    - ``contains(`foobar`, `bar`)``
+    - ``contains('foobar', 'bar')``
     - ``true``
   * - n/a
-    - ``contains(`false`, `bar`)``
+    - ``contains(`false`, 'bar')``
     - ``<error: invalid-type>``
   * - n/a
-    - ``contains(`foobar`, 123)``
+    - ``contains('foobar', 123)``
     - ``false``
   * - ``["a", "b"]``
-    - ``contains(@, `a`)``
+    - ``contains(@, 'a')``
     - ``true``
   * - ``["a"]``
-    - ``contains(@, `a`)``
+    - ``contains(@, 'a')``
     - ``true``
   * - ``["a"]``
-    - ``contains(@, `b`)``
+    - ``contains(@, 'b')``
     - ``false``
   * - ``["foo", "bar"]``
-    - ``contains(@, `foo`)``
+    - ``contains(@, 'foo')``
     - ``true``
   * - ``["foo", "bar"]``
-    - ``contains(@, `b`)``
+    - ``contains(@, 'b')``
     - ``false``
 
 
@@ -1216,7 +1216,7 @@ Returns the next highest integer value by rounding up if necessary.
     - ``2``
   * - ``ceil(`1`)``
     - ``1``
-  * - ``ceil(`abc`)``
+  * - ``ceil(`"abc"`)``
     - ``null``
 
 
@@ -1239,14 +1239,14 @@ function returns ``false``.
   * - Given
     - Expression
     - Result
-  * - ``foobarbaz``
-    - ``ends_with(@, `baz`)``
+  * - ``"foobarbaz"``
+    - ``ends_with(@, 'baz')``
     - ``true``
-  * - ``foobarbaz``
-    - ``ends_with(@, `foo`)``
+  * - ``"foobarbaz"``
+    - ``ends_with(@, 'foo')``
     - ``false``
-  * - ``foobarbaz``
-    - ``ends_with(@, `z`)``
+  * - ``"foobarbaz"``
+    - ``ends_with(@, 'z')``
     - ``true``
 
 
@@ -1298,16 +1298,16 @@ together using the ``$glue`` argument as a separator between each.
     - Expression
     - Result
   * - ``["a", "b"]``
-    - ``join(`, `, @)``
+    - ``join(', ', @)``
     - ``"a, b"``
   * - ``["a", "b"]``
-    - :literal:`join(\`\`, @)`
+    - ``join('', @)``
     - ``"ab"``
   * - ``["a", false, "b"]``
-    - ``join(`, `, @)``
+    - ``join(', ', @)``
     - ``<error: invalid-type>``
   * - ``[false]``
-    - ``join(`, `, @)``
+    - ``join(', ', @)``
     - ``<error: invalid-type>``
 
 .. _func-keys:
@@ -1371,8 +1371,8 @@ Returns the length of the given argument using the following types rules:
     - Expression
     - Result
   * - n/a
-    - ``length(`abc`)``
-    - ``3``
+    - ``length('abc')``
+    - 3
   * - "current"
     - ``length(@)``
     - ``7``
@@ -1654,7 +1654,7 @@ Reverses the order of the ``$argument``.
   * - ``["a", "b", "c", 1, 2, 3]``
     - ``reverse(@)``
     - ``[3, 2, 1, "c", "b", "a"]``
-  * - ``"abcd``
+  * - ``"abcd"``
     - ``reverse(@)``
     - ``dcba``
 
@@ -1759,14 +1759,14 @@ this function returns ``false``.
   * - Given
     - Expression
     - Result
-  * - ``foobarbaz``
-    - ``starts_with(@, `foo`)``
+  * - ``"foobarbaz"``
+    - ``starts_with(@, 'foo')``
     - ``true``
-  * - ``foobarbaz``
-    - ``starts_with(@, `baz`)``
+  * - ``"foobarbaz"``
+    - ``starts_with(@, 'baz')``
     - ``false``
-  * - ``foobarbaz``
-    - ``starts_with(@, `f`)``
+  * - ``"foobarbaz"``
+    - ``starts_with(@, 'f')``
     - ``true``
 
 
