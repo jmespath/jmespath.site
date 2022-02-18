@@ -1,0 +1,57 @@
+name: build-sphinx-to-gh-pages
+
+env:
+  GITHUB_ACTOR: Springcomp
+  GITHUB_REPOSITORY: jmespath-unofficial/jmespath.site
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+
+  build-sphinx-job:
+    runs-on: ubuntu-latest
+    container: debian:buster-slim
+
+    steps:
+      - name: 📚 checkout
+        uses: actions/checkout@v2
+
+      - name: install prerequisites
+        run: |
+          set -x
+          apt-get update
+          apt-get install -y \
+            git \
+            make \
+            python3-sphinx
+        shell: bash
+
+      - name: prepare GitHub pages
+        run: |
+          git init
+          git config --local user.name "${GITHUB_ACTOR}"
+          git config --local user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+          git remote add deploy "https://${GITHUB_ACTOR}:${GITHUB_PERSONAL_ACCESS_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" 
+          git checkout -b gh-pages
+          touch docs/.nojekyll
+        shell: bash
+        env:
+          GITHUB_PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+
+      - name: build Sphinx
+        run: |
+          make clean
+          make html
+        shell: bash
+
+      - name: publish GitHub pages
+        run: |
+          cp -r documentation/_build/html/* docs/
+          git add -f --all docs/*
+          git add -f docs/.nojekyll
+          git commit -am "[gh-pages] Publishing changes to GitHub pages"
+          git push deploy gh-pages --force
+        shell: bash
