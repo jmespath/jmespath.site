@@ -45,6 +45,9 @@ level is based on which compliance tests the library can pass.
   * - C++
     - `jmespath.cpp <https://github.com/robertmrk/jmespath.cpp>`__
     - Fully compliant
+  * - Elixir
+    - `ex-jmes <https://github.com/stephan83/ex-jmes>`__
+    - Fully compliant
 
 In addition to the JMESPath libraries above, there are a number of
 miscellaneous JMESPath tools.
