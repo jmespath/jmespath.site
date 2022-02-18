@@ -2,20 +2,16 @@ help:
 	@echo 'Makefile for a pelican Web site                                        '
 	@echo '                                                                       '
 	@echo 'Usage:                                                                 '
-	@echo '   make publish                     upload to s3 bucket '
+	@echo '   make clean                                                          '
+	@echo '   make html                                                           '
 
-
-publish:
-	$(MAKE) -C docs/ publish
 
 clean:
-	$(MAKE) -C docs/ clean
+	$(MAKE) -C documentation/ clean
 
 html:
-	$(MAKE) -C docs/ html
+	$(MAKE) -C documentation/ html
 
 doclint:
 	find . -type f -name "*.rst" | xargs doc8
 
-
-.PHONY: help publish
