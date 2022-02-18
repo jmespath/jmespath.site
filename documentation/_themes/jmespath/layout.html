@@ -111,11 +111,11 @@ $(document).ready(function() {
     </div>
     <div class="collapse navbar-collapse" id="toggle-main-nav">
       <ul class="nav navbar-nav">
-        <li><a href="/">Home</a></li>
-        <li><a href="/tutorial.html">Tutorial</a></li>
-        <li><a href="/examples.html">Examples</a></li>
-        <li><a href="/specification.html">Specification</a></li>
-        <li><a href="/libraries.html">Libraries</a></li>
+        <li><a href="{{ pathto('index.html', 1) }}">Home</a></li>
+        <li><a href="{{ pathto('tutorial.html', 1) }}">Tutorial</a></li>
+        <li><a href="{{ pathto('examples.html', 1) }}">Examples</a></li>
+        <li><a href="{{ pathto('specification.html', 1) }}">Specification</a></li>
+        <li><a href="{{ pathto('libraries.html', 1) }}">Libraries</a></li>
         <li><a href="https://github.com/jmespath">Github</a></li>
       </ul>
     </div>
