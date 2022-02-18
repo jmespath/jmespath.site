@@ -2,7 +2,7 @@
 JMESPath Libraries
 ==================
 
-The JMESPath specification is implemented in varioues languages.  Each list
+The JMESPath specification is implemented in various languages.  Each list
 below shows JMESPath libraries as well as the compliance level.  The compliance
 level is based on which compliance tests the library can pass.
 
