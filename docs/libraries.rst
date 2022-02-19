@@ -15,20 +15,14 @@ level is based on which compliance tests the library can pass.
   * - Language
     - Name
     - Compliance Level
-  * - Python
-    - `jmespath.py <https://github.com/jmespath/jmespath.py>`__
+  * - C++
+    - `jmespath.cpp <https://github.com/robertmrk/jmespath.cpp>`__
     - Fully compliant
-  * - PHP
-    - `jmespath.php <https://github.com/jmespath/jmespath.php>`__
+  * - .NET
+    - `jmespath.net <https://github.com/jdevillard/JmesPath.Net>`__
     - Fully compliant
-  * - Javascript
-    - `jmespath.js <https://github.com/jmespath/jmespath.js>`__
-    - Fully compliant
-  * - Ruby
-    - `jmespath.rb <https://github.com/trevorrowe/jmespath.rb>`__
-    - Fully compliant
-  * - Lua
-    - `jmespath.lua <https://github.com/jmespath/jmespath.lua>`__
+  * - Elixir
+    - `ex-jmes <https://github.com/stephan83/ex-jmes>`__
     - Fully compliant
   * - Go
     - `go-jmespath <https://github.com/jmespath/go-jmespath>`__
@@ -36,11 +30,26 @@ level is based on which compliance tests the library can pass.
   * - Java
     - `jmespath-java <https://github.com/burtcorp/jmespath-java>`__
     - Fully compliant
+  * - Lua
+    - `jmespath.lua <https://github.com/jmespath/jmespath.lua>`__
+    - Fully compliant
+  * - Javascript
+    - `jmespath.js <https://github.com/jmespath/jmespath.js>`__
+    - Fully compliant
+  * - PHP
+    - `jmespath.php <https://github.com/jmespath/jmespath.php>`__
+    - Fully compliant
+  * - Python
+    - `jmespath.py <https://github.com/jmespath/jmespath.py>`__
+    - Fully compliant
+  * - Ruby
+    - `jmespath.rb <https://github.com/trevorrowe/jmespath.rb>`__
+    - Fully compliant
   * - Rust
     - `jmespath.rs <https://github.com/mtdowling/jmespath.rs>`__
     - Fully compliant
-  * - DotNet
-    - `jmespath.net <https://github.com/jdevillard/JmesPath.Net>`__
+  * - TypeScript
+    - `jmespath-ts <https://github.com/nanoporetech/jmespath-ts>`__
     - Fully compliant
 
 In addition to the JMESPath libraries above, there are a number of
