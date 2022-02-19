@@ -24,7 +24,7 @@ The result of applying a JMESPath expression against a JSON document will
 evaluation process.  Structured data in, structured data out.
 
 This also means that, with the exception of JMESPath expression types,
-JMESPath only supports the same types support by JSON:
+JMESPath only supports the same types supported by JSON:
 
 * number (integers and double-precision floating-point format in JSON)
 * string
