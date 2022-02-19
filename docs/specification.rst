@@ -840,7 +840,7 @@ Examples
 
 .. _functions:
 
-Functions Expressions
+Function Expressions
 =====================
 
 ::
