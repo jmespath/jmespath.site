@@ -483,7 +483,7 @@ element is the result of evaluating ``state.name``.  Each list element will
 therefore create a two element list, and the final result of the entire
 expression is a list of two element lists.
 
-Unlike a projection, the result of the expression in always included, even if
+Unlike a projection, the result of the expression is always included, even if
 the result is a null.  If you change the above expression to ``people[].[foo,
 bar]`` each two element list will be ``[null, null]``.
 
