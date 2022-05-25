@@ -25,7 +25,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 """
 import os
-import urlparse
+import urllib.parse
 import xml.etree.ElementTree as ET
 
 
@@ -40,7 +40,7 @@ def add_html_link(app, pagename, templatename, context, doctree):
     """As each page is built, collect page names for the sitemap"""
     base_url = app.config['html_theme_options'].get('base_url', '')
     if base_url:
-        full_url = urlparse.urljoin(base_url, pagename + '.html')
+        full_url = urllib.parse.urljoin(base_url, pagename + '.html')
         app.sitemap_links.append(full_url)
 
 

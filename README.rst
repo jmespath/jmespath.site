@@ -67,7 +67,7 @@ rendered html::
 
   $ make html
   $ cd docs/_build/html
-  $ python -m SimpleHTTPServer
+  $ python -m http.server
 
 You can then view the docs at http://localhost:8000/
 
