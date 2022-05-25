@@ -100,7 +100,7 @@ we can use this expression:
 
     [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 
-The two example above can be shortened.  If the ``start`` or ``step`` value is
+The two example above can be shortened.  If the ``start`` or ``stop`` value is
 omitted it is assumed to be the start or the end of the array.  For example:
 
 .. jpexample:: [:5]
@@ -109,7 +109,7 @@ omitted it is assumed to be the start or the end of the array.  For example:
 
     [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 
-Try modifying changing the example above to only include the last half of the
+Try modifying the example above to only include the last half of the
 array elements without specifying the end value of ``10``.
 
 The general form of a slice is ``[start:stop:step]``.  So far we've looked
@@ -206,7 +206,7 @@ of the spec, but the main points are:
 
 You can try this out in the demo above.  Notice how  ``people[*].first`` only
 included three elements, even though the people array has four elements.
-This is because the last element, ``{"missing": "different"}`` evalues to
+This is because the last element, ``{"missing": "different"}`` evaluates to
 ``null`` when the expression ``first`` is applied, and ``null`` values are not
 added to the collected result array.  If you try the expression ``foo[*].bar``
 you'll see a result of ``null``, because the value associated with the ``foo``
@@ -487,7 +487,7 @@ Unlike a projection, the result of the expression in always included, even if
 the result is a null.  If you change the above expression to ``people[].[foo,
 bar]`` each two element list will be ``[null, null]``.
 
-A multiselect has the same basic idea of a multiselect list, except it instead
+A multiselect hash has the same basic idea as a multiselect list, except it instead
 creates a hash instead of an array.  Using the same example above, if we
 instead wanted to create a two element hash that had two keys, ``Name`` and
 ``State``, we could use this:
