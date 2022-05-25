@@ -51,6 +51,12 @@ level is based on which compliance tests the library can pass.
   * - TypeScript
     - `jmespath-ts <https://github.com/nanoporetech/jmespath-ts>`__
     - Fully compliant
+  * - C++
+    - `jmespath.cpp <https://github.com/robertmrk/jmespath.cpp>`__
+    - Fully compliant
+  * - Elixir
+    - `ex-jmes <https://github.com/stephan83/ex-jmes>`__
+    - Fully compliant
 
 In addition to the JMESPath libraries above, there are a number of
 miscellaneous JMESPath tools.
