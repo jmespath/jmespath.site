@@ -24,7 +24,8 @@
             <span class="glyphicon glyphicon-search"></span>
             <input class="form-control jmespath-expression" type="text" placeholder="Expression" value="locations[?state == 'WA'].name | sort(@) | {WashingtonCities: join(', ', @)}" size="40"/>
           </div>
-          <textarea class="form-control jmespath-input" rows="8">
+          <div>
+            <textarea class="form-control jmespath-input" rows="8">
 {
   "locations": [
     {"name": "Seattle", "state": "WA"},
@@ -33,6 +34,7 @@
     {"name": "Olympia", "state": "WA"}
   ]
 }</textarea>
+        </div>
         </form>
         <h3>Result</h3>
         <pre class="jmespath-result"></pre>
@@ -87,10 +89,24 @@
 $(document).ready(function() {
     $('.jmespath-demo').each(function(i, el) {
         function evaluateDemo(el) {
-            var expression = $(el).find('.jmespath-expression').val();
-            var inputData = JSON.parse($(el).find('.jmespath-input').val());
-            var result = jmespath.search(inputData, expression);
-            $(el).find('.jmespath-result').text(JSON.stringify(result, null, 2));
+          var expressionTextArea = $(el).find('.jmespath-expression');
+          var expression = expressionTextArea.val();
+          var input = $(el).find('.jmespath-input');
+          var inputData = {};
+          try {
+            inputData = JSON.parse(input.val());
+            input.parent().removeClass('has-error');
+          } catch {
+            input.parent().addClass('has-error');
+          }
+          var result;
+          try {
+            result = jmespath.search(inputData, expression);
+            expressionTextArea.parent().removeClass('has-error');
+          } catch {
+            expressionTextArea.parent().addClass('has-error');
+          }
+          $(el).find('.jmespath-result').text(JSON.stringify(result, null, 2));
         }
         $(el).find('.jmespath-expression').bind('keyup', function() {
             evaluateDemo(el);
