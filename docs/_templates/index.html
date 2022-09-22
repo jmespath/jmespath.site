@@ -91,6 +91,12 @@ $(document).ready(function() {
         function evaluateDemo(el) {
           var expressionTextArea = $(el).find('.jmespath-expression');
           var expression = expressionTextArea.val();
+          try {
+            jmespath.search({}, expression);
+            expressionTextArea.parent().removeClass('has-error');
+          } catch {
+            expressionTextArea.parent().addClass('has-error');
+          }
           var input = $(el).find('.jmespath-input');
           var inputData = {};
           try {
@@ -99,13 +105,7 @@ $(document).ready(function() {
           } catch {
             input.parent().addClass('has-error');
           }
-          var result;
-          try {
-            result = jmespath.search(inputData, expression);
-            expressionTextArea.parent().removeClass('has-error');
-          } catch {
-            expressionTextArea.parent().addClass('has-error');
-          }
+          var result = jmespath.search(inputData, expression);
           $(el).find('.jmespath-result').text(JSON.stringify(result, null, 2));
         }
         $(el).find('.jmespath-expression').bind('keyup', function() {
