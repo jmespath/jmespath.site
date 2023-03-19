@@ -348,7 +348,7 @@ Slice expressions adhere to the following rules:
 * If no stop position is given, it is assumed to be the length of the array if
   the given step is greater than 0 or 0 if the given step is less than 0.
 * If the given step is omitted, it it assumed to be 1.
-* If the given step is 0, an error MUST be raised.
+* If the given step is 0, an ``invalid-value`` error MUST be raised.
 * If the element being sliced is not an array, the result is ``null``.
 * If the element being sliced is an array and yields no results, the result
   MUST be an empty array.
