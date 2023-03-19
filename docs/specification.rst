@@ -348,7 +348,7 @@ Slice expressions adhere to the following rules:
 * If no stop position is given, it is assumed to be the length of the array if
   the given step is greater than 0 or 0 if the given step is less than 0.
 * If the given step is omitted, it it assumed to be 1.
-* If the given step is 0, an error MUST be raised.
+* If the given step is 0, an ``invalid-value`` error MUST be raised.
 * If the element being sliced is not an array, the result is ``null``.
 * If the element being sliced is an array and yields no results, the result
   MUST be an empty array.
@@ -987,8 +987,8 @@ As a shorthand, the type ``any`` is used to indicate that the argument can be
 of any type (``array|object|number|string|boolean|null``).
 
 JMESPath functions are required to type check their input arguments.
-Specifying an invalid type for a function argument will result in a JMESPath
-error.
+Specifying an invalid type for a function argument will result in a
+``invalid-type`` error.
 
 The expression type, denoted by ``&expression``, is used to specify a
 expression that is not immediately evaluated.  Instead, a reference to that
@@ -1718,8 +1718,8 @@ in the array of ``elements``, the ``expr`` expression is applied and the
 resulting value is used as the key used when sorting the ``elements``.
 
 If the result of evaluating the ``expr`` against the current array element
-results in type other than a ``number`` or a ``string``, a type error will
-occur.
+results in type other than a ``number`` or a ``string``, an ``invalid-type``
+error will occur.
 
 Below are several examples using the ``people`` array (defined above) as the
 given input.  ``sort_by`` follows the same sorting logic as the ``sort``
