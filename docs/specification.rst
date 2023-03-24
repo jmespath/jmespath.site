@@ -232,9 +232,9 @@ Examples
 Errors
 ======
 
-Errors may be raised during the JMEspath evaluation process. How and when errors
-are raised is implementation specific, but implementations should indicate to
-the caller when errors have occurred.
+Errors may be raised during the JMEspath evaluation process. How and when
+errors are raised is implementation specific, but implementations should
+indicate to the caller when errors have occurred.
 
 The following errors are defined:
 
