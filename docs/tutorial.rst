@@ -390,7 +390,7 @@ A filter projection can be used to accomplish this:
       "machines": [
         {"name": "a", "state": "running"},
         {"name": "b", "state": "stopped"},
-        {"name": "b", "state": "running"}
+        {"name": "c", "state": "running"}
       ]
     }
 
