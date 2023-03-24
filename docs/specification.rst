@@ -227,6 +227,27 @@ Examples
    search("\u2713", {"\u2713": "value"}) -> "value"
 
 
+.. _errors:
+
+Errors
+======
+
+Errors may be raised during the JMEspath evaluation process. How and when errors
+are raised is implementation specific, but implementations should indicate to
+the caller when errors have occurred.
+
+The following errors are defined:
+
+* ``invalid-type`` is raised when an invalid type is encountered during the
+  evaluation process.
+* ``invalid-value`` is raised when an invalid value is encountered during the
+  evaluation process.
+* ``unknown-function`` is raised when an unknown function is encountered during
+  the evaluation process.
+* ``invalid-arity`` is raised when an invalid number of function arguments is
+  encountered during the evaluation process.
+
+
 .. _subexpressions:
 
 SubExpressions
