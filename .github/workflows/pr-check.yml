@@ -1,0 +1,25 @@
+name: Run PR Checks
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+      - "feature/**"
+jobs:
+  prcheck:
+    name: Run doc checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+      - name: Build and verify docs
+        run: |
+          make html
+          make doclint
