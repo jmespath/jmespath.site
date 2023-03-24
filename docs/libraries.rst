@@ -6,6 +6,11 @@ The JMESPath specification is implemented in various languages.  Each list
 below shows JMESPath libraries as well as the compliance level.  The compliance
 level is based on which compliance tests the library can pass.
 
+JMESPath Org Implementations
+============================
+
+These libraries are the language implementations that are part of the
+`JMESPath Org <https://github.com/jmespath/>`__:
 
 .. cssclass:: table
 
@@ -15,20 +20,11 @@ level is based on which compliance tests the library can pass.
   * - Language
     - Name
     - Compliance Level
-  * - C++
-    - `jmespath.cpp <https://github.com/robertmrk/jmespath.cpp>`__
-    - Fully compliant
-  * - .NET
-    - `jmespath.net <https://github.com/jdevillard/JmesPath.Net>`__
-    - Fully compliant
-  * - Elixir
-    - `ex-jmes <https://github.com/stephan83/ex-jmes>`__
+  * - Python
+    - `jmespath.py <https://github.com/jmespath/jmespath.py>`__
     - Fully compliant
   * - Go
     - `go-jmespath <https://github.com/jmespath/go-jmespath>`__
-    - Fully compliant
-  * - Java
-    - `jmespath-java <https://github.com/burtcorp/jmespath-java>`__
     - Fully compliant
   * - Lua
     - `jmespath.lua <https://github.com/jmespath/jmespath.lua>`__
@@ -39,27 +35,17 @@ level is based on which compliance tests the library can pass.
   * - PHP
     - `jmespath.php <https://github.com/jmespath/jmespath.php>`__
     - Fully compliant
-  * - Python
-    - `jmespath.py <https://github.com/jmespath/jmespath.py>`__
-    - Fully compliant
   * - Ruby
-    - `jmespath.rb <https://github.com/trevorrowe/jmespath.rb>`__
+    - `jmespath.rb <https://github.com/jmespath/jmespath.rb>`__
     - Fully compliant
   * - Rust
-    - `jmespath.rs <https://github.com/mtdowling/jmespath.rs>`__
-    - Fully compliant
-  * - TypeScript
-    - `jmespath-ts <https://github.com/nanoporetech/jmespath-ts>`__
-    - Fully compliant
-  * - C++
-    - `jmespath.cpp <https://github.com/robertmrk/jmespath.cpp>`__
-    - Fully compliant
-  * - Elixir
-    - `ex-jmes <https://github.com/stephan83/ex-jmes>`__
+    - `jmespath.rs <https://github.com/jmespath/jmespath.rs>`__
     - Fully compliant
 
-In addition to the JMESPath libraries above, there are a number of
-miscellaneous JMESPath tools.
+JMESPath Tools
+--------------
+
+Below are miscellaneous tools maintained by the JMESPath org:
 
 .. cssclass:: table
 
@@ -79,3 +65,37 @@ miscellaneous JMESPath tools.
       and prints the result of evaluating the JMESPath expression to stdout.
       This is useful if you're writing shell scripts that need to manipulate
       JSON data.
+
+
+Community Implementations
+=========================
+
+In addition to the official libraries managed by the JMESPath org, the
+community has written JMESPath libraries in various languages:
+
+.. cssclass:: table
+
+.. list-table::
+  :header-rows: 1
+
+  * - Language
+    - Name
+    - Compliance Level
+  * - C++
+    - `jmespath.cpp <https://github.com/robertmrk/jmespath.cpp>`__
+    - Fully compliant
+  * - C++
+    - `jsoncons <https://github.com/danielaparker/jsoncons/blob/master/doc/ref/jmespath/jmespath.md>`__
+    - Fully compliant
+  * - Elixir
+    - `ex-jmes <https://github.com/stephan83/ex-jmes>`__
+    - Fully compliant
+  * - Java
+    - `jmespath-java <https://github.com/burtcorp/jmespath-java>`__
+    - Fully compliant
+  * - .NET
+    - `jmespath.net <https://github.com/jdevillard/JmesPath.Net>`__
+    - Fully compliant
+  * - TypeScript
+    - `jmespath-ts <https://github.com/nanoporetech/jmespath-ts>`__
+    - Fully compliant
