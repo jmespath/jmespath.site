@@ -1297,6 +1297,80 @@ Returns the next lowest integer value by rounding down if necessary.
     - ``1``
 
 
+.. _func-items:
+
+items
+-----
+
+::
+
+    array[array[any]] items(object $obj)
+
+Returns a an array of key value pairs for the provided object ``$obj``. Each
+pair is a 2-item array with the first item being the key and the second item
+being the value. This function is the inverse of :ref:`func-to-object`.
+Note that because JSON hashes are inheritently unordered, the key value pairs
+of the provided object ``$obj`` are inheritently unordered.  Implementations
+are not required to return values in any specific order.  For example, given
+the input::
+
+    {"a": "first", "b": "second", "c": "third"}
+
+The expression ``items(@)`` could have any of these return values:
+
+* ``[["a", "first"], ["b", "second"], ["c", "third"]]``
+* ``[["a", "first"], ["c", "third"], ["b", "second"]]``
+* ``[["b", "second"], ["a", "first"], ["c", "third"]]``
+* ``[["b", "second"], ["c", "third"], ["a", "first"]]``
+* ``[["c", "third"], ["a", "first"], ["b", "second"]]``
+* ``[["c", "third"], ["b", "second"], ["a", "first"]]``
+
+If you would like a specific order, consider using the ``sort_by`` function.
+
+.. cssclass:: table
+
+.. list-table:: Examples
+  :header-rows: 1
+
+  * - Given
+    - Expression
+    - Result
+  * - ``{"a": "first", "b": "second"}``
+    - ``items(@)``
+    - ``[["b", "second"], ["a", "first"]]``
+  * - ``{"z": "last", "b": "second"}``
+    - ``sort_by(items(@), &[0])``
+    - ``[["b", "second"], ["z", "last"]]``
+  * - ``{"z": "last", "b": "second"}``
+    - ``sort_by(items(@), &[1])``
+    - ``[["z", "last"], ["b", "second"]]``
+
+
+.. _func-from-items:
+
+from_items
+----------
+
+::
+
+    object from_items(array[array[any]] $arg)
+
+Returns an object from the provided array of key value pairs. This function
+is the inverse of :ref:`func-items`.
+
+.. cssclass:: table
+
+.. list-table:: Examples
+  :header-rows: 1
+
+  * - Given
+    - Expression
+    - Result
+  * - ``[["one", 1], ["two", 2]]``
+    - ``from_items(@)``
+    - ``{"one": 1, "two": 2}``
+
+
 .. _func-join:
 
 join
@@ -2007,6 +2081,32 @@ If you would like a specific order, consider using the
   * - ``false``
     - ``values(@)``
     - ``<error: invalid-type>``
+
+
+.. _func-zip:
+
+zip
+---
+
+::
+
+    array[array[any]] zip([array[any] $arg, [, array[any] $...]])
+
+Accepts 1 or more arrays as arguments and returns an array of arrays in which
+the *i-th* array contains the *i-th* element from each of the argument arrays.
+The returned array is truncated to the length of the shortest argument array.
+
+.. cssclass:: table
+
+.. list-table:: Examples
+  :header-rows: 1
+
+  * - Expression
+    - Result
+  * - ``zip(`["a", "b"]`, `[1, 2]`)``
+    - ``[["a", 1], ["b", 2]]``
+  * - ``zip(`["a", "b", "c"]`, `[1, 2]`)``
+    - ``[["a", 1], ["b", 2]]``
 
 
 Pipe Expressions
