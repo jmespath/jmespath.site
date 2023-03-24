@@ -487,9 +487,9 @@ Unlike a projection, the result of the expression in always included, even if
 the result is a null.  If you change the above expression to ``people[].[foo,
 bar]`` each two element list will be ``[null, null]``.
 
-A multiselect hash has the same basic idea as a multiselect list, except it instead
-creates a hash instead of an array.  Using the same example above, if we
-instead wanted to create a two element hash that had two keys, ``Name`` and
+A multiselect hash has the same basic idea as a multiselect list, except it
+instead creates a hash instead of an array.  Using the same example above, if
+we instead wanted to create a two element hash that had two keys, ``Name`` and
 ``State``, we could use this:
 
 .. jpexample:: people[].{Name: name, State: state.name}

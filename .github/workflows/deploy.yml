@@ -1,0 +1,29 @@
+name: Deploy site
+on:
+  push:
+    branches:
+      - master
+jobs:
+  deploydocs:
+    name: Build and deploy docs
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+      - name: Build and verify docs
+        run: |
+          make html
+          make doclint
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ secrets.DEPLOY_ROLE_ARN }}
+          aws-region: us-west-2
+      - name: Run deployment
+        run: |
+          make publish
