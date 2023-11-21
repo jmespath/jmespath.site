@@ -488,6 +488,6 @@ the final third of this expression.
 
 And finally, the third part of the expression,
 ``{WashingtonCities: join(', ', @)}``, creates a multiselect hash.  It takes as
-input, the list of sorted city names, and produces a hash witih a single key,
+input, the list of sorted city names, and produces a hash with a single key,
 ``WashingtonCities``, whose values are the input list (denoted by ``@``) as a
 string separated by a comma.
