@@ -446,7 +446,7 @@ expression.  The pipe expression is evaluated as::
 MultiSelect
 ===========
 
-Up to this point, we've looked at JMESPath expressions that help to pare down a
+Up to this point, we've looked at JMESPath expressions that help to parse down a
 JSON document into just the elements you're interested in.  This next concept,
 :ref:`multiselect lists <multiselectlist>` and
 :ref:`multiselect hashes <multiselecthash>` allow you to create JSON elements.
