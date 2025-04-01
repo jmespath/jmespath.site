@@ -491,3 +491,19 @@ And finally, the third part of the expression,
 input, the list of sorted city names, and produces a hash with a single key,
 ``WashingtonCities``, whose values are the input list (denoted by ``@``) as a
 string separated by a comma.
+
+Keys with periods
+=================
+
+How to deal with keys that might contain special characters, simply quote the key with double quotes.
+
+.. jpexample:: formats."qcow2.xz".file
+    :layout: 2cols-expand
+
+    {
+      "formats": {
+        "qcow2.xz": {
+          "file": "image.qcow2.xz"
+        }
+      }
+    }
