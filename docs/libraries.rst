@@ -41,6 +41,9 @@ These libraries are the language implementations that are part of the
   * - Rust
     - `jmespath.rs <https://github.com/jmespath/jmespath.rs>`__
     - Fully compliant
+  * - Swift
+    - `jmespath.swift <https://github.com/jmespath/jmespath.swift>`__
+    - Fully compliant
 
 JMESPath Tools
 --------------
