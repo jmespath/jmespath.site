@@ -621,7 +621,7 @@ Examples
 --------
 
 Given a ``multi-select-hash`` expression ``{foo: one.two, bar: bar}`` and the
-data ``{"bar": "bar", {"one": {"two": "one-two"}}}``, the expression is
+data ``{"bar": "bar", "one": {"two": "one-two"}}``, the expression is
 evaluated as follows:
 
 1. A hash is created: ``{}``
