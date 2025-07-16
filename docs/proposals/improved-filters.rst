@@ -136,7 +136,7 @@ for the ``users`` data above::
 If we want to get the names of all admin users whose account is enabled, we
 could either say::
 
-    users[?is_admin == `true` && disabled == `false]
+    users[?is_admin == `true` && disabled == `false`]
 
 but it's more natural and succinct to instead say::
 
