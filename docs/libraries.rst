@@ -96,6 +96,9 @@ community has written JMESPath libraries in various languages:
   * - .NET
     - `jmespath.net <https://github.com/jdevillard/JmesPath.Net>`__
     - Fully compliant
+  * - Crystal
+    - `jmespath.cr <https://github.com/qequ/jmespath.cr>`__
+    - Fully compliant
   * - TypeScript
     - `jmespath-ts <https://github.com/nanoporetech/jmespath-ts>`__
     - Fully compliant
