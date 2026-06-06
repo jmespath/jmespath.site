@@ -96,6 +96,8 @@ community has written JMESPath libraries in various languages:
   * - .NET
     - `jmespath.net <https://github.com/jdevillard/JmesPath.Net>`__
     - Fully compliant
+    - `Corvus.Text.Json <https://github.com/corvus-dotnet/Corvus.JsonSchema>`__
+    - Fully compliant
   * - TypeScript
     - `jmespath-ts <https://github.com/nanoporetech/jmespath-ts>`__
     - Fully compliant
